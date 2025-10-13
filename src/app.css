@@ -14,4 +14,10 @@
     .flexbox{
         @apply flex flex-row gap-4 justify-center items-center;
     }
+    .icone{
+        @apply text-blue-600 bg-white rounded-full w-24 h-24 p-8;
+    }
+    .sub-title{
+        @apply  font-medium text-black text-xl max-w-full text-center;    
+    }
 }
