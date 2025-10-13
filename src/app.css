@@ -1,0 +1,17 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+@layer components{
+    .menu-color{
+        @apply text-blue-600;
+    }
+    .card-style{
+        @apply card-title text-blue-600;
+    }
+    .title{
+        @apply  text-3xl text-black font-bold;
+    }
+    .flexbox{
+        @apply flex flex-row gap-4 justify-center items-center;
+    }
+}
