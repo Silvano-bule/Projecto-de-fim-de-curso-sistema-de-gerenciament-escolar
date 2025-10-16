@@ -47,7 +47,7 @@
             </ul>
         </div>
         <div class="navbar-end gap-4 mr-8">
-            <a class="btn bg-blue-600 border-none">Sign up</a>
+            <a class="btn bg-blue-600 border-none" href="../src/views/login/index.php">Sign up</a>
             <a class="btn bg-blue-200 border-none text-blue-600">Login</a>
         </div>
     </div>
@@ -466,8 +466,8 @@
                 <div>
                     <label for="name" class="block text-gray-600 font-medium">Nome</label>
                     <input type="text" id="name"
-                        class="w-full mt-1 p-2 border border-gray-300 rounded focus:ring focus:ring-indigo-500"
-                        x-model="name" placeholder="Your Name" />
+                        class="w-full mt-1 p-2 border -gray-300 rounded focus:ring focus:ring-indigo-500"
+                        x-model="name" placeholder="Seu Nome" />
                 </div>
                 <div>
                     <label for="email" class="block text-gray-600 font-medium">Email</label>
@@ -482,8 +482,8 @@
                         x-model="message" placeholder="Your message..." rows="4"></textarea>
                 </div>
                 <div>
-                    <button type="button" @click.prevent="submitForm"
-                        class="w-full bg-indigo-600 text-white py-2 rounded hover:bg-indigo-500 focus:outline-none focus:ring focus:ring-indigo-500">
+                    <button type="button"
+                        class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-500">
                         Send Message
                     </button>
                 </div>
@@ -548,6 +548,7 @@
             </div>
         </div>
     </footer>
+    <script src=""></script>
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script>
         AOS.init();
