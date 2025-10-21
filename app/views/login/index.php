@@ -64,20 +64,20 @@
                             </span>
                         </button>
                     </div>
-                    <form id="form-aluno" class="grid grid-cols-1 gap-6 mt-8 md:grid-cols-2" method="post">
+                    <form id="form-aluno" class="grid grid-cols-1 gap-6 mt-8 md:grid-cols-2" action="" method="post">
                         <div>
                             <label class="block mb-2 text-sm text-gray-600 dark:text-gray-200">Digte o seu nome ou
                                 senha</label>
                             <input type="text" id="input_name" placeholder="John"
-                                class="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40" name="nome"
-                                required />
+                                class="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:ring focus:ring-blue-400 focus:outline-none focus:ring-opacity-40"
+                                name="nome" required />
                         </div>
                         <div>
                             <label class="block mb-2 text-sm text-gray-600 dark:text-gray-200">Digite a sua
                                 senha</label>
                             <input id="input_password" type="password" placeholder="XXX-XX-XXXX-XXX"
-                                class="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40" name="pass"
-                                required maxlength="20" minlength="8" />
+                                class="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
+                                name="pass" required maxlength="20" minlength="8" />
                         </div>
 
 
@@ -109,7 +109,17 @@
             </div>
         </div>
     </section>
-    <script src="../js/script.js"></script>
+    <script src="../js/main.js"></script>
+
+<!-- <?php
+
+require '../../../vendor/autoload.php';
+
+use Core\ConfigController as config;
+$url = new config()
+
+?> -->
 </body>
 
 </html>
+

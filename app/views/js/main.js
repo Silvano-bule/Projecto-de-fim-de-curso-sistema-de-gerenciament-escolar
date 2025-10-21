@@ -12,10 +12,26 @@ btns.forEach(btn => {
         btn.classList.add('bg-blue-500', 'text-white')
     })
 })
+const inputs = [inputNome, inputPasse]
+let verificacao = null
 
-btnSubmit.addEventListener('click', () => {
-    if (inputNome.value === '' || inputPasse.value === '') {
-        alert('Digite os campos')
-        return
-    }
+btnSubmit.addEventListener('click',() => {
+    inputs.forEach(input => {
+        if (input.value === '') {
+            input.classList.remove('focus:ring-blue-400')
+            input.classList.add('focus:ring-red-400')
+        }
+    });
 })
+
+function verificarValores() {
+    inputs.forEach(input => {
+        input.addEventListener('input', () => {
+            input.classList.add('focus:ring-blue-400')
+            input.classList.remove('focus:ring-red-400')
+        })
+    });
+
+}
+
+verificarValores()
