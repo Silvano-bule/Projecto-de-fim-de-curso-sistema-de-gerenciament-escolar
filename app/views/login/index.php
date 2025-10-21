@@ -111,15 +111,16 @@
     </section>
     <script src="../js/main.js"></script>
 
-<!-- <?php
-
-require '../../../vendor/autoload.php';
-
-use Core\ConfigController as config;
-$url = new config()
-
-?> -->
 </body>
 
 </html>
 
+<?php
+
+require  dirname(__DIR__, 3). '\vendor\autoload.php';
+
+use \App\controllers\appController\page;
+
+ echo page::getDates()
+
+?>
