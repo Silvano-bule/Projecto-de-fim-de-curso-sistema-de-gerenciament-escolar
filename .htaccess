@@ -1,0 +1,22 @@
+#Modulo de rescrita de URLs do apache. É como ligar o interruptor que permite o Apache manipular URLs antes de elas chegarem ao PHP.
+RewriteEngine On
+
+#Define o caminho base onde está teu projeto.
+RewriteBase /S_G_E
+
+#Se o arquivo que a pessoa está pedindo não existir, continua para a próxima regra.
+RewriteCond %{REQUEST_FILENAME} !-f
+
+#Se o diretório não existir, continua para a próxima regra.
+RewriteCond %{REQUEST_FILENAME} !-d
+
+#Configuração Principal
+RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
+
+#^(.*)$ Captura qualquer coisa depois da pasta base.
+
+#index.php?url=$1 redireciona tudo para index.php, e passa o que foi digitado na URL como parâmetro url.
+
+#[QSA,L] Indica duas coisas: 
+#QSA = mantém os parâmetros da query string (ex: ?id=5 continua valendo).
+#L = “Last rule” — para aqui, não continua aplicando outras regras.

@@ -1,8 +1,8 @@
 <?php 
 
-namespace App\controllers\appController;
+namespace App\controllers\homeController;
 
-class page  
+class page
 {
     public static function getDates() : string {
         return 'Ola mundo';
