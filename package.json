@@ -7,6 +7,6 @@
     "tailwindcss": "^4.1.14"
   },
   "scripts": {
-    "build:css": "npx @tailwindcss/cli -i ./views/app.css -o ./views/output.css --watch"
+    "build:css": "npx @tailwindcss/cli -i ./app/input.css -o ./public/assets/css/output.css --watch"
   }
 }

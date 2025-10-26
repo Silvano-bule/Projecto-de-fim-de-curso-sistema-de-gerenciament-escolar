@@ -1,6 +1,3 @@
-<?php 
+<?php
 
-$title = 'SISTEMA ESCOLAR - BULE';
-
-echo $title;
-include './app/views/page.php';
+require __DIR__ . '/../views/page.php';

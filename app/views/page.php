@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema de Gerenciamento Escolar</title>
-    <link rel="shortcut icon" href="../img/logo.png" type="image/x-icon">
-    <link href="./output.css" rel="stylesheet">
+    <link rel="shortcut icon" href="assets/img/logo.png" type="image/x-icon">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link rel="stylesheet" href="assets/css/output.css">
     <style>
         html {
             scroll-behavior: smooth;
@@ -35,7 +34,7 @@
                     <li><a href="#contato">Contactos</a></li>
                 </ul>
             </div>
-            <a class="btn btn-ghost text-xl w-24 h-20 ml-8"><img src="../img/logo.png" alt="logo Escolar"></a>
+            <a class="btn btn-ghost text-xl w-24 h-20 ml-8"><img src="assets/img/logo.png" alt="logo Escolar"></a>
         </div>
         <div class="navbar-center hidden lg:flex">
             <ul class="menu menu-horizontal px-1">
@@ -51,7 +50,7 @@
             <a class="btn bg-blue-200 border-none text-blue-600" href="../app/views/login/index.php">Entrar</a>
         </div>
     </div>
-    <div class="hero min-h-screen" style="background-image: url(../img/img.jpg);">
+    <div class="hero min-h-screen" style="background-image: url(assets/img/img.jpg);">
         <div class="hero-overlay"></div>
         <div class="hero-content text-neutral-content text-center">
             <div class="max-w-lg">
@@ -120,7 +119,7 @@
                 <button class="bg-blue-600 py-2 px-4 rounded-full text-white">Saber mais</button>
             </div>
             <div data-aos="fade-left">
-                <img src="../img/school.jpg" alt="image" class="rounded-lg w-72 h-44">
+                <img src="assets/img/school.jpg" alt="image" class="rounded-lg w-72 h-44">
             </div>
         </div>
     </section>
@@ -136,7 +135,7 @@
                 <div class="card bg-white w-72 md:w-96 shadow-md hover:shadow-blue-400/50 hover:shadow-xl cursor-pointer transition-all duration-500 hover:-translate-y-1"
                     data-aos="flip-left">
                     <figure>
-                        <img src="../img/img.jpg" alt="image" class="rounded-t-xl" />
+                        <img src="assets/img/img.jpg" alt="image" class="rounded-t-xl" />
                     </figure>
                     <div class="card-body">
                         <h2 class="card-style text-xl font-semibold">Informática</h2>
@@ -155,7 +154,7 @@
                 <div class="card bg-white w-72 md:w-96 shadow-md hover:shadow-blue-400/50 hover:shadow-xl cursor-pointer transition-all duration-500 hover:-translate-y-1"
                     data-aos="flip-left">
                     <figure>
-                        <img src="../img/img (2).jpg" alt="image" />
+                        <img src="assets/img/img (2).jpg" alt="image" />
                     </figure>
                     <div class="card-body">
                         <h2 class="card-style">Ciencias fisicas e bioloicas</h2>
@@ -169,7 +168,7 @@
                 <div class="card bg-white w-72 md:w-96 shadow-md hover:shadow-blue-400/50 hover:shadow-xl cursor-pointer transition-all duration-500 hover:-translate-y-1"
                     data-aos="flip-left">
                     <figure>
-                        <img src="../img/img (1).jpg" alt="image" />
+                        <img src="assets/img/img (1).jpg" alt="image" />
                     </figure>
                     <div class="card-body">
                         <h2 class="card-style">Ciencias Economicas e Juridicas</h2>
@@ -285,7 +284,7 @@
                 <div class="w-full max-w-md px-8 py-4 mt-16 bg-white rounded-lg shadow-lg dark:bg-gray-800">
                     <div class="flex justify-center -mt-16 md:justify-end">
                         <img class="object-cover w-20 h-20 border-2 border-blue-600 rounded-full dark:border-blue-600"
-                            alt="Testimonial avatar" src="../img/dep (1).jpg">
+                            alt="Testimonial avatar" src="assets/img/dep (1).jpg">
                     </div>
 
                     <h2 class="mt-2 text-xl font-semibold text-gray-800 dark:text-white md:mt-0">TI</h2>
@@ -301,7 +300,7 @@
                 <div class="w-full max-w-md px-8 py-4 mt-16 bg-white rounded-lg shadow-lg dark:bg-gray-800">
                     <div class="flex justify-center -mt-16 md:justify-end">
                         <img class="object-cover w-20 h-20 border-2 border-blue-500 rounded-full dark:border-blue-600"
-                            alt="Testimonial avatar" src="../img/dep (2).jpg">
+                            alt="Testimonial avatar" src="assets/img/dep (2).jpg">
                     </div>
 
                     <h2 class="mt-2 text-xl font-semibold text-gray-800 dark:text-white md:mt-0">Empreendedorismo</h2>
@@ -317,7 +316,7 @@
                 <div class="w-full max-w-md px-8 py-4 mt-16 bg-white rounded-lg shadow-lg dark:bg-gray-800">
                     <div class="flex justify-center -mt-16 md:justify-end">
                         <img class="object-cover w-20 h-20 border-2 border-blue-500 rounded-full dark:border-blue-600"
-                            alt="Testimonial avatar" src="../img/dep (3).jpg">
+                            alt="Testimonial avatar" src="assets/img/dep (3).jpg">
                     </div>
 
                     <h2 class="mt-2 text-xl font-semibold text-gray-800 dark:text-white md:mt-0">Ciências e Educação
@@ -334,7 +333,7 @@
                 <div class="w-full max-w-md px-8 py-4 mt-16 bg-white rounded-lg shadow-lg dark:bg-gray-800">
                     <div class="flex justify-center -mt-16 md:justify-end">
                         <img class="object-cover w-20 h-20 border-2 border-blue-500 rounded-full dark:border-blue-600"
-                            alt="Testimonial avatar" src="../img/dep (4).jpg">
+                            alt="Testimonial avatar" src="assets/img/dep (4).jpg">
                     </div>
 
                     <h2 class="mt-2 text-xl font-semibold text-gray-800 dark:text-white md:mt-0">Pesquisa e Inovação
@@ -376,7 +375,7 @@
                     data-aos="fade-left">
                     <div class="flex flex-col sm:-mx-4 sm:flex-row items-center">
                         <img class="flex-shrink-0 object-cover w-24 h-24 rounded-full sm:mx-4 ring-4 ring-gray-300 transition-transform duration-500 group-hover:scale-110"
-                            src="../img/dep (8).jpg" alt="">
+                            src="assets/img/dep (8).jpg" alt="">
                         <div class="mt-4 sm:mx-4 sm:mt-0 text-center sm:text-left">
                             <h1
                                 class="text-xl font-semibold text-gray-700 capitalize md:text-2xl dark:text-white group-hover:text-white transition-colors duration-500">
@@ -397,7 +396,7 @@
                     data-aos="fade-up-right">
                     <div class="flex flex-col sm:-mx-4 sm:flex-row items-center">
                         <img class="flex-shrink-0 object-cover w-24 h-24 rounded-full sm:mx-4 ring-4 ring-gray-300 transition-transform duration-500 group-hover:scale-110"
-                            src="../img/dep (6).jpg" alt="">
+                            src="assets/img/dep (6).jpg" alt="">
                         <div class="mt-4 sm:mx-4 sm:mt-0 text-center sm:text-left">
                             <h1
                                 class="text-xl font-semibold text-gray-700 capitalize md:text-2xl dark:text-white group-hover:text-white transition-colors duration-500">
@@ -418,7 +417,7 @@
                     data-aos="fade-left">
                     <div class="flex flex-col sm:-mx-4 sm:flex-row items-center">
                         <img class="flex-shrink-0 object-cover w-24 h-24 rounded-full sm:mx-4 ring-4 ring-gray-300 transition-transform duration-500 group-hover:scale-110"
-                            src="../img/dep (2).jpg" alt="">
+                            src="assets/img/dep (2).jpg" alt="">
                         <div class="mt-4 sm:mx-4 sm:mt-0 text-center sm:text-left">
                             <h1
                                 class="text-xl font-semibold text-gray-700 capitalize md:text-2xl dark:text-white group-hover:text-white transition-colors duration-500">
@@ -540,7 +539,7 @@
 
             <div class="flex flex-col items-center justify-between sm:flex-row">
                 <a href="#">
-                    <img class="w-auto h-10" src="../img/logo.png" alt="logo">
+                    <img class="w-auto h-10" src="assets/img/logo.png" alt="logo">
                 </a>
 
                 <p class="mt-4 text-sm text-gray-500 sm:mt-0 dark:text-gray-300">© Copyright 2025. Todos os direito

@@ -1,14 +1,6 @@
 <?php 
 
-require 'vendor/autoload.php';
-require './routers/router.php';
+require '../vendor/autoload.php';
 
+require __DIR__ . '/../app/core/app.php';
 
-const AVALAIBLE_ROUTERS = [
-    'home' => 'homeController.php',
-    'contact' => 'contactController.php',
-    'login' => 'loginController.php'
-];
-
-
-const DEFAULT_ROUTE = AVALAIBLE_ROUTERS['home'];

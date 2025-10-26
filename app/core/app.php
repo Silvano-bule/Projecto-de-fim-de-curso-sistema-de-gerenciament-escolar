@@ -1,13 +1,13 @@
 <?php
 
 /* Aqui fica toda logica de rotemento */
-require './public/index.php';
+require __DIR__ .'/controller.php';
 
 $availableNamesrouters = array_keys(AVALAIBLE_ROUTERS);
 
 if (isset($_GET['page']) && in_array($_GET['page'], $availableNamesrouters)) {
     $controller = AVALAIBLE_ROUTERS[$_GET['page']];
-}else{
+} else {
     $controller = DEFAULT_ROUTE;
 }
-require __DIR__ . '/../app/controllers/'. $controller;
+require  dirname(__DIR__, 1) . '/../app/controllers/' . $controller;
