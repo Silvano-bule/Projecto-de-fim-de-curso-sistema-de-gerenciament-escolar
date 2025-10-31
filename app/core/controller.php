@@ -1,9 +1,7 @@
 <?php 
 
 const AVALAIBLE_ROUTERS = [
-    'home' => 'homeController.php',
-    'contact' => 'contactController.php',
-    'login' => 'loginController.php'
+    'home' => 'homeController.php'
 ];
 
 

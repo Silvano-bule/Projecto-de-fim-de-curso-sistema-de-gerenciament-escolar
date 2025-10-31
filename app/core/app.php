@@ -1,7 +1,7 @@
 <?php
 
 /* Aqui fica toda logica de rotemento */
-require __DIR__ .'/controller.php';
+require_once __DIR__ .'/controller.php';
 
 $availableNamesrouters = array_keys(AVALAIBLE_ROUTERS);
 

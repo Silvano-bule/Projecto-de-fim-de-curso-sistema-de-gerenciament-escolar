@@ -1,3 +1,4 @@
+<IfModule mod_rewrite.c>
 #Modulo de rescrita de URLs do apache. É como ligar o interruptor que permite o Apache manipular URLs antes de elas chegarem ao PHP.
 RewriteEngine On
 
@@ -20,3 +21,4 @@ RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
 #[QSA,L] Indica duas coisas: 
 #QSA = mantém os parâmetros da query string (ex: ?id=5 continua valendo).
 #L = “Last rule” — para aqui, não continua aplicando outras regras.
+</IfModule>
