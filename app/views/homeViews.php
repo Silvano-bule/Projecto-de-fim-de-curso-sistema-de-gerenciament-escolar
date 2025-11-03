@@ -46,8 +46,8 @@
             </ul>
         </div>
         <div class="navbar-end gap-4 mr-8">
-            <a class="btn bg-blue-600 border-none" href="../app/views/cadastrar/index.php">Cadastrar</a>
-            <a class="btn bg-blue-200 border-none text-blue-600" href="../app/views/login/index.php">Entrar</a>
+            <a class="btn bg-blue-600 border-none" href="index.php?page=cadastrar">Cadastrar</a>
+            <a class="btn bg-blue-200 border-none text-blue-600" href="index.php?page=entrar">Entrar</a>
         </div>
     </div>
     <div class="hero min-h-screen" style="background-image: url(assets/img/img.jpg);">
