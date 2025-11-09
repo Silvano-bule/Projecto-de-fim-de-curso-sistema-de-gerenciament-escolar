@@ -2,4 +2,4 @@
 
 require_once '../vendor/autoload.php';
 
-require_once __DIR__.'/../app/core/route.php';
+use SGE\core\Router;
