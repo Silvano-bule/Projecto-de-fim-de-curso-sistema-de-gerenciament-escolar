@@ -2,4 +2,7 @@
 
 require_once '../vendor/autoload.php';
 
-use SGE\core\Router;
+use App\core\Router;
+
+$router = new Router();
+$router->route();
