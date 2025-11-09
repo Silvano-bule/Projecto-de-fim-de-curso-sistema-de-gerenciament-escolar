@@ -1,3 +1,10 @@
 <?php 
+namespace App\controllers;
 
-require_once __DIR__ . '/../views/entrarViews.php';
+class entrarController
+{
+    public function render()
+    {
+        require_once __DIR__ . '/../views/entrarViews.php';
+    }
+}

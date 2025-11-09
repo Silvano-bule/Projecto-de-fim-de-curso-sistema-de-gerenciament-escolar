@@ -1,9 +1,13 @@
 <?php
 
+use App\controllers\homeController;
+use App\controllers\cadastrarController;
+use App\controllers\entrarController;
+
 define('AVAILABLE_ROUTES', [
-    'home' => 'homeController.php',
-    'cadastrar' => 'cadastrarController.php',
-    'entrar' => 'entrarController.php'
+    'home' => homeController::class,
+    'cadastrar' => cadastrarController::class,
+    'entrar' => entrarController::class
 ]);
 
-define('DEFAULT_ROUTE', AVAILABLE_ROUTES['home']);
+define('DEFAULT_ROUTE', homeController::class);

@@ -1,3 +1,10 @@
 <?php 
+namespace App\controllers;
 
-require_once __DIR__ . '/../views/homeViews.php';
+class homeController
+{
+    public function render()
+    {
+        require_once __DIR__ . '/../views/homeViews.php';
+    }
+}
