@@ -43,7 +43,7 @@
         <div class="flex items-center justify-center py-4 text-center bg-gray-50 dark:bg-gray-700">
             <span class="text-sm text-gray-600 dark:text-gray-200">Já tem uma conta? </span>
 
-            <a href="index.php?page=entrar" class="mx-2 text-sm font-bold text-blue-500 dark:text-blue-400 hover:underline">Registrar</a>
+            <a href="index.php?page=entrar" class="mx-2 text-sm font-bold text-blue-500 dark:text-blue-400 hover:underline">entrar</a>
         </div>
     </div>
 </body>

@@ -2,12 +2,14 @@
 
 use App\controllers\homeController;
 use App\controllers\cadastrarController;
+use App\controllers\dashboard;
 use App\controllers\entrarController;
 
 define('AVAILABLE_ROUTES', [
     'home' => homeController::class,
     'cadastrar' => cadastrarController::class,
-    'entrar' => entrarController::class
+    'entrar' => entrarController::class,
+    'paineldashboard' => dashboard::class
 ]);
 
 define('DEFAULT_ROUTE', homeController::class);
