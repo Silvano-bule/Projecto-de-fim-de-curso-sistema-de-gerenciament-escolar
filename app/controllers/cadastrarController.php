@@ -11,15 +11,15 @@ class cadastrarController
             $email = trim($_POST['email'] ?? '');
             $senha = trim($_POST['senha'] ?? '');
 
-            $entrar = [];
+            $error = [];
             // Aqui você pode adicionar a lógica para salvar os dados no banco de dados
             if (empty($nome)) $error = "Nome é obrigatório.";
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)) $error = "Email é inválido.";
             if (strlen($senha) < 6) $error = "Senha deve ter pelo menos 6 caracteres.";
 
             if (isset($error)) {
-                foreach ($entrar as $error) {
-                    echo $error;
+                foreach ($error as $erros) {
+                    echo $erros;
                 }
                 return;
             }

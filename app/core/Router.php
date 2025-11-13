@@ -5,6 +5,7 @@ namespace App\core;
 use App\controllers\cadastrarController;
 use App\controller\entrarController;
 use App\controllers\homeController;
+
 class Router
 {
     public function route()
@@ -20,12 +21,11 @@ class Router
             $controller = DEFAULT_ROUTE;
         }
 
-        $controllerInstance = new $controller(); 
+        $controllerInstance = new $controller();
 
-        if(!method_exists($controllerInstance, 'render')){
+        if (!method_exists($controllerInstance, 'render')) {
             throw new \Exception("O controlador selecionado não possui o método render.");
         }
-        $controllerInstance-> render();
-        
+        $controllerInstance->render();
     }
 }
