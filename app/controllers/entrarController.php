@@ -24,12 +24,12 @@ class entrarController
                     $error[] = "Email ou senha inválidos.";
                 } else {
                     // Login bem-sucedido
-                    header('Location: index.php?page=paineldashboard');
-                    exit;
+                    header('Location: index.php?page=dashboard');
+                    return;
                 }
             }
         }
-        
+        require_once __DIR__ . '/../views/cabaçalho.php';
         require_once __DIR__ . '/../views/entrarViews.php';
     }
 }

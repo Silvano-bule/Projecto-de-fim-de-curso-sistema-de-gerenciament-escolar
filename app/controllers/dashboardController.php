@@ -2,7 +2,7 @@
 
 namespace App\controllers;
 
-class dashboard
+class dashboardController
 {
     public function render()
     {

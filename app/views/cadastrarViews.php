@@ -1,12 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="assets/css/output.css">
-</head>
 
 <body class="flex justify-center items-center min-h-screen">
     <div class="w-md max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-800">
@@ -19,17 +11,26 @@
 
             <p class="mt-1 text-center text-gray-500 dark:text-gray-400">Criar conta</p>
 
-            <form action="index.php?page=cadastrar"  method="post">
+            <form action="index.php?page=cadastrar" method="post" autocomplete="off">
                 <div class="w-full mt-4">
-                    <input class="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-lg dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300" type="text" placeholder="Digite o seu nome" aria-label="text" name="nome" required/>
+                    <input autocomplete="given-name" class="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-lg dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300" type="text" placeholder="Digite o seu nome" aria-label="text" name="nome" value="<?= htmlspecialchars($nome ?? '') ?>" />
+                    <?php if (isset($error['nome'])): ?>
+                        <p class><?= htmlspecialchars($error['nome']) ?></p>
+                    <?php endif; ?>
                 </div>
 
                 <div class="w-full mt-4">
-                    <input class="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-lg dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300" type="email" placeholder="Email Address" aria-label="Email Address" name="email" required/>
+                    <input autocomplete="email" class="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-lg dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300" type="email" placeholder="Email Address" aria-label="Email Address" name="email" value="<?= htmlspecialchars($email ?? '') ?>" />
+                    <?php if (isset($error['email'])): ?>
+                        <p><?= htmlspecialchars($error['email']) ?></p>
+                    <?php endif; ?>
                 </div>
 
                 <div class="w-full mt-4">
-                    <input class="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-lg dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300" type="password" placeholder="Password" aria-label="Password" name="senha" required minlength="6"/>
+                    <input autocomplete="new-password" class="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-lg dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300" type="password" placeholder="Password" aria-label="Password" name="senha" minlength="6" />
+                    <?php if (isset($error['senha'])): ?>
+                        <p><?= htmlspecialchars($error['senha']) ?></p>
+                    <?php endif; ?>
                 </div>
 
                 <div class="flex items-center justify-center mt-4">
@@ -47,5 +48,3 @@
         </div>
     </div>
 </body>
-
-</html>
