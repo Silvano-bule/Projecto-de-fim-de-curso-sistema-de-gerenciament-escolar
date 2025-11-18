@@ -3,7 +3,7 @@
 namespace App\core;
 
 use App\controllers\cadastrarController;
-use App\controller\entrarController;
+use App\controllers\entrarController;
 use App\controllers\homeController;
 use App\controllers\dashboardController;
 

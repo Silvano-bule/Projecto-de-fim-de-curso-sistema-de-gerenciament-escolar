@@ -8,28 +8,47 @@ class entrarController
 {
     public function render()
     {
-        $error = [];
-        
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            $_SESSION['error'] = [];
+            $_SESSION['old'] = [];
+
             $email = trim($_POST['email'] ?? '');
             $senha = trim($_POST['senha'] ?? '');
 
-            if (empty($email)) $error[] = "Email é obrigatório.";
-            if (empty($senha)) $error[] = "Senha é obrigatória.";
+            $_SESSION['old']['email'] = $email;
 
-            if (empty($error)) {
+            if ($email === '') $_SESSION['error']["email"] = "Email é obrigatório.";
+            if ($senha === '') $_SESSION['error']["senha"] = "Senha é obrigatória.";
+
+            if (empty($_SESSION['error'])) {
+
                 $usuario = Usuarios::buscarPorEmail($email);
-                
+
                 if (!$usuario || !password_verify($senha, $usuario['senha'])) {
-                    $error[] = "Email ou senha inválidos.";
+                    $_SESSION['error']["senha"] = "Email ou senha inválidos.";
                 } else {
-                    // Login bem-sucedido
-                    header('Location: index.php?page=dashboard');
-                    return;
+                    // Login bem sucedido
+                    unset($_SESSION['error'], $_SESSION['old']);
+                    header("Location: index.php?page=dashboard");
+                    exit;
                 }
             }
+
+            // ← REDIRECT PARA EVITAR QUE A VIEW SEJA EXIBIDA EM POST
+            header("Location: index.php?page=entrar");
+            exit;
         }
-        require_once __DIR__ . '/../views/cabaçalho.php';
-        require_once __DIR__ . '/../views/entrarViews.php';
+
+        // GET REQUEST — PEGA OS ERROS E "OLD"
+        $error = $_SESSION['error'] ?? [];
+        $email = $_SESSION['old']['email'] ?? '';
+        $senha = '';
+
+        // limpa erros após pegar
+        unset($_SESSION['error'], $_SESSION['old']);
+
+        require __DIR__ . '/../views/entrarViews.php';
     }
 }

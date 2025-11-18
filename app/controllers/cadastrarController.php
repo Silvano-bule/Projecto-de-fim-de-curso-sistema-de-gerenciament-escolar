@@ -8,41 +8,68 @@ class cadastrarController
 {
     public function render()
     {
-        $nome = '';
-        $email = '';
-        $senha = '';
-        $error = [];  // ← Inicializar ANTES do if
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        // ===========================
+        // GET → mostrar form com erros (se existirem)
+        // ===========================
+
+        $error = $_SESSION['error'] ?? [];
+        $nome = $_SESSION['nome'] ?? '';
+        $email = $_SESSION['email'] ?? '';
+
+        // limpar para não ficar preso
+        unset($_SESSION['error'], $_SESSION['nome'], $_SESSION['email']);
+
+        // ===========================
+        // POST → processar cadastro
+        // ===========================
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
             $nome = trim($_POST['nome'] ?? '');
             $email = trim($_POST['email'] ?? '');
             $senha = trim($_POST['senha'] ?? '');
 
-            // Validações
-            if (empty($nome)) $error['nome'] = "Nome é obrigatório.";
-            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) $error['email'] = "Email é inválido.";
-            if (strlen($senha) < 6) $error['senha'] = "Senha deve ter pelo menos 6 caracteres.";
+            $error = [];
 
-            // ⭐ PARAR SE HOUVER ERROS
-            if (!empty($error)) {
-                require_once __DIR__ . '/../views/cabaçalho.php';
-                require_once __DIR__ . '/../views/cadastrarViews.php';
-                return; // ← Para aqui, não continua
+            // validações
+            if ($nome === '') {
+                $error['nome'] = "Nome é obrigatório.";
             }
 
-            // Só chega aqui se NÃO houver erros
-            $usuario = new Usuarios();
-            $usuario::salvar($nome, $email, $senha);
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $error['email'] = "Email inválido.";
+            }
 
-            header('Location: index.php?page=entrar');
-            exit();
+            if(Usuarios::buscarPorEmail($email)){
+                $error['email'] = 'Este email já esta cadastrado';
+            }
+
+            if (strlen($senha) < 6) {
+                $error['senha'] = "A senha precisa ter pelo menos 6 caracteres.";
+            }
+
+            // tem erro → salvar sessão e redirect
+            if (!empty($error)) {
+                $_SESSION['error'] = $error;
+                $_SESSION['nome'] = $nome;
+                $_SESSION['email'] = $email;
+
+                header("Location: ?page=cadastrar");
+                exit;
+            }
+
+            // sem erro → salvar
+            Usuarios::salvar($nome, $email, $senha);
+
+            header("Location: ?page=entrar");
+            exit;
         }
 
-        // Exibir o formulário de cadastro
-
-        // Debug: registra o valor atual de $nome no log do PHP
-        error_log('[DEBUG cadastrar] $nome raw: ' . var_export($nome, true));
-        require_once __DIR__ . '/../views/cabaçalho.php';
+        // exibir view
         require_once __DIR__ . '/../views/cadastrarViews.php';
     }
 }
