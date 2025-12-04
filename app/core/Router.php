@@ -5,7 +5,7 @@ namespace App\core;
 use App\controllers\cadastrarController;
 use App\controllers\entrarController;
 use App\controllers\homeController;
-use App\controllers\dashboardController;
+use App\controllers\AdminDashboardController;
 
 class Router
 {

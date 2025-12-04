@@ -7,12 +7,11 @@ use PDO;
 
 class Usuarios
 {
-
-    public static function salvar($nome, $email, $senha)
+    public static function salvar($nome, $email, $senha, $tipo)
     {
         $db = Database::getConnection();
 
-        $query = "INSERT INTO usuarios (nome, email, senha) VALUES (:nome,:email,:senha)";
+        $query = "INSERT INTO usuarios (nome, email, senha, tipo) VALUES (:nome,:email,:senha, :tipo)";
         $stmt = $db->prepare($query);
 
         $senhaHash = password_hash($senha, PASSWORD_BCRYPT);
@@ -20,6 +19,8 @@ class Usuarios
         $stmt->bindParam(':nome', $nome);
         $stmt->bindParam(':email', $email);
         $stmt->bindParam(':senha', $senhaHash);
+        $stmt ->bindParam(':tipo', $tipo);
+
 
         return $stmt->execute();
     }

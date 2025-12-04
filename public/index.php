@@ -8,8 +8,9 @@ require_once '../vendor/autoload.php';
 
 use App\core\Router;
 use App\core\Session;
+use App\controllers\AuthController;
 
-Session::start();
+AuthController::iniciarSessao();
 
 $router = new Router();
 $router->route();

@@ -3,13 +3,14 @@
 namespace App\controllers;
 
 use App\Models\Usuarios;
+use App\controllers\AuthController;
 
 class cadastrarController
 {
     public function render()
     {
         if (session_status() === PHP_SESSION_NONE) {
-            session_start();
+            AuthController::iniciarSessao();
         }
 
         // ===========================
@@ -19,9 +20,11 @@ class cadastrarController
         $error = $_SESSION['error'] ?? [];
         $nome = $_SESSION['nome'] ?? '';
         $email = $_SESSION['email'] ?? '';
+        $senha = $_SESSION['senha'] ?? '';
+        $tipo = $_SESSION['tipo'] ?? '';
 
         // limpar para não ficar preso
-        unset($_SESSION['error'], $_SESSION['nome'], $_SESSION['email']);
+        unset($_SESSION['error'], $_SESSION['nome'], $_SESSION['email'], $_SESSION['senha'], $_SESSION['tipo']);
 
         // ===========================
         // POST → processar cadastro
@@ -32,6 +35,7 @@ class cadastrarController
             $nome = trim($_POST['nome'] ?? '');
             $email = trim($_POST['email'] ?? '');
             $senha = trim($_POST['senha'] ?? '');
+            $tipo = trim($_POST['tipo'] ?? '');
 
             $error = [];
 
@@ -42,6 +46,9 @@ class cadastrarController
 
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 $error['email'] = "Email inválido.";
+            }
+            if($tipo === ''){
+                $error['tipo'] = "Tipo de usuario é obrigatório.";
             }
 
             if(Usuarios::buscarPorEmail($email)){
@@ -57,13 +64,15 @@ class cadastrarController
                 $_SESSION['error'] = $error;
                 $_SESSION['nome'] = $nome;
                 $_SESSION['email'] = $email;
+                $_SESSION['senha'] = $senha;
+                $_SESSION['tipo'] = $tipo;
 
                 header("Location: ?page=cadastrar");
                 exit;
             }
 
             // sem erro → salvar
-            Usuarios::salvar($nome, $email, $senha);
+            Usuarios::salvar($nome, $email, $senha, $tipo);
 
             header("Location: ?page=entrar");
             exit;

@@ -3,12 +3,12 @@
 namespace App\controllers;
 
 use App\Models\Usuarios;
+use App\controllers\AuthController;
 
 class entrarController
 {
     public function render()
     {
-
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $_SESSION['error'] = [];
@@ -30,15 +30,21 @@ class entrarController
                     $_SESSION['error']["senha"] = "Email ou senha inválidos.";
                 } else {
                     // Login bem sucedido
+                    $userLoged = AuthController::login($usuario);
                     unset($_SESSION['error'], $_SESSION['old']);
-                    header("Location: index.php?page=dashboard");
-                    exit;
+
+                    if ($userLoged && $usuario['tipo'] ===  'admin') {
+                        header("Location: index.php?page=admin_dashboard");
+                        exit;
+                    } else if ($userLoged && $usuario['tipo'] ===  'professor') {
+                        header("Location: index.php?page=professor_dashboard");
+                        exit;
+                    } else {
+                        header("Location: index.php?page=aluno_dashboard");
+                        exit;
+                    }
                 }
             }
-
-            // ← REDIRECT PARA EVITAR QUE A VIEW SEJA EXIBIDA EM POST
-            header("Location: index.php?page=entrar");
-            exit;
         }
 
         // GET REQUEST — PEGA OS ERROS E "OLD"
