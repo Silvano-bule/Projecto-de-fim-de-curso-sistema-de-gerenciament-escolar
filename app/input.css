@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @plugin "daisyui";
 @import 'animate.css';
+
 @layer components{
     .menu-color{
         @apply text-blue-600;
