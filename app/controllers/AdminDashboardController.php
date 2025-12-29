@@ -3,6 +3,7 @@
 namespace App\controllers;
 
 use App\controllers\AuthController;
+use App\Models\Usuarios;
 
 class AdminDashboardController
 {
@@ -19,6 +20,11 @@ class AdminDashboardController
             header("Location: index.php?page=entrar");
             exit;
         }
+
+        $dados = [
+            'nome' => $_SESSION['user_name'],
+            'totalUsers' => Usuarios::contarUsuarios()
+        ];
         require_once __DIR__ . '/../views/adminDashboardView.php';
     }
 }

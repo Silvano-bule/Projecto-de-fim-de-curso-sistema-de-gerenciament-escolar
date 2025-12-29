@@ -15,17 +15,18 @@ class Usuarios
         $stmt = $db->prepare($query);
 
         $senhaHash = password_hash($senha, PASSWORD_BCRYPT);
-        
+
         $stmt->bindParam(':nome', $nome);
         $stmt->bindParam(':email', $email);
         $stmt->bindParam(':senha', $senhaHash);
-        $stmt ->bindParam(':tipo', $tipo);
+        $stmt->bindParam(':tipo', $tipo);
 
 
         return $stmt->execute();
     }
 
-    public static function buscarPorEmail($email) {
+    public static function buscarPorEmail($email)
+    {
         $db = Database::getConnection();
 
         $query = "SELECT * FROM usuarios WHERE email = :email";
@@ -33,6 +34,18 @@ class Usuarios
         $stmt->bindParam(':email', $email);
         $stmt->execute();
 
-        return $stmt -> fetch(PDO::FETCH_ASSOC);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+    public static function contarUsuarios()
+    {
+        $db = Database::getConnection();
+
+        $msm = "SELECT COUNT(*) as total from usuarios";
+
+        $stmt =  $db->prepare($msm);
+        $stmt->execute();
+
+        $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $resultado['total'];
     }
 }
