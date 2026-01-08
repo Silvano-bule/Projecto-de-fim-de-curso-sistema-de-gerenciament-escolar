@@ -3,13 +3,15 @@
 namespace App\controllers;
 
 use App\Models\Usuarios;
-use App\controllers\AuthController;
+use App\Controllers\AuthController;
 
 class entrarController
 {
     public function render()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            AuthController::iniciarSessao();
 
             $_SESSION['error'] = [];
             $_SESSION['old'] = [];
@@ -33,10 +35,10 @@ class entrarController
                     $userLoged = AuthController::login($usuario);
                     unset($_SESSION['error'], $_SESSION['old']);
 
-                    if ($userLoged && $usuario['tipo'] ===  'admin') {
+                    if ($userLoged && strtolower(trim($usuario['tipo'])) ===  'admin') {
                         header("Location: index.php?page=admin_dashboard");
                         exit;
-                    } else if ($userLoged && $usuario['tipo'] ===  'professor') {
+                    } else if ($userLoged && strtolower(trim($usuario['tipo'])) ===  'professor') {
                         header("Location: index.php?page=professor_dashboard");
                         exit;
                     } else {

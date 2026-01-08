@@ -11,20 +11,23 @@ class AdminDashboardController
     {
         AuthController::iniciarSessao();
 
-        if(AuthController::isLogged() !== true){
+       /*  var_dump($_SESSION['user_tipo']);
+        exit; */
+
+        if(AuthController::isLogged() === false){
             header("Location: index.php?page=entrar");
             exit;
         }
 
-        if(!isset($_SESSION['user_tipo']) === 'admin'){
+        if (!isset($_SESSION['user_tipo']) || $_SESSION['user_tipo'] !== 'admin') {
             header("Location: index.php?page=entrar");
             exit;
         }
 
-        $dados = [
+         $dados = [
             'nome' => $_SESSION['user_name'],
             'totalUsers' => Usuarios::contarUsuarios()
-        ];
+        ]; 
         require_once __DIR__ . '/../views/adminDashboardView.php';
     }
 }
