@@ -4,6 +4,10 @@ namespace App\controllers;
 
 use App\controllers\AuthController;
 use App\Models\Usuarios;
+use App\Models\Aluno;
+use App\Models\Professores;
+use App\Models\Turma;
+use App\Models\Curso;
 
 class AdminDashboardController
 {
@@ -11,10 +15,10 @@ class AdminDashboardController
     {
         AuthController::iniciarSessao();
 
-       /*  var_dump($_SESSION['user_tipo']);
+        /*  var_dump($_SESSION['user_tipo']);
         exit; */
 
-        if(AuthController::isLogged() === false){
+        if (AuthController::isLogged() === false) {
             header("Location: index.php?page=entrar");
             exit;
         }
@@ -24,10 +28,14 @@ class AdminDashboardController
             exit;
         }
 
-         $dados = [
+        $dados = [
             'nome' => $_SESSION['user_name'],
-            'totalUsers' => Usuarios::contarUsuarios()
-        ]; 
+            'totalUsers' => Usuarios::contarUsuarios(),
+            'totalAlunos' => Aluno::contarAlunos(),
+            'totalProfessores' => Professores::contarProfessores(),
+            'totalTurmas' => Turma::contarTurmas(),
+            'totalCursos' => Curso::contarCursos()
+        ];
         require_once __DIR__ . '/../views/adminDashboardView.php';
     }
 }
