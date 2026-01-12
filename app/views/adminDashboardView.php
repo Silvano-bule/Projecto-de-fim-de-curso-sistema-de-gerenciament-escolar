@@ -11,8 +11,9 @@
 
 <body class="container w-auto">
     <section class="flex flex-row">
+        <!-- Menu lateral -->
         <aside
-            class="flex flex-col w-64 h-screen px-5 py-8 overflow-y-auto bg-white border-r rtl:border-r-0 rtl:border-l dark:bg-gray-900 dark:border-gray-700">
+            class="flex flex-col w-64 h-screen px-5 py-8 overflow-y-auto bg-white border-r rtl:border-r-0 rtl:border-l dark:bg-gray-900 dark:border-gray-700 ">
             <a href="#">
                 <img class="w-auto h-7" src="https://merakiui.com/images/logo.svg" alt="">
             </a>
@@ -27,7 +28,7 @@
                                 d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5m.75-9l3-3 2.148 2.148A12.061 12.061 0 0116.5 7.605" />
                         </svg>
 
-                        <span class="mx-2 text-sm font-medium">Painel</span>
+                        <span class="mx-2 text-sm font-medium">Dashboard</span>
                     </a>
                     <a class="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"
                         href="#">
@@ -117,8 +118,9 @@
                     </div>
                 </div>
             </div>
-
         </aside>
+
+        <!-- Main content -->
         <section class="container mx-auto px-4">
             <div class="grid grid-row-4">
                 <div class="flex flex-row items-center justify-between mt-6 p-4 rounded-lg mx-4">
@@ -126,6 +128,21 @@
                         <h1 id="year">Ano lectivo</h1>
                     </div>
                     <div class="flex flex-row gap-2 items-center justify-center">
+                        <div class="dropdown dropdown-hover">
+                            <div class="flex flow-row items-center bg-blue-500 text-white rounded-md px-3 cursor-pointer">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                </svg>
+                                <div tabindex="0" role="button" class="m-2">Adicionar novo</div>
+                            </div>
+                            <ul tabindex="-1" class="dropdown-content menu bg-blue-600 rounded-box z-1 w-52 p-2 shadow-sm mt-1 text-white">
+                                <li><a id="aluno">Aluno</a></li>
+                                <li><a id="professor">Professor</a></li>
+                                <li><a id="turma">Turma</a></li>
+                                <li><a id="curso">Curso</a></li>
+                                <li><a id="classe">Classe</a></li>
+                            </ul>
+                        </div>
                         <div class="relative mx-3">
                             <span class="absolute inset-y-0 left-0 flex items-center pl-3">
                                 <svg class="w-5 h-5 text-gray-400" viewBox="0 0 24 24" fill="none">
@@ -141,6 +158,8 @@
                     </div>
                 </div>
             </div>
+
+            <!--  Dados Estatísticos -->
             <div class="grid grid-cols-3 gap-6 mt-6 mx-4">
                 <article class="flex flex-col gap-4 rounded-lg border border-gray-100 bg-white p-6 dark:border-gray-800 dark:bg-gray-900">
                     <div>
@@ -204,7 +223,7 @@
                         <p>
                             <span class="text-2xl font-medium text-gray-900 dark:text-white">
                                 <font dir="auto" style="vertical-align: inherit;">
-                                    <font dir="auto" style="vertical-align: inherit;"><?=$dados['totalTurmas']?></font>
+                                    <font dir="auto" style="vertical-align: inherit;"><?= $dados['totalTurmas'] ?></font>
                                 </font>
                             </span>
                         </p>
@@ -221,17 +240,155 @@
                         <p>
                             <span class="text-2xl font-medium text-gray-900 dark:text-white">
                                 <font dir="auto" style="vertical-align: inherit;">
-                                    <font dir="auto" style="vertical-align: inherit;"><?=$dados['totalCursos']?> </font>
+                                    <font dir="auto" style="vertical-align: inherit;"><?= $dados['totalCursos'] ?> </font>
                                 </font>
                             </span>
                         </p>
                     </div>
                 </article>
             </div>
+
+            <!-- Tabela de dados -->
+            <div>
+                <section class="container px-4 py-8 mx-auto">
+                    <div class="flex flex-col">
+                        <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                            <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+                                <div class="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
+                                    <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                                        <thead class="bg-gray-50 dark:bg-gray-800">
+                                            <tr>
+                                                <th scope="col" class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                                    <div class="flex items-center gap-x-3">
+                                                        <input type="checkbox" class="text-blue-500 border-gray-300 rounded dark:bg-gray-900 dark:ring-offset-gray-900 dark:border-gray-700">
+                                                        <button class="flex items-center gap-x-2">
+                                                            <span>Matricula Nª</span>
+
+                                                            <svg class="h-3" viewBox="0 0 10 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                <path d="M2.13347 0.0999756H2.98516L5.01902 4.79058H3.86226L3.45549 3.79907H1.63772L1.24366 4.79058H0.0996094L2.13347 0.0999756ZM2.54025 1.46012L1.96822 2.92196H3.11227L2.54025 1.46012Z" fill="currentColor" stroke="currentColor" stroke-width="0.1" />
+                                                                <path d="M0.722656 9.60832L3.09974 6.78633H0.811638V5.87109H4.35819V6.78633L2.01925 9.60832H4.43446V10.5617H0.722656V9.60832Z" fill="currentColor" stroke="currentColor" stroke-width="0.1" />
+                                                                <path d="M8.45558 7.25664V7.40664H8.60558H9.66065C9.72481 7.40664 9.74667 7.42274 9.75141 7.42691C9.75148 7.42808 9.75146 7.42993 9.75116 7.43262C9.75001 7.44265 9.74458 7.46304 9.72525 7.49314C9.72522 7.4932 9.72518 7.49326 9.72514 7.49332L7.86959 10.3529L7.86924 10.3534C7.83227 10.4109 7.79863 10.418 7.78568 10.418C7.77272 10.418 7.73908 10.4109 7.70211 10.3534L7.70177 10.3529L5.84621 7.49332C5.84617 7.49325 5.84612 7.49318 5.84608 7.49311C5.82677 7.46302 5.82135 7.44264 5.8202 7.43262C5.81989 7.42993 5.81987 7.42808 5.81994 7.42691C5.82469 7.42274 5.84655 7.40664 5.91071 7.40664H6.96578H7.11578V7.25664V0.633865C7.11578 0.42434 7.29014 0.249976 7.49967 0.249976H8.07169C8.28121 0.249976 8.45558 0.42434 8.45558 0.633865V7.25664Z" fill="currentColor" stroke="currentColor" stroke-width="0.3" />
+                                                            </svg>
+                                                        </button>
+                                                    </div>
+                                                </th>
+
+                                                <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                                    Nome
+                                                </th>
+
+                                                <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                                    Data
+                                                </th>
+
+                                                <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                                    Classe
+                                                </th>
+
+                                                <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                                    Turma
+                                                </th>
+
+                                                <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                                    Sala
+                                                </th>
+
+                                                <th scope="col" class="relative py-3.5 px-4">
+                                                    <span class="sr-only">Actions</span>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
+                                            <tr>
+                                                <td class="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
+                                                    <div class="inline-flex items-center gap-x-3">
+                                                        <input type="checkbox" class="text-blue-500 border-gray-300 rounded dark:bg-gray-900 dark:ring-offset-gray-900 dark:border-gray-700">
+
+                                                        <span>#3066</span>
+                                                    </div>
+                                                </td>
+                                                <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                    <div class="flex items-center gap-x-2">
+                                                        <img class="object-cover w-8 h-8 rounded-full" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80" alt="">
+                                                        <div>
+                                                            <h2 class="text-sm font-medium text-gray-800 dark:text-white ">Arthur Melo</h2>
+                                                            <p class="text-xs font-normal text-gray-600 dark:text-gray-400">authurmelo@example.com</p>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <!-- <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                                    <div class="inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-emerald-500 bg-emerald-100/60 dark:bg-gray-800">
+                                                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path d="M10 3L4.5 8.5L2 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                        </svg>
+
+                                                        <h2 class="text-sm font-normal">Paid</h2>
+                                                    </div>
+                                                </td> -->
+                                                <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">12 Jun 2023</td>
+                                                <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">7ª</td>
+
+                                                <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">B</td>
+                                                <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">20</td>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <!-- Formulário de Configurações da Conta -->
+            <!-- Open the modal using ID.showModal() method -->
+            <button class="btn" onclick="my_modal_1.showModal()">open modal</button>
+            <dialog id="my_modal_1" class="modal">
+                <div class="modal-box">
+                    <h3 class="text-lg font-bold">Hello!</h3>
+                    <p class="py-4">Press ESC key or click the button below to close</p>
+                    <div class="modal-action">
+                        <form method="dialog">
+                            <!-- if there is a button in form, it will close the modal -->
+                            <button class="btn">Close</button>
+                        </form>
+                    </div>
+                </div>
+            </dialog>
+            <section class="hidden max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md dark:bg-gray-800" id="modalAluno">
+                <h2 class="text-lg font-semibold text-gray-700 capitalize dark:text-white">Account settings</h2>
+                <form>
+                    <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
+                        <div>
+                            <label class="text-gray-700 dark:text-gray-200" for="username">Username</label>
+                            <input id="username" type="text" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring">
+                        </div>
+
+                        <div>
+                            <label class="text-gray-700 dark:text-gray-200" for="emailAddress">Email Address</label>
+                            <input id="emailAddress" type="email" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring">
+                        </div>
+
+                        <div>
+                            <label class="text-gray-700 dark:text-gray-200" for="password">Password</label>
+                            <input id="password" type="password" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring">
+                        </div>
+
+                        <div>
+                            <label class="text-gray-700 dark:text-gray-200" for="passwordConfirmation">Password Confirmation</label>
+                            <input id="passwordConfirmation" type="password" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring">
+                        </div>
+                    </div>
+
+                    <div class="flex justify-end mt-6">
+                        <button class="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600">Save</button>
+                    </div>
+                </form>
+            </section>
         </section>
     </section>
-    
-    <script src="assets/js/main.js"></script>
+
+    <script src="assets/js/script.js"></script>
 </body>
 
 </html>
