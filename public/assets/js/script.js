@@ -12,6 +12,7 @@ yearText.textContent = getFullYear();
 const alunoBtn = document.querySelector('#aluno');
 
 alunoBtn.addEventListener('click', () => {
-    const modal = document.querySelector('#modalAluno');
-    modal.classList.remove('hidden');
+    const modal = alunoBtn.getAttribute('data-modal');
+    const modalID = document.getElementById(modal);
+    modalID.showModal();
 });
