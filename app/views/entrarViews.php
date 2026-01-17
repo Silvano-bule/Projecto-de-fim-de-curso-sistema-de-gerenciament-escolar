@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema de Gerenciamento Escolar</title>
-    <link rel="shortcut icon" href="assets/img/logo.png" type="image/x-icon">
+    <link rel="shortcut icon" href="assets/img/logo cemu.jpg" type="image/x-icon">
     <link rel="stylesheet" href="assets/css/output.css">
 </head>
 
@@ -13,7 +13,7 @@
     <div class="w-md max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-800">
         <div class="px-6 py-4">
             <div class="flex justify-center mx-auto">
-                <img class="w-auto h-7 sm:h-8" src="https://merakiui.com/images/logo.svg" alt="">
+                <img class="w-auto h-7 sm:h-8" src="assets/img/logo_cemu_bg.png" alt="logo">
             </div>
 
             <h3 class="mt-3 text-xl font-medium text-center text-gray-600 dark:text-gray-200">Bem vindo de volta</h3>

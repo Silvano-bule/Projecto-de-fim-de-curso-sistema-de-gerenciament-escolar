@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema de Gerenciamento Escolar</title>
-    <link rel="shortcut icon" href="assets/img/logo.png" type="image/x-icon">
+    <link rel="shortcut icon" href="assets/img/logo cemu.jpg" type="image/x-icon">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <link rel="stylesheet" href="assets/css/output.css">
     <style>
@@ -34,7 +34,7 @@
                     <li><a href="#contato">Contactos</a></li>
                 </ul>
             </div>
-            <a class="btn btn-ghost text-xl w-24 h-20 ml-8"><img src="assets/img/logo.png" alt="logo Escolar"></a>
+            <a class="btn btn-ghost text-xl w-24 h-20 ml-8"><img src="assets/img/logo cemu.jpg" alt="logo Escolar"></a>
         </div>
         <div class="navbar-center hidden lg:flex">
             <ul class="menu menu-horizontal px-1">
@@ -539,7 +539,7 @@
 
             <div class="flex flex-col items-center justify-between sm:flex-row">
                 <a href="#">
-                    <img class="w-auto h-10" src="assets/img/logo.png" alt="logo">
+                    <img class="w-auto h-10" src="assets/img/logo cemu.jpg" alt="logo">
                 </a>
 
                 <p class="mt-4 text-sm text-gray-500 sm:mt-0 dark:text-gray-300">© Copyright 2025. Todos os direito
