@@ -321,57 +321,49 @@
                     </div>
                 </section>
             </div>
+
         </section>
-        </div>
     </section>
     <!-- Open the modal using ID.showModal() method -->
     <dialog id="my_modal_1" class="modal">
         <div class="modal-box w-screen max-w-5xl">
             <div class="flex flow-row justify-between items-center">
                 <h3 class="text-lg font-bold">Inserir aluno</h3>
-                <p>x</p>
             </div>
-            <form id="formulario">
-                <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
+            <form action="/TCC/SGE/app/controllers/AlunoDashboardController.php" method="POST" id="formulario">
+                <div class="grid grid-cols-3 gap-6 mt-4 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
                     <div>
                         <label class="text-gray-700 dark:text-gray-200" for="username">Nome<span class="text-red-500 text-xs"> (Obrigatório)</span> </label>
-                        <input id="username" type="text" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring">
+                        <input name="nome_aluno" id="username" type="text" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring">
                     </div>
 
                     <div>
-                        <label class="text-gray-700 dark:text-gray-200" for="emailAddress">Email Address</label>
-                        <input id="emailAddress" type="email" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring">
+                        <label class="text-gray-700 dark:text-gray-200" for="telefone">Telefone</label>
+                        <input name="address_telefone" type="number" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring">
                     </div>
 
                     <div>
-                        <label class="text-gray-700 dark:text-gray-200" for="password">Password</label>
-                        <input autocomplete="on" id="password" type="password" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring">
+                        <label class="text-gray-700 dark:text-gray-200" for="Nascimento">Nascimento</label>
+                        <input autocomplete="on" type="date" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring">
                     </div>
                 </div>
-            </form>
-            <div class="modal-action">
-                <form method="dialog">
-                    <button class="btn">Fechar</button>
-                </form>
-                <button class="btn bg-blue-500" id="saveBtn">Salvar</button>
-            </div>
+                <div>
+                    <label class="text-gray-700 dark:text-gray-200" for="Sexo">Sexo</label>
+                    <select class="block px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"> 
+                        <option value="M">Masculino</option>
+                        <option value="F">Femenino</option>
+                    </select>
+                </div>
+        </div>
+        <button type="submit" class="px-6 py-2 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">
+            Salvar
+        </button>
+        <button class="px-6 py-2 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">
+            Fechar
+        </button>
+        </form>
         </div>
     </dialog>
-    <!-- Open the modal using ID.showModal() method -->
-    <button class="btn" onclick="my_modal_1.showModal()">open modal</button>
-    <dialog id="my_modal_1" class="modal">
-        <div class="modal-box">
-            <h3 class="text-lg font-bold">Hello!</h3>
-            <p class="py-4">Press ESC key or click the button below to close</p>
-            <div class="modal-action">
-                <form method="dialog">
-                    <!-- if there is a button in form, it will close the modal -->
-                    <button class="btn">Close</button>
-                </form>
-            </div>
-        </div>
-    </dialog>
-
     <script src="assets/js/script.js"></script>
 </body>
 
