@@ -342,7 +342,10 @@
                     </div>
                     <div>
                         <label class="text-gray-700 dark:text-gray-200" for="telefone">Telefone</label>
-                        <input name="telefone_aluno" type="number" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" required>
+                        <input placeholder="apenas 9 dígitos" name="telefone_aluno" type="text" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" minlength="9" maxlength="9" pattern="\d{9}" required oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                        <?php if (isset($_GET['erro']) && $_GET['erro'] == 'telefone'): ?>
+                            <p class="text-red-500  text-xs mt-1">Telefone Inválido: Deve conter exatamente 9 dígitos.</p>
+                        <?php endif; ?>
                     </div>
                     <div>
                         <label class="text-gray-700 dark:text-gray-200" for="Nascimento">Nascimento</label>
@@ -373,20 +376,41 @@
                     </div>
                     <div>
                         <label class="text-gray-700 dark:text-gray-200" for="Provincia">Provincia</label>
-                        <input autocomplete="on" type="text" name="provincia_aluno" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" required>
+                        <select name="provincia_aluno" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring">
+                            <option value="Bengo">Bengo</option>
+                            <option value="Benguela">Benguela</option>
+                            <option value="Bié">Bié</option>
+                            <option value="Cabinda">Cabinda</option>
+                            <option value="Cuando Cubango">Cuando Cubango</option>
+                            <option value="Cuanza Norte">Cuanza Norte</option>
+                            <option value="Cuanza Sul">Cuanza Sul</option>
+                            <option value="Cunene">Cunene</option>
+                            <option value="Huanbo">Huambo</option>
+                            <option value="Huíla">Huíla</option>
+                            <option value="Luanda">Luanda</option>
+                            <option value="Lunda Norte">Lunda Norte</option>
+                            <option value="Lunda Norte">Lunda Sul</option>
+                            <option value="malanje">Malanje</option>
+                            <option value="Moxico">Moxico</option>
+                            <option value="Namibe">Namibe</option>
+                            <option value="Uige">Uige</option>
+                            <option value="Zaire">Zaire</option>
+
+                        </select>
                     </div>
                     <div>
                         <label class="text-gray-700 dark:text-gray-200" for="Altura">Altura</label>
-                        <input autocomplete="on" type="number" name="altura_aluno" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" required>
+                        <input autocomplete="on" type="text" pattern="[0-9.,]+" placeholder="Ex: 1,75" title="Digite a altura usando o ponto ou virgula" name="altura_aluno" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" required>
                     </div>
                 </div>
-                <button type="submit" class="px-6 py-2 mt-4 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">
+                <button type="submit" class=" mt-4 px-6 py-2 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">
                     Salvar
                 </button>
                 <button class="px-6 py-2 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">
                     Fechar
                 </button>
             </form>
+
         </div>
     </dialog>
     <script src="assets/js/script.js"></script>

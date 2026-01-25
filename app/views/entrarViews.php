@@ -22,14 +22,14 @@
 
             <form action="index.php?page=entrar" method="post" autocomplete="off">
                 <div class="w-full mt-4">
-                    <input autocomplete="email" class="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-lg dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300 <?= isset($error["email"]) ? 'border-red-500 bg-red-50 dark:bg-red-900/20' : 'border-gray-300' ?>" type="email" placeholder="Digite o seu email" aria-label="Email Address" name="email" value="<?= htmlspecialchars($email ?? '') ?>" />
+                    <input autocomplete="email" class="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 border rounded-lg dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300 <?= isset($error["email"]) ? 'border-red-500 bg-red-50 dark:bg-red-900/20' : 'border-gray-300' ?>" type="email" placeholder="Digite o seu email" aria-label="Email Address" name="email" value="<?= htmlspecialchars($email ?? '') ?>" />
                     <?php if (isset($error["email"])): ?>
                         <p class="text-red-600 text-sm mt-1"><?= htmlspecialchars($error["email"]) ?></p>
                     <?php endif; ?>
                 </div>
 
                 <div class="w-full mt-4">
-                    <input autocomplete="new-password" class="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-lg dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300 <?= isset($error["senha"]) ? 'border-red-500 bg-red-50 dark:bg-red-900/20' : 'border-gray-300' ?>" type="password" placeholder="Digite a sua palavra passe" aria-label="Password" minlength="6" name="senha" />
+                    <input autocomplete="new-password" class="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 border rounded-lg dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300 <?= isset($error["senha"]) ? 'border-red-500 bg-red-50 dark:bg-red-900/20' : 'border-gray-300' ?>" type="password" placeholder="Digite a sua palavra passe" aria-label="Password" minlength="6" name="senha" />
                     <?php if (isset($error["senha"])): ?>
                         <p class="text-red-600 text-sm mt-1"><?= htmlspecialchars($error["senha"] ?? '') ?></p>
                     <?php endif; ?>
