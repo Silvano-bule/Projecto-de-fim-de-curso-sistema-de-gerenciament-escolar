@@ -43,6 +43,10 @@ class AlunoDashboardController
         // echo "</pre>";
         // die();
         
+        if(!preg_match('/^\d{9}LA\d{3}$/', $numero_BI)) {
+            die ("Formato de numero de BI inválido");
+        }
+
         if (empty($nome)  || empty($email) || empty($telefone) || empty($nascimento) || empty($nacionalidade) || $sexo === "" || empty($nome_mae) || empty($nome_mae) || empty($numero_BI) || empty($provincia) || empty($altura)) {
             die("Preencha os campos, por favor");
         }

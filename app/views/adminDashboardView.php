@@ -372,7 +372,7 @@
                     </div>
                     <div>
                         <label class="text-gray-700 dark:text-gray-200" for="Numero do BI">Número do BI</label>
-                        <input autocomplete="on" type="number" name="numero_BI_aluno" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" required>
+                        <input autocomplete="on" type="text" name="numero_BI_aluno" placeholder="000000000LA000" pattern="[0-9]{9}LA[0-9]{3}" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" required maxlength="14">
                     </div>
                     <div>
                         <label class="text-gray-700 dark:text-gray-200" for="Provincia">Provincia</label>
@@ -406,9 +406,7 @@
                 <button type="submit" class=" mt-4 px-6 py-2 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">
                     Salvar
                 </button>
-                <button class="px-6 py-2 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">
-                    Fechar
-                </button>
+                <button id="btnClose">Fechar</button>
             </form>
 
         </div>

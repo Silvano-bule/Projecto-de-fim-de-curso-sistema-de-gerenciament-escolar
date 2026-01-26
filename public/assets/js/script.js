@@ -13,6 +13,8 @@ const username = document.getElementById('username');
 const address = document.getElementById('emailAddress');
 const password = document.getElementById('password');
 const saveBtn = document.getElementById('saveBtn');
+const modal = document.getElementById('my_modal_1');
+const btnClose = document.getElementById('btnClose');
 
 saveBtn.addEventListener('click', async function () {
     const usernameValue = username.value.trim();
@@ -37,36 +39,8 @@ saveBtn.addEventListener('click', async function () {
         alert('Por favor, preencha todos os campos.');
         return;
     }
-
-    const data = {
-        username: usernameValue,
-        email: addressValue,
-        password: passwordValue
-    };
-    try {
-        const resposta = await fetch('/TCC/SGE/app/controllers/AlunoDashboardController.php', {
-            //Definir o método de envio
-            method: 'POST',
-
-            //Carinbar os dados dizendo que é um JSON
-            headers: {
-                'Content-Type': 'application/json'
-            },
-
-            //Converter os dados para JSON
-            body: JSON.stringify(data)
-        });
-
-        if (!resposta.ok) {
-            throw new Error('Erro na rede ou servidor');
-        }
-
-        const resultado = await resposta.json();
-        console.log('O PHP respondeu:', resultado);
-        alert('Dados enviados com sucesso');
-
-    } catch (error) {
-        console.error('Erro na requisição:', error);
-        alert('Ocorreu um erro ao salvar os dados. Tente novamente mais tarde.');
-    }
 });
+
+btnClose.addEventListener('click', function(){
+    modal.classList.add('hidden');
+})
