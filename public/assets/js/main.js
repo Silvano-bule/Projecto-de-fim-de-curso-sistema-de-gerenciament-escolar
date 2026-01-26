@@ -13,10 +13,10 @@ const username = document.getElementById('username');
 const address = document.getElementById('emailAddress');
 const password = document.getElementById('password');
 const saveBtn = document.getElementById('saveBtn');
-const modal = document.getElementById('my_modal_1');
-const btnClose = document.getElementById('btnClose');
+const modal = document.querySelector('.modal');
+const btnClose = document.querySelector('#btnClose');
 
-saveBtn.addEventListener('click', async function () {
+/* saveBtn.addEventListener('click', function () {
     const usernameValue = username.value.trim();
     const addressValue = address.value.trim();
     const passwordValue = password.value.trim();
@@ -40,7 +40,7 @@ saveBtn.addEventListener('click', async function () {
         return;
     }
 });
-
+ */
 btnClose.addEventListener('click', function(){
-    modal.classList.add('hidden');
-})
+    modal.close();
+});

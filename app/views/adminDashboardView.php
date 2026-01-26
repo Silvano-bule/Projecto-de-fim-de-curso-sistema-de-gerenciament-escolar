@@ -403,15 +403,15 @@
                         <input autocomplete="on" type="text" pattern="[0-9.,]+" placeholder="Ex: 1,75" title="Digite a altura usando o ponto ou virgula" name="altura_aluno" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" required>
                     </div>
                 </div>
-                <button type="submit" class=" mt-4 px-6 py-2 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">
+                <button type="submit" class=" m-4  btn btn-success text-white shadow-md hover:shadow-lg transition-all cursor-poiter">
                     Salvar
                 </button>
-                <button id="btnClose">Fechar</button>
+                <button id="btnClose" type="button" class="cursor-pointer btn btn-error  text-white hover:text-red-600 hover:bg-red-300">Fechar</button>
             </form>
 
         </div>
     </dialog>
-    <script src="assets/js/script.js"></script>
+    <script src="assets/js/main.js"></script>
 </body>
 
 </html>
