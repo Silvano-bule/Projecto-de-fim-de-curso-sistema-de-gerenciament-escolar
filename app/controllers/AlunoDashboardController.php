@@ -9,7 +9,7 @@ use App\Models\Aluno;
 
 class AlunoDashboardController
 {
-    public function render()
+    public static function render()
     {
         AuthController::iniciarSessao();
 
