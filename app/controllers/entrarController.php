@@ -7,7 +7,7 @@ use App\Controllers\AuthController;
 
 class entrarController
 {
-    public function render()
+     public function render()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
