@@ -13,8 +13,8 @@ const username = document.getElementById('username');
 const address = document.getElementById('emailAddress');
 const password = document.getElementById('password');
 const saveBtn = document.getElementById('saveBtn');
-const modal = document.querySelector('.modal');
-const btnClose = document.querySelector('#btnClose');
+const modal = document.querySelectorAll('.modal');
+const btnClose = document.querySelectorAll('#btnClose');
 
 /* saveBtn.addEventListener('click', function () {
     const usernameValue = username.value.trim();

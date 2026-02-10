@@ -19,17 +19,6 @@ class TurmaAlunoController
         $sala_turma = filter_input(INPUT_POST, 'sala_turma', FILTER_SANITIZE_SPECIAL_CHARS);
         $capacidade_turma = filter_input(INPUT_POST, 'capacidade_turma', FILTER_SANITIZE_NUMBER_INT);
 
-        $_SESSION['error'] = [];
-
-        if ($capacidade_turma <= 0 || $capacidade_turma > 60) {
-            $_SESSION['error']['capacidade'] = 'Capacidade Inválida: Deve ser um número positivo e não pode exceder 60.';
-        }
-
-        if (!empty($_SESSION['error'])) {
-            $error = $_SESSION['error'] ?? [];
-            unset($_SESSION['error']);
-        }
-
         Turma::guardarTurma($nome_turma,  $periodo_turma, $sala_turma, $capacidade_turma);
 
         header("Location: ../../public/index.php?page=admin_dashboard");
