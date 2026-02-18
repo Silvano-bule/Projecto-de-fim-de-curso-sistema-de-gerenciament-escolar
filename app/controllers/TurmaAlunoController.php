@@ -20,6 +20,16 @@ class TurmaAlunoController
         header("Location: ../../public/index.php?page=admin_dashboard");
         exit;
     }
-}
 
-TurmaAlunoController::pegarInfoTurma();
+    public static function turmasEncontradas()
+    {
+        $turmasEncontradas = Turma::listarTurma();
+
+        if(!is_array($turmasEncontradas)){
+            $turmasEncontradas = [];
+        }
+        $viewPath = __DIR__ . '/../views/adminDashboardView.php';
+
+        require $viewPath;
+    }
+}

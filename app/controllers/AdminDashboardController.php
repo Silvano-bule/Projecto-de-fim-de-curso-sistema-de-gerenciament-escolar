@@ -34,7 +34,8 @@ class AdminDashboardController
             'totalAlunos' => Aluno::contarAlunos(),
             'totalProfessores' => Professores::contarProfessores(),
             'totalTurmas' => Turma::contarTurmas(),
-            'totalCursos' => Curso::contarCursos()
+            'totalCursos' => Curso::contarCursos(),
+            'turmasEncontradas' => Turma::listarTurma()
         ];
         require_once __DIR__ . '/../views/adminDashboardView.php';
     }

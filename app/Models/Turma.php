@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Models;
 
@@ -7,18 +7,20 @@ use PDO;
 
 class Turma
 {
-    public static function contarTurmas(){
+    public static function contarTurmas()
+    {
         $db = Database::getConnection();
         $msm = "SELECT COUNT(*) as total from turma";
         $stmt = $db->prepare($msm);
         $stmt->execute();
 
-        $resultado  = $stmt -> fetch(PDO::FETCH_ASSOC);
+        $resultado  = $stmt->fetch(PDO::FETCH_ASSOC);
         return $resultado['total'];
     }
 
-    public static function guardarTurma($nome_turma, $periodo_turma, $sala_turma, $capacidade_turma){
-          $db = Database::getConnection();
+    public static function guardarTurma($nome_turma, $periodo_turma, $sala_turma, $capacidade_turma)
+    {
+        $db = Database::getConnection();
 
         $sql = "INSERT INTO turma(nome, periodo, sala, capacidade) VALUES(:nome, :periodo, :sala, :capacidade)";
 
@@ -30,5 +32,15 @@ class Turma
             ':sala' => $sala_turma,
             ':capacidade' => $capacidade_turma
         ]);
+    }
+
+    public static function listarTurma()
+    {
+        $db = Database::getConnection();
+        $sql = "SELECT * FROM turma";
+        $sql = $db->prepare($sql);
+        
+        $sql->execute();
+        return $sql->fetchAll(PDO::FETCH_ASSOC);
     }
 }

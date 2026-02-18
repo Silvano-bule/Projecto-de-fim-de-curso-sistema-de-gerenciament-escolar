@@ -38,7 +38,7 @@
                                 d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
                         </svg>
 
-                        <span class="mx-2 text-sm font-medium">Home</span>
+                        <span class="mx-2 text-sm font-medium">Aluno</span>
                     </a>
                     <a class="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"
                         href="#">
@@ -303,15 +303,6 @@
                                                 <td colspan="7" class="text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap p-4">
                                                     <p class="text-center text-gray-500 font-light">Nenhum cadastro recente</p>
                                                 </td>
-                                                <!-- <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                                                    <div class="inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-emerald-500 bg-emerald-100/60 dark:bg-gray-800">
-                                                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                            <path d="M10 3L4.5 8.5L2 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                                        </svg>
-
-                                                        <h2 class="text-sm font-normal">Paid</h2>
-                                                    </div>
-                                                </td> -->
                                             </tr>
                                         </tbody>
                                     </table>
@@ -401,6 +392,56 @@
                     <div>
                         <label class="text-gray-700 dark:text-gray-200" for="Altura">Altura</label>
                         <input autocomplete="on" type="text" pattern="[0-9.,]+" placeholder="Ex: 1,75" title="Digite a altura usando o ponto ou virgula" name="altura_aluno" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" required>
+                    </div>
+                    <div>
+                        <label class="text-gray-700 dark:text-gray-200" for="Classe">Classe</label>
+                        <input autocomplete="on" type="number" placeholder="Ex: 10, 11,12" name="classe_aluno" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" required>
+                    </div>
+                    <div>
+
+                        <label class="text-gray-700 dark:text-gray-200" for="Classe">Turma</label>
+                        <!-- Primeiro, verifique se a variável existe -->
+                        <?php
+                        // Se a variável não foi passada, cria um array vazio
+                        if (!isset($dados['turmasEncontradas']) || !is_array($dados['turmasEncontradas'])) {
+                            $turmasEncontradas = [];
+                        } else {
+                            $turmasEncontradas = $dados['turmasEncontradas'];
+                        }
+
+                        // DEBUG: Veja quantas turmas vieram (remova depois)
+                        echo "<!-- DEBUG: " . count($turmasEncontradas) . " turmas encontradas -->";
+                        ?>
+
+                        <select autocomplete="on" name="turma_aluno" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" required>
+
+                            <!-- Option padrão com value vazio -->
+                            <option value="">Selecionar turma</option>
+
+                            <!-- Verifica se há turmas -->
+                            <?php if (empty($turmasEncontradas)): ?>
+                                <option value="" disabled>Nenhuma turma cadastrada</option>
+                            <?php else: ?>
+                                <?php foreach ($turmasEncontradas as $turma): ?>
+                                    <?php
+                                    // Verifica se os índices existem (segurança)
+                                    $idTurma = isset($turma['idturma']) ? $turma['idturma'] : (isset($turma['id']) ? $turma['id'] : '');
+                                    $nomeTurma = isset($turma['nome']) ? $turma['nome'] : '';
+
+                                    // Só mostra se tiver nome
+                                    if (!empty($nomeTurma)):
+                                    ?>
+                                        <option value="<?php echo htmlspecialchars($idTurma); ?>">
+                                            <?php echo htmlspecialchars($nomeTurma); ?>
+                                        </option>
+                                <?php
+                                    endif;
+                                endforeach;
+                                ?>
+                            <?php endif; ?>
+
+                        </select>
+
                     </div>
                 </div>
                 <button type="submit" class=" m-4  btn btn-success text-white shadow-md hover:shadow-lg transition-all cursor-poiter">
