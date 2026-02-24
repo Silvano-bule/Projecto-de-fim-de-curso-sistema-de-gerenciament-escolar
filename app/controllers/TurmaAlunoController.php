@@ -33,3 +33,4 @@ class TurmaAlunoController
         require $viewPath;
     }
 }
+TurmaAlunoController::pegarInfoTurma();

@@ -139,7 +139,7 @@
                                 <li><a id="turma" onclick="modal_turma.showModal()">Turma</a></li>
                                 <li><a id="curso" onclick="modal_curso.showModal()">Curso</a></li>
                                 <li><a id="aluno" onclick="my_modal_1.showModal()">Aluno</a></li>
-                                <li><a id="professor">Professor</a></li>
+                                <li><a id="professor" onclick="modal_professor.showModal()">Professor</a></li>
                                 <li><a id="classe">Classe</a></li>
                             </ul>
                         </div>
@@ -299,11 +299,51 @@
                                             </tr>
                                         </thead>
                                         <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-                                            <tr>
-                                                <td colspan="7" class="text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap p-4">
-                                                    <p class="text-center text-gray-500 font-light">Nenhum cadastro recente</p>
-                                                </td>
-                                            </tr>
+                                            <?php if (!empty($dados['alunosEncontrados'])): ?>
+                                                <?php foreach ($dados['alunosEncontrados'] as $aluno): ?>
+                                                    <tr>
+                                                        <td class="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
+                                                            <div class="inline-flex items-center gap-x-3">
+                                                                <input type="checkbox" class="text-blue-500 border-gray-300 rounded dark:bg-gray-900 dark:ring-offset-gray-900 dark:border-gray-700">
+                                                                <span><?= htmlspecialchars($aluno['numero_BI'] ?? 'N/A') ?></span>
+                                                            </div>
+                                                        </td>
+                                                        <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                            <?= htmlspecialchars($aluno['nome'] ?? 'N/A') ?>
+                                                        </td>
+                                                        <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                            <?= htmlspecialchars($aluno['nascimento'] ?? 'N/A') ?>
+                                                        </td>
+                                                        <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                            <?= htmlspecialchars($aluno['classe_aluno'] ?? 'N/A') ?>
+                                                        </td>
+                                                        <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                            <!-- Aqui você pode buscar o nome da turma se quiser, mas por simplicidade, mostra o ID -->
+                                                            <?= htmlspecialchars($aluno['idturma'] ?? 'N/A') ?>
+                                                        </td>
+                                                        <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                            <!-- Sala não está na tabela aluno, então N/A -->
+                                                            N/A
+                                                        </td>
+                                                        <td class="px-4 py-4 text-sm whitespace-nowrap">
+                                                            <div class="flex items-center gap-x-6">
+                                                                <button class="text-blue-500 transition-colors duration-200 hover:text-indigo-500 focus:outline-none">
+                                                                    Editar
+                                                                </button>
+                                                                <button class="text-red-500 transition-colors duration-200 hover:text-red-600 focus:outline-none">
+                                                                    Deletar
+                                                                </button>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                <?php endforeach; ?>
+                                            <?php else: ?>
+                                                <tr>
+                                                    <td colspan="7" class="text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap p-4">
+                                                        <p class="text-center text-gray-500 font-light">Nenhum cadastro recente</p>
+                                                    </td>
+                                                </tr>
+                                            <?php endif; ?>
                                         </tbody>
                                     </table>
                                 </div>
@@ -401,18 +441,6 @@
 
                         <label class="text-gray-700 dark:text-gray-200" for="Classe">Turma</label>
                         <!-- Primeiro, verifique se a variável existe -->
-                        <?php
-                        // Se a variável não foi passada, cria um array vazio
-                        if (!isset($dados['turmasEncontradas']) || !is_array($dados['turmasEncontradas'])) {
-                            $turmasEncontradas = [];
-                        } else {
-                            $turmasEncontradas = $dados['turmasEncontradas'];
-                        }
-
-                        // DEBUG: Veja quantas turmas vieram (remova depois)
-                        echo "<!-- DEBUG: " . count($turmasEncontradas) . " turmas encontradas -->";
-                        ?>
-
                         <select autocomplete="on" name="turma_aluno" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" required>
 
                             <!-- Option padrão com value vazio -->
@@ -439,9 +467,22 @@
                                 endforeach;
                                 ?>
                             <?php endif; ?>
-
                         </select>
-
+                    </div>
+                    <div>
+                        <label class="text-gray-700 dark:text-gray-200" for="curso">Curso</label>
+                        <select name="curso" id="curso" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring">
+                            <option value="">Selecionar Curso</option>
+                            <?php if (empty($cursosEncontrados)): ?>
+                                <option value="" disabled>Nenhum curso cadastrado</option>
+                            <?php else: ?>
+                                <?php foreach ($cursosEncontrados as $curso): ?>
+                                    <option value="<?php echo htmlspecialchars($curso['idcurso']); ?>">
+                                        <?php echo htmlspecialchars($curso['nome']); ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                        </select>
                     </div>
                 </div>
                 <button type="submit" class=" m-4  btn btn-success text-white shadow-md hover:shadow-lg transition-all cursor-poiter">
@@ -505,6 +546,72 @@
                         <select placeholder="Ex: Ativo, Inativo" name="status_curso" type="text" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" required>
                             <option value="Ativo">Ativo</option>
                             <option value="Inativo">Inativo</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class=" m-4  btn btn-success text-white shadow-md hover:shadow-lg transition-all cursor-poiter">
+                    Salvar
+                </button>
+                <button id="btnClose" type="button" class="cursor-pointer btn btn-error  text-white hover:text-red-600 hover:bg-red-300">Fechar</button>
+            </form>
+        </div>
+    </dialog>
+    <dialog id="modal_professor" class="modal">
+        <div class="modal-box w-screen max-w-5xl">
+            <div class="flex flow-row justify-between items-center">
+                <h3 class="text-lg font-bold">Inserir Professor</h3>
+            </div>
+            <form action="/TCC/SGE/app/controllers/ProfessorDashboardController.php" method="POST" id="formulario">
+                <div class="grid grid-cols-3 gap-6 mt-4 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
+                    <div>
+                        <label class="text-gray-700 dark:text-gray-200" for="username">Nome<span class="text-red-500 text-xs"> (Obrigatório)</span> </label>
+                        <input name="nome_professor" id="username" type="text" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" required>
+                    </div>
+                    <div>
+                        <label class="text-gray-700 dark:text-gray-200" for="email">Email<span class="text-red-500 text-xs"> (Obrigatório)</span> </label>
+                        <input name="email_professor" id="email" type="email" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" required>
+                    </div>
+                    <div>
+                        <label class="text-gray-700 dark:text-gray-200" for="telefone">Telefone</label>
+                        <input placeholder="apenas 9 dígitos" name="telefone_professor" type="text" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" >
+                       
+                    </div>
+                    <div>
+                        <label class="text-gray-700 dark:text-gray-200" for="Nascimento">Nascimento</label>
+                        <input autocomplete="on" type="date" name="nascimento_professor" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" required>
+                    </div>
+                    <div>
+                        <label class="text-gray-700 dark:text-gray-200" for="Sexo">Sexo</label>
+                        <select name="sexo_professor" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring">
+                            <option value="M">Masculino</option>
+                            <option value="F">Femenino</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="text-gray-700 dark:text-gray-200" for="Nacionalidade">Nacionalidade</label>
+                        <input autocomplete="on" type="text" name="nacionalidade_professor" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" required>
+                    </div>
+                    <div>
+                        <label class="text-gray-700 dark:text-gray-200" for="Provincia">Provincia</label>
+                        <select name="provincia_professor" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring">
+                            <option value="Bengo">Bengo</option>
+                            <option value="Benguela">Benguela</option>
+                            <option value="Bié">Bié</option>
+                            <option value="Cabinda">Cabinda</option>
+                            <option value="Cuando Cubango">Cuando Cubango</option>
+                            <option value="Cuanza Norte">Cuanza Norte</option>
+                            <option value="Cuanza Sul">Cuanza Sul</option>
+                            <option value="Cunene">Cunene</option>
+                            <option value="Huanbo">Huambo</option>
+                            <option value="Huíla">Huíla</option>
+                            <option value="Luanda">Luanda</option>
+                            <option value="Lunda Norte">Lunda Norte</option>
+                            <option value="Lunda Norte">Lunda Sul</option>
+                            <option value="malanje">Malanje</option>
+                            <option value="Moxico">Moxico</option>
+                            <option value="Namibe">Namibe</option>
+                            <option value="Uige">Uige</option>
+                            <option value="Zaire">Zaire</option>
                         </select>
                     </div>
                 </div>

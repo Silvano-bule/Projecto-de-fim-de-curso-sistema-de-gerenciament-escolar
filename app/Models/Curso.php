@@ -36,4 +36,12 @@ class Curso
             ]
         );
     }
+
+    public static function listarCursos(){
+        $db = Database::getConnection();
+        $sql = "SELECT * FROM curso";
+        $stmt = $db-> prepare($sql);
+        $stmt->execute();
+        return $stmt-> fetchAll(PDO::FETCH_ASSOC);
+    }
 }

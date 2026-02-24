@@ -19,12 +19,12 @@ class Aluno
         $resultado  = $stmt->fetch(PDO::FETCH_ASSOC);
         return $resultado['total'];
     }
-    public static function salvarAluno($nome, $email, $telefone, $nascimento, $sexo, $nacionalidade, $nome_pai, $nome_mae, $numero_BI, $provincia, $altura, $turma)
+    public static function salvarAluno($nome, $email, $telefone, $nascimento, $sexo, $nacionalidade, $nome_pai, $nome_mae, $numero_BI, $provincia, $altura, $turma, $curso)
     {
         try {
             $db = Database::getConnection();
 
-            $sql = "INSERT INTO aluno (nome, email, telefone, nascimento, sexo, nacionalidade, nome_pai, nome_mae, numero_BI, provincia, altura, idturma) VALUES (:nome, :email, :telefone, :nascimento, :sexo, :nacionalidade, :nome_pai, :nome_mae, :numero_BI, :provincia, :altura, :turma)";
+            $sql = "INSERT INTO aluno (nome, email, telefone, nascimento, sexo, nacionalidade, nome_pai, nome_mae, numero_BI, provincia, altura, idturma, idcurso) VALUES (:nome, :email, :telefone, :nascimento, :sexo, :nacionalidade, :nome_pai, :nome_mae, :numero_BI, :provincia, :altura, :turma, :curso)";
 
             $stmt = $db->prepare($sql);
 
@@ -40,10 +40,20 @@ class Aluno
                 ':numero_BI' => $numero_BI,
                 ':provincia' => $provincia,
                 ':altura' => $altura,
-                ':turma' => $turma
+                ':turma' => $turma,
+                ':curso' => $curso
             ]);
         } catch (PDOException $e) {
             echo "Erro ao salvar no banco: " . $e->getMessage();
         }
+    }
+
+    public static function listarAlunos()
+    {
+        $db = Database::getConnection();
+        $sql = "SELECT * FROM aluno";
+        $stmt = $db->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }

@@ -30,7 +30,8 @@ class AlunoDashboardController
         $numero_BI = filter_input(INPUT_POST, 'numero_BI_aluno', FILTER_SANITIZE_SPECIAL_CHARS);
         $provincia = filter_input(INPUT_POST, 'provincia_aluno', FILTER_SANITIZE_SPECIAL_CHARS);
         $altura_raw = filter_input(INPUT_POST, 'altura_aluno', FILTER_DEFAULT);
-        $turma = filter_input(INPUT_POST, 'turma_aluno', FILTER_SANITIZE_NUMBER_INT);
+        $turma = filter_input(INPUT_POST, 'turma_aluno', FILTER_SANITIZE_SPECIAL_CHARS);
+        $curso = filter_input(INPUT_POST, 'curso', FILTER_SANITIZE_SPECIAL_CHARS);
 
         $altura = str_replace(',', '.', $altura_raw);
 
@@ -48,14 +49,14 @@ class AlunoDashboardController
             die ("Formato de numero de BI inválido");
         }
 
-        if (empty($nome)  || empty($email) || empty($telefone) || empty($nascimento) || empty($nacionalidade) || $sexo === "" || empty($nome_mae) || empty($nome_mae) || empty($numero_BI) || empty($provincia) || empty($altura) || empty($turma)) {
+        if (empty($nome)  || empty($email) || empty($telefone) || empty($nascimento) || empty($nacionalidade) || $sexo === "" || empty($nome_mae) || empty($nome_pai) || empty($numero_BI) || empty($provincia) || empty($altura) || empty($turma) || empty($curso)) {
             die("Preencha os campos, por favor");
         }
 
-        Aluno::salvarAluno($nome, $email, $telefone, $nascimento, $sexo, $nacionalidade, $nome_pai, $nome_mae, $numero_BI, $provincia, $altura, $turma);
+        Aluno::salvarAluno($nome, $email, $telefone, $nascimento, $sexo, $nacionalidade, $nome_pai, $nome_mae, $numero_BI, $provincia, $altura, $turma, $curso);
 
         header("Location: ../../public/index.php?page=admin_dashboard");
-        exit;
+        exit();
     }
 }
 AlunoDashboardController::matricularAluno();

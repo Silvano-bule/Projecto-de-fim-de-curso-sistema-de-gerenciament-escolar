@@ -16,6 +16,17 @@ class CursoController {
         header("Location: ../../public/index.php?page=admin_dashboard");
         exit;
     }
+
+    public static function listarCursos() {
+        $cursos = Curso::listarCursos();
+
+        if(!is_array($cursos)){
+            $cursos = [];
+        }
+        $viewPath = __DIR__ . '/../views/adminDashboardView.php';
+
+        require $viewPath;
+    }
 }
 
 CursoController::guardarCurso();
