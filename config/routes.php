@@ -17,6 +17,7 @@ define('AVAILABLE_ROUTES', [
     'aluno_dashboard' => AlunoDashboardController::class,
     'classe' => App\controllers\ClasseController::class,
     'Auth' => App\controllers\AuthController::class,
+    'matricular_aluno' => AlunoDashboardController::class,  
 ]);
 
 define('DEFAULT_ROUTE', homeController::class);

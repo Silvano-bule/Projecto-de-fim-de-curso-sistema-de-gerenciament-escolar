@@ -70,4 +70,11 @@ class Aluno
             ]
         );
     }
+    public static function listarAlunosRecentes(){
+        $db = Database::getConnection();
+        $sql = "SELECT * FROM aluno  ORDER BY idaluno DESC  LIMIT 3";
+        $stmt  = $db->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

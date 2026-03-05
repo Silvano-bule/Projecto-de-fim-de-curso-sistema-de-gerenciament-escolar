@@ -7,6 +7,7 @@ require_once __DIR__ . '/../../vendor/autoload.php';
 use App\controllers\AuthController;
 use App\Models\Aluno;
 use App\Models\Usuarios;
+
 class AlunoDashboardController
 {
     public static function render()
@@ -46,19 +47,19 @@ class AlunoDashboardController
         // var_dump($_POST);
         // echo "</pre>";
         // die();
-        
-        if(!preg_match('/^\d{9}LA\d{3}$/', $numero_BI)) {
-            die ("Formato de numero de BI inválido");
+
+        if (!preg_match('/^\d{9}LA\d{3}$/', $numero_BI)) {
+            die("Formato de numero de BI inválido");
         }
 
         if (empty($nome)  || empty($email) || empty($telefone) || empty($nascimento) || empty($nacionalidade) || $sexo === "" || empty($nome_mae) || empty($nome_pai) || empty($numero_BI) || empty($provincia) || empty($altura) || empty($turma) || empty($curso) || empty($classe)) {
             die("Preencha os campos, por favor");
         }
 
-        
+
         Aluno::salvarAluno($nome, $email, $telefone, $nascimento, $sexo, $nacionalidade, $nome_pai, $nome_mae, $numero_BI, $provincia, $altura, $turma, $curso, $classe);
 
-        
+
         header("Location: ../../public/index.php?page=admin_dashboard");
         exit();
     }
@@ -73,5 +74,20 @@ class AlunoDashboardController
 
         require $viewPath;
     }
+    public static function listarAlunosRecentes()
+    {
+        $alunosEncontrados = Aluno::listarAlunosRecentes();
+
+        if (!is_array($alunosEncontrados)) {
+            $alunosEncontrados = [];
+        }
+
+        echo "<pre>";
+        print_r($alunosEncontrados);
+        echo "</pre>";
+        exit;
+        $viewPath = __DIR__ . '/../views/adminDashboardView.php';
+
+        require $viewPath;
+    }
 }
-AlunoDashboardController::matricularAluno();
