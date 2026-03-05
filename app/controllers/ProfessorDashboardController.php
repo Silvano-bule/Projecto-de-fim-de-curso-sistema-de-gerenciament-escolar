@@ -1,9 +1,7 @@
 <?php
+namespace App\controllers;
 
-namespace App\Controllers;
-
-use App\controllers\AuthController;
-use App\Models\Professor;
+use App\Models\Teacher;
 
 class ProfessorDashboardController
 {
@@ -13,7 +11,7 @@ class ProfessorDashboardController
 
         echo "Professor Dasboard";
     }
-    public static function  salvarDados()
+    public function salvarDados()
     {
         $nome = filter_input(INPUT_POST, 'nome_professor', FILTER_SANITIZE_SPECIAL_CHARS);
         $email = filter_input(INPUT_POST, 'email_professor', FILTER_SANITIZE_EMAIL);
@@ -23,15 +21,14 @@ class ProfessorDashboardController
         $nacionalidade  = filter_input(INPUT_POST, 'nacionalidade_professor', FILTER_SANITIZE_SPECIAL_CHARS);
         $provincia = filter_input(INPUT_POST, 'provincia_professor', FILTER_SANITIZE_SPECIAL_CHARS);
 
-        if (empty($nome) || empty($email) || empty($telefone) || empty($nascimento) || empty($sexo) || empty($nacionalidade) || empty($provincia)) {
+          if (empty($nome) || empty($email) || empty($telefone) || empty($nascimento) || empty($sexo) || empty($nacionalidade) || empty($provincia)) {
             echo "Preencha todos os campos";
             return;
         }
 
-        Professor::guardarDados($nome, $email, $telefone, $nascimento, $sexo, $nacionalidade, $provincia);
+        Teacher::guardarDados($nome, $email, $telefone, $nascimento, $sexo, $nacionalidade, $provincia);
 
-        header('Location: ../../public/index.php?page=admin_dashboard');
-        exit();
+        header('Location: index.php?page=admin_dashboard');
+        exit;
     }
 }
-ProfessorDashboardController::salvarDados();

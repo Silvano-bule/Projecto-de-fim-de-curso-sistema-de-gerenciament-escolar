@@ -16,13 +16,15 @@ class Usuarios
 
         $senhaHash = password_hash($senha, PASSWORD_BCRYPT);
 
-        $stmt->bindParam(':nome', $nome);
-        $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':senha', $senhaHash);
-        $stmt->bindParam(':tipo', $tipo);
 
+         $stmt->execute([
+            ':nome'  => $nome,
+            ':email' => $email,
+            ':senha' => $senhaHash,
+            ':tipo'  => $tipo
+        ]);
 
-        return $stmt->execute();
+        return $db->lastInsertId();
     }
 
     public static function buscarPorEmail($email)
@@ -47,5 +49,14 @@ class Usuarios
 
         $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
         return $resultado['total'];
+    }
+
+    public static function listarUsuarios()
+    {
+        $db = Database::getConnection();
+        $insert = "SELECT * from usuarios";
+        $stmt = $db->prepare($insert);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use App\core\Database;
@@ -19,12 +20,12 @@ class Aluno
         $resultado  = $stmt->fetch(PDO::FETCH_ASSOC);
         return $resultado['total'];
     }
-    public static function salvarAluno($nome, $email, $telefone, $nascimento, $sexo, $nacionalidade, $nome_pai, $nome_mae, $numero_BI, $provincia, $altura, $turma, $curso)
+    public static function salvarAluno($nome, $email, $telefone, $nascimento, $sexo, $nacionalidade, $nome_pai, $nome_mae, $numero_BI, $provincia, $altura, $turma, $curso, $classe)
     {
         try {
             $db = Database::getConnection();
 
-            $sql = "INSERT INTO aluno (nome, email, telefone, nascimento, sexo, nacionalidade, nome_pai, nome_mae, numero_BI, provincia, altura, idturma, idcurso) VALUES (:nome, :email, :telefone, :nascimento, :sexo, :nacionalidade, :nome_pai, :nome_mae, :numero_BI, :provincia, :altura, :turma, :curso)";
+            $sql = "INSERT INTO aluno (nome, email, telefone, nascimento, sexo, nacionalidade, nome_pai, nome_mae, numero_BI, provincia, altura, id_turma, id_curso, id_classe) VALUES (:nome, :email, :telefone, :nascimento, :sexo, :nacionalidade, :nome_pai, :nome_mae, :numero_BI, :provincia, :altura, :turma, :curso, :classe)";
 
             $stmt = $db->prepare($sql);
 
@@ -41,7 +42,8 @@ class Aluno
                 ':provincia' => $provincia,
                 ':altura' => $altura,
                 ':turma' => $turma,
-                ':curso' => $curso
+                ':curso' => $curso,
+                ':classe' => $classe
             ]);
         } catch (PDOException $e) {
             echo "Erro ao salvar no banco: " . $e->getMessage();
@@ -55,5 +57,17 @@ class Aluno
         $stmt = $db->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public static function ligarAluno($idAluno)
+    {
+        $db = Database::getConnection();
+        $sql  = "INSERT INTO aluno (usuario_id) VALUES (:id_usuario)";
+        $stmt = $db->prepare($sql);
+        $stmt->execute(
+            [
+                ':id_usuario' => $idAluno
+            ]
+        );
     }
 }

@@ -107,7 +107,7 @@
                             <span class="text-sm font-medium text-gray-700 dark:text-gray-200"><?= $dados['nome'] ?></span>
                         </a>
 
-                        <a href="#"
+                        <a href="index.php?page=Auth&action=logout"
                             class="text-gray-500 transition-colors duration-200 rotate-180 dark:text-gray-400 rtl:rotate-0 hover:text-blue-500 dark:hover:text-blue-400">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="w-5 h-5">
@@ -140,7 +140,7 @@
                                 <li><a id="curso" onclick="modal_curso.showModal()">Curso</a></li>
                                 <li><a id="aluno" onclick="my_modal_1.showModal()">Aluno</a></li>
                                 <li><a id="professor" onclick="modal_professor.showModal()">Professor</a></li>
-                                <li><a id="classe">Classe</a></li>
+                                <li><a id="classe" onclick="modal_classe.showModal()">Classe</a></li>
                             </ul>
                         </div>
                         <div class="relative mx-3">
@@ -241,6 +241,23 @@
                             <span class="text-2xl font-medium text-gray-900 dark:text-white">
                                 <font dir="auto" style="vertical-align: inherit;">
                                     <font dir="auto" style="vertical-align: inherit;"><?= $dados['totalCursos'] ?> </font>
+                                </font>
+                            </span>
+                        </p>
+                    </div>
+                </article>
+                <article class="flex flex-col gap-4 rounded-lg border border-gray-100 bg-white p-6 dark:border-gray-800 dark:bg-gray-900">
+                    <div>
+                        <strong class="block text-sm font-medium text-gray-500 dark:text-gray-400">
+                            <font dir="auto" style="vertical-align: inherit;">
+                                <font dir="auto" style="vertical-align: inherit;">Classe</font>
+                            </font>
+                        </strong>
+
+                        <p>
+                            <span class="text-2xl font-medium text-gray-900 dark:text-white">
+                                <font dir="auto" style="vertical-align: inherit;">
+                                    <font dir="auto" style="vertical-align: inherit;"><?= $dados['totalClasses'] ?> </font>
                                 </font>
                             </span>
                         </p>
@@ -435,10 +452,20 @@
                     </div>
                     <div>
                         <label class="text-gray-700 dark:text-gray-200" for="Classe">Classe</label>
-                        <input autocomplete="on" type="number" placeholder="Ex: 10, 11,12" name="classe_aluno" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" required>
+                        <select name="classe_aluno" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" required>
+                            <option value="">Selecionar classe</option>
+                            <?php if (empty($classesEncontradas)): ?>
+                                <option value="" disabled>Nenhuma classe cadastrada</option>
+                            <?php else: ?>
+                                <?php foreach ($classesEncontradas as $classe): ?>
+                                    <option value="<?php echo htmlspecialchars($classe['idclasse']); ?>">
+                                        <?php echo htmlspecialchars($classe['nome']); ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                        </select>
                     </div>
                     <div>
-
                         <label class="text-gray-700 dark:text-gray-200" for="Classe">Turma</label>
                         <!-- Primeiro, verifique se a variável existe -->
                         <select autocomplete="on" name="turma_aluno" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" required>
@@ -561,7 +588,7 @@
             <div class="flex flow-row justify-between items-center">
                 <h3 class="text-lg font-bold">Inserir Professor</h3>
             </div>
-            <form action="/TCC/SGE/app/controllers/ProfessorDashboardController.php" method="POST" id="formulario">
+            <form action="index.php?page=professor_dashboard&action=salvarDados" method="POST">
                 <div class="grid grid-cols-3 gap-6 mt-4 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
                     <div>
                         <label class="text-gray-700 dark:text-gray-200" for="username">Nome<span class="text-red-500 text-xs"> (Obrigatório)</span> </label>
@@ -573,8 +600,7 @@
                     </div>
                     <div>
                         <label class="text-gray-700 dark:text-gray-200" for="telefone">Telefone</label>
-                        <input placeholder="apenas 9 dígitos" name="telefone_professor" type="text" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" >
-                       
+                        <input placeholder="apenas 9 dígitos" name="telefone_professor" type="text" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" required>
                     </div>
                     <div>
                         <label class="text-gray-700 dark:text-gray-200" for="Nascimento">Nascimento</label>
@@ -612,6 +638,40 @@
                             <option value="Namibe">Namibe</option>
                             <option value="Uige">Uige</option>
                             <option value="Zaire">Zaire</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class=" m-4  btn btn-success text-white shadow-md hover:shadow-lg transition-all cursor-poiter">
+                    Salvar
+                </button>
+                <button id="btnClose" type="button" class="cursor-pointer btn btn-error  text-white hover:text-red-600 hover:bg-red-300">Fechar</button>
+            </form>
+        </div>
+    </dialog>
+    <dialog id="modal_classe" class="modal">
+        <div class="modal-box w-screen max-w-5xl">
+            <div class="flex flow-row justify-between items-center">
+                <h3 class="text-lg font-bold">Inserir classe</h3>
+            </div>
+            <form action="index.php?page=classe&action=pegarInfoClasse" method="POST">
+                <div class="grid grid-cols-3 gap-6 mt-4 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
+                    <div>
+                        <label class="text-gray-700 dark:text-gray-200" for="username">Nome<span class="text-red-500 text-xs"> (Obrigatório)</span> </label>
+                        <input name="nome_classe" id="username" type="text" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" required>
+                    </div>
+                    <div>
+                        <label class="text-gray-700 dark:text-gray-200" for="curso">Curso</label>
+                        <select name="curso" id="curso" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring">
+                            <option value="">Selecionar Curso</option>
+                            <?php if (empty($cursosEncontrados)): ?>
+                                <option value="" disabled>Nenhum curso cadastrado</option>
+                            <?php else: ?>
+                                <?php foreach ($cursosEncontrados as $curso): ?>
+                                    <option value="<?php echo htmlspecialchars($curso['idcurso']); ?>">
+                                        <?php echo htmlspecialchars($curso['nome']); ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
                         </select>
                     </div>
                 </div>

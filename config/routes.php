@@ -7,6 +7,7 @@ use App\controllers\AdminDashboardController;
 use App\controllers\ProfessorDashboardController;
 use App\controllers\AlunoDashboardController;
 
+
 define('AVAILABLE_ROUTES', [
     'home' => homeController::class,
     'cadastrar' => cadastrarController::class,
@@ -14,7 +15,8 @@ define('AVAILABLE_ROUTES', [
     'admin_dashboard' => AdminDashboardController::class,
     'professor_dashboard' => ProfessorDashboardController::class,
     'aluno_dashboard' => AlunoDashboardController::class,
-
+    'classe' => App\controllers\ClasseController::class,
+    'Auth' => App\controllers\AuthController::class,
 ]);
 
 define('DEFAULT_ROUTE', homeController::class);

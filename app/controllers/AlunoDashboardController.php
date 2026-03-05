@@ -6,7 +6,7 @@ require_once __DIR__ . '/../../vendor/autoload.php';
 
 use App\controllers\AuthController;
 use App\Models\Aluno;
-
+use App\Models\Usuarios;
 class AlunoDashboardController
 {
     public static function render()
@@ -32,11 +32,13 @@ class AlunoDashboardController
         $altura_raw = filter_input(INPUT_POST, 'altura_aluno', FILTER_DEFAULT);
         $turma = filter_input(INPUT_POST, 'turma_aluno', FILTER_SANITIZE_SPECIAL_CHARS);
         $curso = filter_input(INPUT_POST, 'curso', FILTER_SANITIZE_SPECIAL_CHARS);
+        $classe = filter_input(INPUT_POST, 'classe_aluno', FILTER_SANITIZE_SPECIAL_CHARS);
+        $usuario_email = filter_input(INPUT_POST, 'usuario_email', FILTER_SANITIZE_EMAIL); // Email ou nome do usuário
 
         $altura = str_replace(',', '.', $altura_raw);
 
         if (strlen($telefone) !== 9) {
-            header('Location:../../public/index.php?page=admin_dashboard&erro=telefone');
+            header('Location:../../public/index.php?page=admin_dashboard');
             exit();
         }
 
@@ -49,14 +51,27 @@ class AlunoDashboardController
             die ("Formato de numero de BI inválido");
         }
 
-        if (empty($nome)  || empty($email) || empty($telefone) || empty($nascimento) || empty($nacionalidade) || $sexo === "" || empty($nome_mae) || empty($nome_pai) || empty($numero_BI) || empty($provincia) || empty($altura) || empty($turma) || empty($curso)) {
+        if (empty($nome)  || empty($email) || empty($telefone) || empty($nascimento) || empty($nacionalidade) || $sexo === "" || empty($nome_mae) || empty($nome_pai) || empty($numero_BI) || empty($provincia) || empty($altura) || empty($turma) || empty($curso) || empty($classe)) {
             die("Preencha os campos, por favor");
         }
 
-        Aluno::salvarAluno($nome, $email, $telefone, $nascimento, $sexo, $nacionalidade, $nome_pai, $nome_mae, $numero_BI, $provincia, $altura, $turma, $curso);
+        
+        Aluno::salvarAluno($nome, $email, $telefone, $nascimento, $sexo, $nacionalidade, $nome_pai, $nome_mae, $numero_BI, $provincia, $altura, $turma, $curso, $classe);
 
+        
         header("Location: ../../public/index.php?page=admin_dashboard");
         exit();
+    }
+    public static function listarAlunos()
+    {
+        $alunosEncontrados = Aluno::listarAlunos();
+
+        if (!is_array($alunosEncontrados)) {
+            $alunosEncontrados = [];
+        }
+        $viewPath = __DIR__ . '/../views/adminDashboardView.php';
+
+        require $viewPath;
     }
 }
 AlunoDashboardController::matricularAluno();

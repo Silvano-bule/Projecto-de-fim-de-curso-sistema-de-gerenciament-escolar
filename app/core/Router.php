@@ -15,6 +15,7 @@ class Router
 
         $availableRouteNames = array_keys(AVAILABLE_ROUTES);
         $page = $_GET['page'] ?? 'home';
+        $action = $_GET['action'] ?? 'render';
 
         if (in_array($page, $availableRouteNames, true)) {
             $controller = AVAILABLE_ROUTES[$page];
@@ -24,9 +25,9 @@ class Router
 
         $controllerInstance = new $controller();
 
-        if (!method_exists($controllerInstance, 'render')) {
-            throw new \Exception("O controlador selecionado não possui o método render.");
+        if (!method_exists($controllerInstance, $action)) {
+            throw new \Exception("O controlador selecionado não possui o método {$action}.");
         }
-        $controllerInstance->render();
+        $controllerInstance->$action();
     }
 }

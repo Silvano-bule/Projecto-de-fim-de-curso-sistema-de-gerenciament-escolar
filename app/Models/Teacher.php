@@ -6,7 +6,7 @@ use App\core\Database;
 use PDO;
 use PDOException;
 
-class Professor
+class Teacher
 {
     public static function contarProfessores()
     {

@@ -4,6 +4,7 @@ namespace App\controllers;
 
 use App\Models\Usuarios;
 use App\controllers\AuthController;
+use App\Models\Aluno;
 
 class cadastrarController
 {
@@ -47,11 +48,11 @@ class cadastrarController
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 $error['email'] = "Email inválido.";
             }
-            if($tipo === ''){
+            if ($tipo === '') {
                 $error['tipo'] = "Tipo de usuario é obrigatório.";
             }
 
-            if(Usuarios::buscarPorEmail($email)){
+            if (Usuarios::buscarPorEmail($email)) {
                 $error['email'] = 'Este email já esta cadastrado';
             }
 
@@ -72,8 +73,9 @@ class cadastrarController
             }
 
             // sem erro → salvar
-            Usuarios::salvar($nome, $email, $senha, $tipo);
+            $idUsuario  = Usuarios::salvar($nome, $email, $senha, $tipo);
 
+            Aluno::ligarAluno($idUsuario);
             header("Location: ?page=entrar");
             exit;
         }
