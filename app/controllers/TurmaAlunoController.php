@@ -20,5 +20,8 @@ class TurmaAlunoController
         header("Location: ../../public/index.php?page=admin_dashboard");
         exit;
     }
+    public static function listarTurmas()
+    {
+        return Turma::listarTurma();
+    }
 }
-TurmaAlunoController::pegarInfoTurma();

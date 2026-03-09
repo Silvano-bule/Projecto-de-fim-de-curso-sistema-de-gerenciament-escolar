@@ -20,12 +20,12 @@ class Aluno
         $resultado  = $stmt->fetch(PDO::FETCH_ASSOC);
         return $resultado['total'];
     }
-    public static function salvarAluno($nome, $email, $telefone, $nascimento, $sexo, $nacionalidade, $nome_pai, $nome_mae, $numero_BI, $provincia, $altura, $turma, $curso, $classe)
+    public static function salvarAluno($nome, $email, $telefone, $nascimento, $sexo, $nacionalidade, $nome_pai, $nome_mae, $numero_BI, $provincia, $altura, $turma, $curso, $classe, $sala)
     {
         try {
             $db = Database::getConnection();
 
-            $sql = "INSERT INTO aluno (nome, email, telefone, nascimento, sexo, nacionalidade, nome_pai, nome_mae, numero_BI, provincia, altura, id_turma, id_curso, id_classe) VALUES (:nome, :email, :telefone, :nascimento, :sexo, :nacionalidade, :nome_pai, :nome_mae, :numero_BI, :provincia, :altura, :turma, :curso, :classe)";
+            $sql = "INSERT INTO aluno (nome, email, telefone, nascimento, sexo, nacionalidade, nome_pai, nome_mae, numero_BI, provincia, altura, id_turma, id_curso, id_classe, sala) VALUES (:nome, :email, :telefone, :nascimento, :sexo, :nacionalidade, :nome_pai, :nome_mae, :numero_BI, :provincia, :altura, :turma, :curso, :classe, :sala)";
 
             $stmt = $db->prepare($sql);
 
@@ -43,8 +43,12 @@ class Aluno
                 ':altura' => $altura,
                 ':turma' => $turma,
                 ':curso' => $curso,
-                ':classe' => $classe
+                ':classe' => $classe,
+                ':sala' => $sala
+
             ]);
+
+            return $db->lastInsertId(); 
         } catch (PDOException $e) {
             echo "Erro ao salvar no banco: " . $e->getMessage();
         }
@@ -70,9 +74,19 @@ class Aluno
             ]
         );
     }
-    public static function listarAlunosRecentes(){
+    public static function listarAlunosRecentes()
+    {
         $db = Database::getConnection();
-        $sql = "SELECT * FROM aluno  ORDER BY idaluno DESC  LIMIT 3";
+
+        $sql = "SELECT 
+        aluno.*,
+        matricula.numero_matricula
+        FROM aluno
+        LEFT JOIN matricula 
+        ON aluno.idaluno = matricula.alunomatricula
+        ORDER BY aluno.idaluno DESC
+        LIMIT 3";
+
         $stmt  = $db->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);

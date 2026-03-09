@@ -6,15 +6,26 @@ require_once __DIR__ . '/../../vendor/autoload.php';
 
 use App\controllers\AuthController;
 use App\Models\Aluno;
-use App\Models\Usuarios;
+use App\controllers\TurmaAlunoController;
+use App\controllers\matriculaController;
+use App\Models\Matricula;
 
 class AlunoDashboardController
 {
     public static function render()
     {
         AuthController::iniciarSessao();
+        $alunosEncontrados = Aluno::listarAlunosRecentes();
 
-        echo "Usuario Dasbord";
+        if (!is_array($alunosEncontrados)) {
+            $alunosEncontrados = [];
+        }
+
+        echo "<pre>";
+        print_r($alunosEncontrados);
+        $viewPath = __DIR__ . '/../views/adminDashboardView.php';
+
+        require $viewPath;
     }
 
 
@@ -34,33 +45,32 @@ class AlunoDashboardController
         $turma = filter_input(INPUT_POST, 'turma_aluno', FILTER_SANITIZE_SPECIAL_CHARS);
         $curso = filter_input(INPUT_POST, 'curso', FILTER_SANITIZE_SPECIAL_CHARS);
         $classe = filter_input(INPUT_POST, 'classe_aluno', FILTER_SANITIZE_SPECIAL_CHARS);
-        $usuario_email = filter_input(INPUT_POST, 'usuario_email', FILTER_SANITIZE_EMAIL); // Email ou nome do usuário
-
+        $sala = filter_input(INPUT_POST, 'sala', FILTER_SANITIZE_SPECIAL_CHARS);
         $altura = str_replace(',', '.', $altura_raw);
 
+
         if (strlen($telefone) !== 9) {
-            header('Location:../../public/index.php?page=admin_dashboard');
+            // Redireciona de volta para a dashboard de administrador usando URL relativa ao index.php público.
+            header('Location: index.php?page=admin_dashboard');
             exit();
         }
-
-        // echo "<pre>";
-        // var_dump($_POST);
-        // echo "</pre>";
-        // die();
 
         if (!preg_match('/^\d{9}LA\d{3}$/', $numero_BI)) {
             die("Formato de numero de BI inválido");
         }
 
-        if (empty($nome)  || empty($email) || empty($telefone) || empty($nascimento) || empty($nacionalidade) || $sexo === "" || empty($nome_mae) || empty($nome_pai) || empty($numero_BI) || empty($provincia) || empty($altura) || empty($turma) || empty($curso) || empty($classe)) {
+        if (empty($nome)  || empty($email) || empty($telefone) || empty($nascimento) || empty($nacionalidade) || $sexo === "" || empty($nome_mae) || empty($nome_pai) || empty($numero_BI) || empty($provincia) || empty($altura) || empty($turma) || empty($curso) || empty($classe) || empty($sala)) {
             die("Preencha os campos, por favor");
         }
 
+        $idAluno =  Aluno::salvarAluno($nome, $email, $telefone, $nascimento, $sexo, $nacionalidade, $nome_pai, $nome_mae, $numero_BI, $provincia, $altura, $turma, $curso, $classe, $sala);
 
-        Aluno::salvarAluno($nome, $email, $telefone, $nascimento, $sexo, $nacionalidade, $nome_pai, $nome_mae, $numero_BI, $provincia, $altura, $turma, $curso, $classe);
+        $numeroDeMatricula = Matricula::gerarMatricula();
 
-
-        header("Location: ../../public/index.php?page=admin_dashboard");
+        Matricula::salvarMatricula($numeroDeMatricula, $idAluno, $turma);
+        
+        // Redireciona de volta para a dashboard de administrador usando URL relativa ao index.php público.
+        header("Location: index.php?page=admin_dashboard");
         exit();
     }
     public static function listarAlunos()
@@ -70,22 +80,6 @@ class AlunoDashboardController
         if (!is_array($alunosEncontrados)) {
             $alunosEncontrados = [];
         }
-        $viewPath = __DIR__ . '/../views/adminDashboardView.php';
-
-        require $viewPath;
-    }
-    public static function listarAlunosRecentes()
-    {
-        $alunosEncontrados = Aluno::listarAlunosRecentes();
-
-        if (!is_array($alunosEncontrados)) {
-            $alunosEncontrados = [];
-        }
-
-        echo "<pre>";
-        print_r($alunosEncontrados);
-        echo "</pre>";
-        exit;
         $viewPath = __DIR__ . '/../views/adminDashboardView.php';
 
         require $viewPath;

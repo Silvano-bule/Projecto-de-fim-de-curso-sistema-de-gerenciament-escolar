@@ -10,6 +10,7 @@ use App\Models\Turma;
 use App\Models\Curso;
 use App\Models\Teacher;
 use App\Models\Classe;
+use App\Models\Matricula;
 
 class AdminDashboardController
 {
@@ -17,8 +18,27 @@ class AdminDashboardController
     {
         AuthController::iniciarSessao();
 
-        /*  var_dump($_SESSION['user_tipo']);
-        exit; */
+        /*    $matricula = Matricula::listarAlunosComMatriculas();
+        echo "<pre>";
+        print_r($matricula);
+        echo "</pre>";
+        die(); */
+
+        $alunosRecentes = Aluno::listarAlunosRecentes();
+/* 
+        echo "<pre>";
+        print_r($alunosRecentes);
+        echo "</pre>";
+        die(); */
+        if (!is_array($alunosRecentes)) {
+            $alunosRecentes = [];
+        }
+
+        $turmasEncontradas = Turma::listarTurma();
+        if (!is_array($turmasEncontradas)) {
+            $turmasEncontradas = [];
+        }
+
 
         if (AuthController::isLogged() === false) {
             header("Location: index.php?page=entrar");
@@ -41,7 +61,11 @@ class AdminDashboardController
             'cursosEncontrados' => Curso::listarCursos(),
             'totalClasses' => Classe::totalClasses(),
             'classesEncontradas' => Classe::classes(),
+            'alunosRecentes' => $alunosRecentes,
+            'matriculaGerada' => Matricula::listarAlunosComMatriculas()
         ];
+
+
         extract($dados);
         require_once __DIR__ . '/../views/adminDashboardView.php';
     }

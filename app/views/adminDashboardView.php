@@ -306,9 +306,9 @@
                                     <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                                         <thead class="bg-gray-50 dark:bg-gray-800">
                                             <tr>
+                                                <h1>Gestão rápida de alunos</h1>
                                                 <th scope="col" class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                                     <div class="flex items-center gap-x-3">
-                                                        <input type="checkbox" class="text-blue-500 border-gray-300 rounded dark:bg-gray-900 dark:ring-offset-gray-900 dark:border-gray-700">
                                                         <button class="flex items-center gap-x-2">
                                                             <span>Matricula Nª</span>
 
@@ -341,19 +341,15 @@
                                                     Sala
                                                 </th>
 
-                                                <th scope="col" class="relative py-3.5 px-4">
-                                                    <span class="sr-only">Actions</span>
-                                                </th>
                                             </tr>
                                         </thead>
                                         <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-                                            <?php if (!empty($dados['alunosEncontrados'])): ?>
-                                                <?php foreach ($dados['alunosEncontrados'] as $aluno): ?>
+                                            <?php if (!empty($dados['alunosRecentes'])): ?>
+                                                <?php foreach ($dados['alunosRecentes'] as $aluno): ?>
                                                     <tr>
                                                         <td class="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
                                                             <div class="inline-flex items-center gap-x-3">
-                                                                <input type="checkbox" class="text-blue-500 border-gray-300 rounded dark:bg-gray-900 dark:ring-offset-gray-900 dark:border-gray-700">
-                                                                <span><?= htmlspecialchars($aluno['numero_BI'] ?? 'N/A') ?></span>
+                                                                <span><?= htmlspecialchars($aluno['numero_matricula'] ?? 'N/A') ?></span>
                                                             </div>
                                                         </td>
                                                         <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
@@ -363,37 +359,19 @@
                                                             <?= htmlspecialchars($aluno['nascimento'] ?? 'N/A') ?>
                                                         </td>
                                                         <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                            <?= htmlspecialchars($aluno['classe_aluno'] ?? 'N/A') ?>
+                                                            <?= htmlspecialchars($aluno['id_classe'] ?? 'N/A') ?>
                                                         </td>
                                                         <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                                                             <!-- Aqui você pode buscar o nome da turma se quiser, mas por simplicidade, mostra o ID -->
-                                                            <?= htmlspecialchars($aluno['idturma'] ?? 'N/A') ?>
+                                                            <?= htmlspecialchars($aluno['id_turma'] ?? 'N/A') ?>
                                                         </td>
                                                         <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                            <!-- Sala não está na tabela aluno, então N/A -->
-                                                            N/A
-                                                        </td>
-                                                        <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                                            <div class="flex items-center gap-x-6">
-                                                                <button class="text-blue-500 transition-colors duration-200 hover:text-indigo-500 focus:outline-none">
-                                                                    Editar
-                                                                </button>
-                                                                <button class="text-red-500 transition-colors duration-200 hover:text-red-600 focus:outline-none">
-                                                                    Deletar
-                                                                </button>
-                                                            </div>
+                                                            <?= htmlspecialchars($aluno['sala'] ?? 'N/A') ?>
                                                         </td>
                                                     </tr>
                                                 <?php endforeach; ?>
                                             <?php else: ?>
-                                                <?php if (!empty($alunosEncontrados)): ?>
-                                                    <?php foreach ($alunosEncontrados as $aluno): ?>
-                                                        <tr>
-                                                            <td colspan="7" class="text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap p-4">
-                                                                <p class="text-center text-gray-500 font-light"><?= $aluno['nome'] ?? 'N/A' ?></p>
-                                                            </td>
-                                                        </tr>
-                                                    <?php endforeach; ?>
+                                                <?php if (!empty($dados['alunosRecentes'])): ?>
                                                 <?php else: ?>
                                                     <tr>
                                                         <td colspan="7" class="text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap p-4">
@@ -552,6 +530,21 @@
                             <?php endif; ?>
                         </select>
                     </div>
+                    <div>
+                        <label class="text-gray-700 dark:text-gray-200" for="sala">Sala</label>
+                        <select name="sala" id="sala" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring">
+                            <option value="">Selecionar Sala</option>
+                            <?php if (empty($turmasEncontradas)): ?>
+                                <option value="" disabled>Nenhuma sala cadastrada</option>
+                            <?php else: ?>
+                                <?php foreach ($turmasEncontradas as $turma): ?>
+                                    <option value="<?php echo htmlspecialchars($turma['idturma']); ?>">
+                                        <?php echo htmlspecialchars($turma['sala']); ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                        </select>
+                    </div>
                 </div>
                 <button type="submit" class=" m-4  btn btn-success text-white shadow-md hover:shadow-lg transition-all cursor-poiter">
                     Salvar
@@ -565,7 +558,7 @@
             <div class="flex flow-row justify-between items-center">
                 <h3 class="text-lg font-bold">Criar Turma</h3>
             </div>
-            <form action="/TCC/SGE/app/controllers/TurmaAlunoController.php" method="POST" id="formulario">
+            <form action="index.php?page=turma&action=pegarInfoTurma" method="POST" id="formulario">
                 <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-2">
                     <div>
                         <label class="text-gray-700 dark:text-gray-200" for="nome_turma">Nome da Turma</label>
@@ -723,6 +716,7 @@
             </form>
         </div>
     </dialog>
+
     <script src="assets/js/script.js"></script>
 </body>
 

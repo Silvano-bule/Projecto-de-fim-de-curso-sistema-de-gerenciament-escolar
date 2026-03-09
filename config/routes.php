@@ -6,6 +6,7 @@ use App\controllers\entrarController;
 use App\controllers\AdminDashboardController;
 use App\controllers\ProfessorDashboardController;
 use App\controllers\AlunoDashboardController;
+use App\controllers\TurmaAlunoController;
 
 
 define('AVAILABLE_ROUTES', [
@@ -17,7 +18,8 @@ define('AVAILABLE_ROUTES', [
     'aluno_dashboard' => AlunoDashboardController::class,
     'classe' => App\controllers\ClasseController::class,
     'Auth' => App\controllers\AuthController::class,
-    'matricular_aluno' => AlunoDashboardController::class,  
+    'matricular_aluno' => AlunoDashboardController::class,
+    'turma' => TurmaAlunoController::class
 ]);
 
 define('DEFAULT_ROUTE', homeController::class);

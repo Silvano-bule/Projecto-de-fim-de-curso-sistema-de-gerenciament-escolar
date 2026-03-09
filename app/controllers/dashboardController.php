@@ -12,7 +12,6 @@ class dashboardController
             header("Location: index.php?page=entrar");
             exit;
         }
-
         
     }
 }
