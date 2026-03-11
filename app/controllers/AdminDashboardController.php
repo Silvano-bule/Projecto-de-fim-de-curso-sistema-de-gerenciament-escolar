@@ -25,11 +25,12 @@ class AdminDashboardController
         die(); */
 
         $alunosRecentes = Aluno::listarAlunosRecentes();
-/* 
-        echo "<pre>";
-        print_r($alunosRecentes);
+
+       /*  echo "<pre>";
+        print_r($alunos);
         echo "</pre>";
         die(); */
+
         if (!is_array($alunosRecentes)) {
             $alunosRecentes = [];
         }
@@ -62,7 +63,8 @@ class AdminDashboardController
             'totalClasses' => Classe::totalClasses(),
             'classesEncontradas' => Classe::classes(),
             'alunosRecentes' => $alunosRecentes,
-            'matriculaGerada' => Matricula::listarAlunosComMatriculas()
+            'matriculaGerada' => Matricula::listarAlunosComMatriculas(),
+            'alunos' => Aluno::listarAlunos()
         ];
 
 
