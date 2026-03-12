@@ -40,4 +40,13 @@ class Teacher
             echo "ERRO AO SALVAR NO BANCO: " . $e->getMessage();
         }
     }
+    public static function listarProfessores()
+    {
+        $db = Database::getConnection();
+        $sql = "SELECT * FROM professor";
+        $stmt = $db->prepare($sql);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

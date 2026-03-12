@@ -416,23 +416,42 @@
                                                 <h1 class="text-2xl font-bold text-white">Professores</h1>
                                                 <p>Gerencie o corpo docente</p>
                                             </div>
-                                            <button class="flex flow-row items-center bg-blue-500 text-white rounded-md px-3 cursor-pointer" id="professor" onclick="my_modal_1.showModal()">
+                                            <button class="flex flow-row items-center bg-blue-500 text-white rounded-md px-3 cursor-pointer" id="professor" onclick="modal_professor.showModal()">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                                                 </svg>
-                                                <div tabindex="0" role="button" class="m-2">Novo aluno</div>
+                                                <div tabindex="0" role="button" class="m-2">Novo Professor</div>
                                             </button>
                                         </div>
-                                        <input id="inputPesquisa" type="text" class="mt-8 px-4 py-2 text-gray-700 bg-white border rounded-md dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 min-w-full" placeholder="Buscar Alunos">
+                                        <input id="inputPesquisa" type="text" class="mt-8 px-4 py-2 text-gray-700 bg-white border rounded-md dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 min-w-full" placeholder="Buscar Professores">
                                         <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                                             <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8 mt-4">
-                                                <div class="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
-                                                    <div>
-                                                        <h1 class="font-semibold text-lg text-foreground">Nome do usuario</h1>
-                                                        <p>Email do usuario</p>
-                                                        <p>Disciplina</p>
-                                                        <p>QuantidadendeTurmas e Alunos</p>
-                                                        <button>Ver Perfil</button>
+                                                <div class="p-6 pt-0">
+                                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                        <?php foreach ($professores as $professor): ?>
+                                                            <div class="p-6 rounded-lg border border-border hover:border-primary hover:not-first-of-type:shadow-lg transition-all duration-200" id="itemProfessor">
+                                                                <div class="p-6 rounded-lg border border-border hover:border-primary hover:shadow-lg transition-all duration-200">
+                                                                    <div class="flex items-start gap-4" id="itemProfessor">
+                                                                        <div class="h-14 w-14 rounded-full bg-gradient-to-br from-primary to-accent-foreground flex items-center justify-center flex-shrink-0"><span class="text-xl font-bold text-primary-foreground">J</span></div>
+                                                                        <div class="flex-1">
+                                                                            <h3 class="font-semibold text-lg text-foreground"><?= $professor['nome'] ?></h3>
+                                                                            <div class="flex items-center gap-2 mt-1 text-sm text-muted-foreground"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail h-3 w-3">
+                                                                                    <rect width="20" height="16" x="2" y="4" rx="2"></rect>
+                                                                                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+                                                                                </svg><?= $professor['email'] ?></div>
+                                                                            <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-primary text-primary-foreground hover:bg-primary/80 mt-3">Matemática</div>
+                                                                            <div class="flex items-center gap-4 mt-4 text-sm">
+                                                                                <div class="flex items-center gap-1 text-muted-foreground"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-book-open h-4 w-4">
+                                                                                        <path d="M12 7v14"></path>
+                                                                                        <path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"></path>
+                                                                                    </svg><span>5 turmas</span></div>
+                                                                                <div class="text-muted-foreground">156 alunos</div>
+                                                                            </div><button class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3 mt-4 w-full">Ver Perfil</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        <?php endforeach; ?>
                                                     </div>
                                                 </div>
                                             </div>
@@ -442,7 +461,6 @@
                             </div>
                         </div>
                     </div>
-
                 </section>
             </div>
             <!-- Open the modal using ID.showModal() method -->

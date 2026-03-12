@@ -47,19 +47,41 @@ function trocarConteudo(alvo) {
     document.getElementById(alvo).classList.remove('hidden');
 }
 
-const inputSearch = document.querySelector('#inputPesquisa');
+const inputSearch = document.querySelectorAll('#inputPesquisa');
 const linhas = document.querySelectorAll('#tabelaAlunos tbody tr');
+const linhasProfessores = document.querySelectorAll('#itemProfessor');
+function detetarCaracter() {
+    inputSearch.forEach(input => {
+        input.addEventListener('input', function () {
+            const termo = this.value.toLowerCase();
 
-inputSearch.addEventListener('input', function () {
-    const termo = inputSearch.value.toLowerCase();
+            function filtrarLinhas(linhas) {
+                linhas.forEach(linha => {
+                    const conteudoLinha = linha.textContent.toLowerCase();
 
-    linhas.forEach(linha => {
-        const conteudoLinha = linha.textContent.toLowerCase();
+                    if (conteudoLinha.includes(termo)) {
+                        linha.style.display = '';
+                    } else {
+                        linha.style.display = 'none';
+                    }
 
-        if (conteudoLinha.includes(termo)) {
-            linha.style.display = '';
-        } else {
-            linha.style.display = 'none';
-        }
+                });
+            }
+            filtrarLinhas(linhas);
+
+            function filtrarLinhasProfessores(linhasProfessores) {
+                linhasProfessores.forEach(linha => {
+                    const conteudolinha = linha.textContent.toLowerCase();
+
+                    if (conteudolinha.includes(termo)) {
+                        linha.style.display = '';
+                    } else {
+                        linha.style.display = 'none';
+                    }
+                })
+            }
+            filtrarLinhasProfessores(linhasProfessores);
+        });
     });
-});
+}
+detetarCaracter();
