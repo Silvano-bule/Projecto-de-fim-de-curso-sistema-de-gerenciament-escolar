@@ -19,7 +19,8 @@ define('AVAILABLE_ROUTES', [
     'classe' => App\controllers\ClasseController::class,
     'Auth' => App\controllers\AuthController::class,
     'matricular_aluno' => AlunoDashboardController::class,
-    'turma' => TurmaAlunoController::class
+    'turma' => TurmaAlunoController::class,
+    'removerAluno' => AlunoDashboardController::class
 ]);
 
 define('DEFAULT_ROUTE', homeController::class);

@@ -85,3 +85,13 @@ function detetarCaracter() {
     });
 }
 detetarCaracter();
+
+function removerAluno(idaluno) {
+    fetch("index.php?page=aluno_dashboard&action=removerAluno&id=" + idaluno)
+        .then(response => response.text())
+        .then(msg => {
+            alert("Aluno removido");
+            location.reload();
+        });
+
+}

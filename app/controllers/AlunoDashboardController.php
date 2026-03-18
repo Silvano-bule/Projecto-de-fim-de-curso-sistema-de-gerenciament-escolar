@@ -68,7 +68,7 @@ class AlunoDashboardController
         $numeroDeMatricula = Matricula::gerarMatricula();
 
         Matricula::salvarMatricula($numeroDeMatricula, $idAluno, $turma);
-        
+
         // Redireciona de volta para a dashboard de administrador usando URL relativa ao index.php público.
         header("Location: index.php?page=admin_dashboard");
         exit();
@@ -83,5 +83,13 @@ class AlunoDashboardController
         $viewPath = __DIR__ . '/../views/adminDashboardView.php';
 
         require $viewPath;
+    }
+    public function removerAluno()
+    {
+        if (isset($_GET['id'])) {
+            $id = $_GET['id'];
+            Aluno::removerAluno($id);
+        }
+        header("Location: ?page = Aluno");
     }
 }

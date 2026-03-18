@@ -48,7 +48,7 @@ class Aluno
 
             ]);
 
-            return $db->lastInsertId(); 
+            return $db->lastInsertId();
         } catch (PDOException $e) {
             echo "Erro ao salvar no banco: " . $e->getMessage();
         }
@@ -90,5 +90,21 @@ class Aluno
         $stmt  = $db->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    public static function removerAluno($id)
+    {
+        $db = Database::getConnection();
+
+        $sql1=  "DELETE FROM matricula WHERE alunomatricula = :id";
+        $stmt1 = $db->prepare($sql1);
+        $stmt1->execute([
+            ':id' => $id
+        ]);
+
+        $sql = "DELETE FROM aluno WHERE idaluno = :id";
+        $stmt = $db->prepare($sql);
+        $stmt->execute([
+            ':id' => $id
+        ]);
     }
 }
