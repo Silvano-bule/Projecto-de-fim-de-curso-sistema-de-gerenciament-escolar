@@ -107,4 +107,16 @@ class Aluno
             ':id' => $id
         ]);
     }
+    public  static function buscarAlunoPorId($id)
+    {
+        $db = Database::getConnection();
+
+        $sql = "SELECT * FROM aluno WHERE idaluno = :id";
+        $stmt = $db->prepare($sql);
+        $stmt->execute([
+            ':id' => $id
+        ]);
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 }

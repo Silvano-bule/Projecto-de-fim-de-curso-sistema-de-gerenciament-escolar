@@ -92,4 +92,17 @@ class AlunoDashboardController
         }
         header("Location: ?page = Aluno");
     }
+    public function editarAluno()
+    {
+
+        if ($_GET['id']) {
+            $id = $_GET['id'];
+
+            header('content-type: application/json');
+            $aluno = Aluno::buscarAlunoPorId($id);
+            echo json_encode($aluno);
+
+            exit;
+        }
+    }
 }

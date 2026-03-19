@@ -384,7 +384,7 @@
 
                                                             <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"><?= $aluno['email'] ?></td>
                                                             <td>
-                                                                <div class="dropdown dropdown-hovern">
+                                                                <div class="dropdown dropdown-hover">
                                                                     <div tabindex="0" role="button" class="btn m-1 "> <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                                                                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z" />
                                                                         </svg></div>
@@ -398,7 +398,7 @@
                                                                             </a>
                                                                         </li>
                                                                         <li>
-                                                                            <a>
+                                                                            <a onclick="editarAluno(<?= $aluno['idaluno'] ?>)">
                                                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
                                                                                     <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
                                                                                 </svg>
@@ -420,65 +420,82 @@
                 </section>
 
                 <!-- Area de Professor -->
-                <section id="Professores" class="p-4 ml-64 hidden">
+                <section id="Professores" class="p-4 ml-64">
                     <div class="grid grid-row-2 gap-8">
-                        <div class="container mx-auto px-4">
-                            <div class="flex flex-col gap-4">
-                                <section class="container px-4 mx-auto">
-                                    <div class="flex flex-col gap-4 mt-6">
-                                        <div class="flex flex-row justify-between items-center mt-8">
-                                            <div>
-                                                <h1 class="text-2xl font-bold text-white">Professores</h1>
-                                                <p>Gerencie o corpo docente</p>
-                                            </div>
-                                            <button class="flex flow-row items-center bg-blue-500 text-white rounded-md px-3 cursor-pointer" id="professor" onclick="modal_professor.showModal()">
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                                                </svg>
-                                                <div tabindex="0" role="button" class="m-2">Novo Professor</div>
-                                            </button>
-                                        </div>
-                                        <input id="inputPesquisa" type="text" class="mt-8 px-4 py-2 text-gray-700 bg-white border rounded-md dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 min-w-full" placeholder="Buscar Professores">
-                                        <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                                            <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8 mt-4">
-                                                <div class="p-6 pt-0">
-                                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                                        <?php foreach ($professores as $professor): ?>
-                                                            <div class="p-6 rounded-lg border border-border hover:border-primary hover:not-first-of-type:shadow-lg transition-all duration-200" id="itemProfessor">
-                                                                <div class="p-6 rounded-lg border border-border hover:border-primary hover:shadow-lg transition-all duration-200">
-                                                                    <div class="flex items-start gap-4" id="itemProfessor">
-                                                                        <div class="h-14 w-14 rounded-full bg-gradient-to-br from-primary to-accent-foreground flex items-center justify-center flex-shrink-0"><span class="text-xl font-bold text-primary-foreground">J</span></div>
-                                                                        <div class="flex-1">
-                                                                            <h3 class="font-semibold text-lg text-foreground"><?= $professor['nome'] ?></h3>
-                                                                            <div class="flex items-center gap-2 mt-1 text-sm text-muted-foreground"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail h-3 w-3">
-                                                                                    <rect width="20" height="16" x="2" y="4" rx="2"></rect>
-                                                                                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
-                                                                                </svg><?= $professor['email'] ?></div>
-                                                                            <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-primary text-primary-foreground hover:bg-primary/80 mt-3">Matemática</div>
-                                                                            <div class="flex items-center gap-4 mt-4 text-sm">
-                                                                                <div class="flex items-center gap-1 text-muted-foreground"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-book-open h-4 w-4">
-                                                                                        <path d="M12 7v14"></path>
-                                                                                        <path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"></path>
-                                                                                    </svg><span>5 turmas</span></div>
-                                                                                <div class="text-muted-foreground">156 alunos</div>
-                                                                            </div><button class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3 mt-4 w-full">Ver Perfil</button>
+
+                        <section class="container px-4 mx-auto">
+                            <div class="flex flex-col gap-4 mt-6">
+                                <div class="flex flex-row justify-between items-center mt-8">
+                                    <div>
+                                        <h1 class="text-2xl font-bold text-white">Alunos</h1>
+                                        <p>Gerencie todos os alunos cadastrados</p>
+                                    </div>
+                                    <button class="flex flow-row items-center bg-blue-500 text-white rounded-md px-3 cursor-pointer" id="aluno" onclick="my_modal_1.showModal()">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                        </svg>
+                                        <div tabindex="0" role="button" class="m-2">Novo aluno</div>
+                                    </button>
+                                </div>
+                                <input id="inputPesquisa" type="text" class="mt-8 px-4 py-2 text-gray-700 bg-white border rounded-md dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 min-w-full" placeholder="Buscar Alunos">
+                                <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                                    <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8 mt-4">
+                                        <div class="overflow-visible border border-gray-200 dark:border-gray-700 md:rounded-lg">
+                                            <table id="tabelaAlunos" class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                                                <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
+                                                    <?php foreach ($dados['alunos'] as $aluno): ?>
+                                                        <tr class="flex flex-row justify-between items-center px-4">
+                                                            <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                                                <div class="inline-flex items-center gap-x-3">
+                                                                    <div class="flex items-center gap-x-2">
+                                                                        <img class="object-cover w-10 h-10 rounded-full" src="https://images.unsplash.com/photo-1499470932971-a90681ce8530?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" alt="">
+                                                                        <div>
+                                                                            <h2 class="font-medium text-gray-800 dark:text-white "><?= $aluno['nome'] ?></h2>
+                                                                            <p class="text-sm font-normal text-gray-600 dark:text-gray-400"><?= $aluno['email'] ?> <span class="text-sm font-normal text-gray-600 dark:text-gray-400 ml-10"><?= $aluno['telefone'] ?> </span></p>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                        <?php endforeach; ?>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                                            </td>
+
+                                                            <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"><?= $aluno['email'] ?></td>
+                                                            <td>
+                                                                <div class="dropdown dropdown-hover">
+                                                                    <div tabindex="0" role="button" class="btn m-1 "> <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                                                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z" />
+                                                                        </svg></div>
+                                                                    <ul class="dropdown-content menu bg-base-100 rounded-box w-52 p-2 shadow-sm  absolute right-0">
+                                                                        <li>
+                                                                            <a onclick="removerAluno(<?= $aluno['idaluno'] ?>)">
+                                                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4 text-red-500">
+                                                                                    <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                                                                </svg>
+                                                                                Excluir
+                                                                            </a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a onclick="editarAluno(<?= $aluno['idaluno'] ?>)">
+                                                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+                                                                                    <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                                                                                </svg>
+                                                                                Editar
+                                                                            </a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    <?php endforeach; ?>
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
-                                </section>
+                                </div>
                             </div>
-                        </div>
                     </div>
                 </section>
             </div>
-            <!-- Open the modal using ID.showModal() method -->
+
+            <!--Modal Aluno -->
             <dialog id="my_modal_1" class="modal">
                 <div class="modal-box w-screen max-w-5xl">
                     <div class="flex flow-row justify-between items-center">
@@ -496,41 +513,41 @@
                             </div>
                             <div>
                                 <label class="text-gray-700 dark:text-gray-200" for="telefone">Telefone</label>
-                                <input placeholder="apenas 9 dígitos" name="telefone_aluno" type="text" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" minlength="9" maxlength="9" pattern="\d{9}" required oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                                <input placeholder="apenas 9 dígitos" id="telefone" name="telefone_aluno" type="text" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" minlength="9" maxlength="9" pattern="\d{9}" required oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                                 <?php if (isset($_GET['erro']) && $_GET['erro'] == 'telefone'): ?>
                                     <p class="text-red-500  text-xs mt-1">Telefone Inválido: Deve conter exatamente 9 dígitos.</p>
                                 <?php endif; ?>
                             </div>
                             <div>
                                 <label class="text-gray-700 dark:text-gray-200" for="Nascimento">Nascimento</label>
-                                <input autocomplete="on" type="date" name="nascimento_aluno" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" required>
+                                <input autocomplete="on" type="date" id="nasc" name="nascimento_aluno" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" required>
                             </div>
                             <div>
                                 <label class="text-gray-700 dark:text-gray-200" for="Sexo">Sexo</label>
-                                <select name="sexo_aluno" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring">
+                                <select name="sexo_aluno" id="sexo" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring">
                                     <option value="M">Masculino</option>
                                     <option value="F">Femenino</option>
                                 </select>
                             </div>
                             <div>
                                 <label class="text-gray-700 dark:text-gray-200" for="Nacionalidade">Nacionalidade</label>
-                                <input autocomplete="on" type="text" name="nacionalidade_aluno" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" required>
+                                <input autocomplete="on" type="text" id="nacio" name="nacionalidade_aluno" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" required>
                             </div>
                             <div>
                                 <label class="text-gray-700 dark:text-gray-200" for="Nome da pai">Nome do Pai</label>
-                                <input autocomplete="on" type="text" name="pai_aluno" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" required>
+                                <input autocomplete="on" type="text" name="pai_aluno" id="nome_pai" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" required>
                             </div>
                             <div>
                                 <label class="text-gray-700 dark:text-gray-200" for="Nome da mae">Nome da mae</label>
-                                <input autocomplete="on" type="text" name="mae_aluno" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" required>
+                                <input autocomplete="on" type="text" name="mae_aluno" id="nome_mae" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" required>
                             </div>
                             <div>
                                 <label class="text-gray-700 dark:text-gray-200" for="Numero do BI">Número do BI</label>
-                                <input autocomplete="on" type="text" name="numero_BI_aluno" placeholder="000000000LA000" pattern="[0-9]{9}LA[0-9]{3}" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" required maxlength="14">
+                                <input autocomplete="on" type="text" name="numero_BI_aluno" id="numero_BI" placeholder="000000000LA000" pattern="[0-9]{9}LA[0-9]{3}" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-30  dark:border-gray-600 focus:border-blue-400 focus:ring-blue-30０ focus:ring-opacity-4０ dark:focus:border-blue-3００ focus:outline-none focus:ring" required maxlength="14">
                             </div>
                             <div>
                                 <label class="text-gray-700 dark:text-gray-200" for="Provincia">Provincia</label>
-                                <select name="provincia_aluno" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring">
+                                <select name="provincia_aluno" id="provincia" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring">
                                     <option value="Bengo">Bengo</option>
                                     <option value="Benguela">Benguela</option>
                                     <option value="Bié">Bié</option>
@@ -554,11 +571,11 @@
                             </div>
                             <div>
                                 <label class="text-gray-700 dark:text-gray-200" for="Altura">Altura</label>
-                                <input autocomplete="on" type="text" pattern="[0-9.,]+" placeholder="Ex: 1,75" title="Digite a altura usando o ponto ou virgula" name="altura_aluno" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" required>
+                                <input autocomplete="on" type="text" pattern="[0-9.,]+" placeholder="Ex: 1,75" title="Digite a altura usando o ponto ou virgula" id="altura" name="altura_aluno" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" required>
                             </div>
                             <div>
                                 <label class="text-gray-700 dark:text-gray-200" for="Classe">Classe</label>
-                                <select name="classe_aluno" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" required>
+                                <select name="classe_aluno" id="classe" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" required>
                                     <option value="">Selecionar classe</option>
                                     <?php if (empty($classesEncontradas)): ?>
                                         <option value="" disabled>Nenhuma classe cadastrada</option>
@@ -574,7 +591,7 @@
                             <div>
                                 <label class="text-gray-700 dark:text-gray-200" for="Classe">Turma</label>
                                 <!-- Primeiro, verifique se a variável existe -->
-                                <select autocomplete="on" name="turma_aluno" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" required>
+                                <select autocomplete="on" id="turma" name="turma_aluno" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" required>
 
                                     <!-- Option padrão com value vazio -->
                                     <option value="">Selecionar turma</option>

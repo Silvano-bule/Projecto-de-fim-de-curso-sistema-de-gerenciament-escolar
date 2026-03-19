@@ -95,3 +95,28 @@ function removerAluno(idaluno) {
         });
 
 }
+
+function editarAluno(idaluno) {
+
+    fetch("index.php?page=aluno_dashboard&action=editarAluno&id=" + idaluno)
+        .then(response => response.json())
+        .then(aluno => {
+            document.getElementById('my_modal_1').showModal();
+
+
+            document.getElementById('username').value = aluno.nome;
+            document.getElementById('email').value = aluno.email;
+            document.getElementById('nasc').value = aluno.nascimento;
+            document.getElementById('sexo').value = aluno.sexo;
+            document.getElementById('nacio').value = aluno.nacionalidade;
+            document.getElementById('nome_pai').value = aluno.nome_pai;
+            document.getElementById('nome_mae').value = aluno.nome_mae;
+            document.getElementById('numero_BI').value = aluno.numero_bi;
+            document.getElementById('provincia').value = aluno.provincia;
+            document.getElementById('altura').value = aluno.altura;
+            document.getElementById('classe').value = aluno.id_classe;
+            document.getElementById('turma').value = aluno.id_turma;
+            document.getElementById('Sala').value = aluno.id_sala;
+            document.getElementById('Curso').value = aluno.id_curso;
+        })
+}
