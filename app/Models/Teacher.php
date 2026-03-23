@@ -49,4 +49,29 @@ class Teacher
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public static function removerProfessor($id)
+    {
+        try {
+            $db = Database::getConnection();
+            $sql = "DELETE FROM professor WHERE idprofessor = :id";
+            $stmt = $db->prepare($sql);
+            $stmt->execute([':id' => $id]);
+        } catch (PDOException $e) {
+            echo "Erro ao remover professor: " . $e->getMessage();
+        }
+    }
+
+    public static function editarProfessor($id)
+    {
+        try {
+            $db = Database::getConnection();
+            $sql = "SELECT * FROM professor WHERE idprofessor = :id";
+            $stmt = $db->prepare($sql);
+            $stmt->execute([':id' => $id]);
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            echo "Erro ao buscar professor: " . $e->getMessage();
+        }
+    }
 }

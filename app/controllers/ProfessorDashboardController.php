@@ -1,4 +1,5 @@
 <?php
+
 namespace App\controllers;
 
 use App\Models\Teacher;
@@ -21,7 +22,7 @@ class ProfessorDashboardController
         $nacionalidade  = filter_input(INPUT_POST, 'nacionalidade_professor', FILTER_SANITIZE_SPECIAL_CHARS);
         $provincia = filter_input(INPUT_POST, 'provincia_professor', FILTER_SANITIZE_SPECIAL_CHARS);
 
-          if (empty($nome) || empty($email) || empty($telefone) || empty($nascimento) || empty($sexo) || empty($nacionalidade) || empty($provincia)) {
+        if (empty($nome) || empty($email) || empty($telefone) || empty($nascimento) || empty($sexo) || empty($nacionalidade) || empty($provincia)) {
             echo "Preencha todos os campos";
             return;
         }
@@ -29,6 +30,35 @@ class ProfessorDashboardController
         Teacher::guardarDados($nome, $email, $telefone, $nascimento, $sexo, $nacionalidade, $provincia);
 
         header('Location: index.php?page=admin_dashboard');
+        exit;
+    }
+
+    public function removerProfessor()
+    {
+        if (isset($_GET['id'])) {
+            $id = $_GET['id'];
+            Teacher::removerProfessor($id);
+        }
+    }
+    public function editarProfessor()
+    {
+        header('Content-Type: application/json');
+
+        if (!isset($_GET['id'])) {
+            http_response_code(400);
+            echo json_encode(["erro" => "ID do professor não fornecido"]);
+            exit;
+        }
+
+        $id = $_GET['id'];
+        $professor = Teacher::editarProfessor($id);
+
+        if ($professor) {
+            echo json_encode($professor);
+        } else {
+            http_response_code(404);
+            echo json_encode(["erro" => "Professor não encontrado"]);
+        }
         exit;
     }
 }

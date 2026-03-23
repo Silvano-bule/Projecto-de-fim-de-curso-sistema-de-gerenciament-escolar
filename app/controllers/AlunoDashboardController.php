@@ -12,9 +12,9 @@ use App\Models\Matricula;
 
 class AlunoDashboardController
 {
-    public static function render()
+    public function render()
     {
-        AuthController::iniciarSessao();
+        AuthController::iniciarSessao(); 
         $alunosEncontrados = Aluno::listarAlunosRecentes();
 
         if (!is_array($alunosEncontrados)) {
@@ -29,8 +29,12 @@ class AlunoDashboardController
     }
 
 
-    public static function matricularAluno()
+    public function matricularAluno()
     {
+        // Verificar se é uma requisição AJAX
+        $isAjax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) && 
+                 strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
+
         $nome = filter_input(INPUT_POST, 'nome_aluno', FILTER_SANITIZE_SPECIAL_CHARS);
         $email = filter_input(INPUT_POST, 'email_aluno', FILTER_SANITIZE_EMAIL);
         $telefone = filter_input(INPUT_POST, 'telefone_aluno', FILTER_SANITIZE_NUMBER_INT);
@@ -48,32 +52,77 @@ class AlunoDashboardController
         $sala = filter_input(INPUT_POST, 'sala', FILTER_SANITIZE_SPECIAL_CHARS);
         $altura = str_replace(',', '.', $altura_raw);
 
-
+        // Validações
         if (strlen($telefone) !== 9) {
-            // Redireciona de volta para a dashboard de administrador usando URL relativa ao index.php público.
+            if ($isAjax) {
+                header('Content-Type: application/json');
+                http_response_code(400);
+                echo json_encode(["erro" => "Telefone deve conter exatamente 9 dígitos"]);
+                exit();
+            }
             header('Location: index.php?page=admin_dashboard');
             exit();
         }
 
         if (!preg_match('/^\d{9}LA\d{3}$/', $numero_BI)) {
+            if ($isAjax) {
+                header('Content-Type: application/json');
+                http_response_code(400);
+                echo json_encode(["erro" => "Formato de número do BI inválido"]);
+                exit();
+            }
             die("Formato de numero de BI inválido");
         }
 
         if (empty($nome)  || empty($email) || empty($telefone) || empty($nascimento) || empty($nacionalidade) || $sexo === "" || empty($nome_mae) || empty($nome_pai) || empty($numero_BI) || empty($provincia) || empty($altura) || empty($turma) || empty($curso) || empty($classe) || empty($sala)) {
+            if ($isAjax) {
+                header('Content-Type: application/json');
+                http_response_code(400);
+                echo json_encode(["erro" => "Preencha todos os campos obrigatórios"]);
+                exit();
+            }
             die("Preencha os campos, por favor");
         }
 
-        $idAluno =  Aluno::salvarAluno($nome, $email, $telefone, $nascimento, $sexo, $nacionalidade, $nome_pai, $nome_mae, $numero_BI, $provincia, $altura, $turma, $curso, $classe, $sala);
+        try {
+            $idAluno = Aluno::salvarAluno($nome, $email, $telefone, $nascimento, $sexo, $nacionalidade, $nome_pai, $nome_mae, $numero_BI, $provincia, $altura, $turma, $curso, $classe, $sala);
 
-        $numeroDeMatricula = Matricula::gerarMatricula();
+            if (!$idAluno) {
+                throw new \Exception("Falha ao salvar aluno no banco de dados");
+            }
 
-        Matricula::salvarMatricula($numeroDeMatricula, $idAluno, $turma);
+            $numeroDeMatricula = Matricula::gerarMatricula();
+            Matricula::salvarMatricula($numeroDeMatricula, $idAluno, $turma);
 
-        // Redireciona de volta para a dashboard de administrador usando URL relativa ao index.php público.
-        header("Location: index.php?page=admin_dashboard");
-        exit();
+            if ($isAjax) {
+                header('Content-Type: application/json');
+                http_response_code(200);
+                echo json_encode(["status" => "ok", "message" => "Aluno matriculado com sucesso"]);
+                exit();
+            }
+
+            // Redireciona de volta para a dashboard de administrador
+            header("Location: index.php?page=admin_dashboard");
+            exit();
+        } catch (\PDOException $e) {
+            if ($isAjax) {
+                header('Content-Type: application/json');
+                http_response_code(500);
+                echo json_encode(["erro" => "Erro de banco de dados: " . $e->getMessage()]);
+                exit();
+            }
+            die("Erro ao matricular aluno: " . $e->getMessage());
+        } catch (\Exception $e) {
+            if ($isAjax) {
+                header('Content-Type: application/json');
+                http_response_code(500);
+                echo json_encode(["erro" => "Erro interno: " . $e->getMessage()]);
+                exit();
+            }
+            die("Erro ao matricular aluno: " . $e->getMessage());
+        }
     }
-    public static function listarAlunos()
+    public function listarAlunos()
     {
         $alunosEncontrados = Aluno::listarAlunos();
 
@@ -92,17 +141,50 @@ class AlunoDashboardController
         }
         header("Location: ?page = Aluno");
     }
-    public function editarAluno()
+    public function atualizarAluno()
     {
+        header('Content-Type: application/json');
 
-        if ($_GET['id']) {
-            $id = $_GET['id'];
+        $dados = $_POST;
 
-            header('content-type: application/json');
-            $aluno = Aluno::buscarAlunoPorId($id);
-            echo json_encode($aluno);
-
+        if (empty($dados)) {
+            http_response_code(400);
+            echo json_encode(["erro" => "Dados POST vazios"]);
             exit;
         }
+
+        try {
+            Aluno::atualizarAluno($dados);
+            http_response_code(200);
+            echo json_encode(["status" => "ok"]);
+        } catch (\Exception $e) {
+            error_log("Erro ao atualizar aluno (" . $e->getFile() . ":" . $e->getLine() . "): " . $e->getMessage());
+            http_response_code(500);
+            echo json_encode(["erro" => "Erro interno: " . $e->getMessage()]);
+        }
+        exit;
+    }
+
+    public function obterAluno()
+    {
+        header('Content-Type: application/json');
+
+        if (!isset($_GET['id'])) {
+            http_response_code(400);
+            echo json_encode(["erro" => "ID do aluno não fornecido"]);
+            exit;
+        }
+
+        $id = intval($_GET['id']);
+        $aluno = Aluno::obterAlunoPorId($id);
+
+        if ($aluno) {
+            http_response_code(200);
+            echo json_encode($aluno);
+        } else {
+            http_response_code(404);
+            echo json_encode(["erro" => "Aluno com ID $id não encontrado", "id_buscado" => $id]);
+        }
+        exit;
     }
 }
