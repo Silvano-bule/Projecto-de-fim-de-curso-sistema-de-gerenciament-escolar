@@ -394,7 +394,7 @@
                                                                             </a>
                                                                         </li>
                                                                         <li>
-                                                                            <a onclick="editarAluno(<?= $aluno['idaluno'] ?>)">
+                                                                            <a onclick="obterAluno(<?= $aluno['idaluno'] ?>)">
                                                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
                                                                                     <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
                                                                                 </svg>
@@ -496,7 +496,7 @@
                     <div class="flex flow-row justify-between items-center">
                         <h3 class="text-lg font-bold">Inserir aluno</h3>
                     </div>
-                    <form action="index.php?page=aluno_dashboard" method="POST" id="formulario">
+                    <form action="index.php?page=aluno_dashboard&action=matricularAluno" method="POST" id="formulario">
                         <div class="grid grid-cols-3 gap-6 mt-4 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
                             <input type="hidden" name="idaluno" id="idaluno">
                             <div>
@@ -571,7 +571,7 @@
                             </div>
                             <div>
                                 <label class="text-gray-700 dark:text-gray-200" for="Classe">Classe</label>
-                                <select name="classe_aluno" id="classe" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" required>
+                                <select name="classe_aluno" id="Classe" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" required>
                                     <option value="">Selecionar classe</option>
                                     <?php if (empty($classesEncontradas)): ?>
                                         <option value="" disabled>Nenhuma classe cadastrada</option>
@@ -587,7 +587,7 @@
                             <div>
                                 <label class="text-gray-700 dark:text-gray-200" for="Classe">Turma</label>
                                 <!-- Primeiro, verifique se a variável existe -->
-                                <select autocomplete="on" id="turma" name="turma_aluno" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" required>
+                                <select autocomplete="on" id="Turma" name="turma_aluno" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" required>
 
                                     <!-- Option padrão com value vazio -->
                                     <option value="">Selecionar turma</option>
@@ -652,6 +652,8 @@
                         <button id="btnClose" type="button" class="cursor-pointer btn btn-error  text-white hover:text-red-600 hover:bg-red-300">Fechar</button>
                     </form>
                 </div>
+
+
             </dialog>
             <dialog id="modal_turma" class="modal">
                 <div class="modal-box w-screen max-w-2xl">

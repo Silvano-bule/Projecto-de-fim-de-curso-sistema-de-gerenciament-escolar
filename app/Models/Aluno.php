@@ -111,59 +111,18 @@ class Aluno
             ':id' => $id
         ]);
     }
-    public  static function atualizarAluno($dados)
-    {
-        try {
-            $db = Database::getConnection();
-
-            $sql = " UPDATE aluno SET nome = :nome, email = :email, telefone = :telefone, nascimento = :nascimento, sexo = :sexo, nacionalidade = :nacionalidade, nome_pai = :nome_pai, nome_mae = :nome_mae, numero_BI = :numero_BI, provincia = :provincia, altura = :altura, id_turma = :turma, id_curso = :curso, id_classe = :classe, sala = :sala WHERE idaluno = :id";
-
-            $stmt = $db->prepare($sql);
-
-            $result = $stmt->execute([
-                ':id' => $dados['idaluno'] ?? null,
-                ':nome' => $dados['nome_aluno'] ?? null,
-                ':email' => $dados['email_aluno'] ?? null,
-                ':telefone' => $dados['telefone_aluno'] ?? null,
-                ':nascimento' => $dados['nascimento_aluno'] ?? null,
-                ':sexo' => $dados['sexo_aluno'] ?? null,
-                ':nacionalidade' => $dados['nacionalidade_aluno'] ?? null,
-                ':nome_pai' => $dados['pai_aluno'] ?? null,
-                ':nome_mae' => $dados['mae_aluno'] ?? null,
-                ':numero_BI' => $dados['numero_BI_aluno'] ?? null,
-                ':provincia' => $dados['provincia_aluno'] ?? null,
-                ':altura' => $dados['altura_aluno'] ?? null,
-                ':classe' => $dados['classe_aluno'] ?? null,
-                ':turma' => $dados['turma_aluno'] ?? null,
-                ':curso' => $dados['curso'] ?? null,
-                ':sala' => $dados['sala'] ?? null,
-            ]);
-
-            if (!$result) {
-                throw new \Exception("Falha na execução da query: " . print_r($stmt->errorInfo(), true));
-            }
-
-            return true;
-        } catch (\PDOException $e) {
-            error_log("Erro PDO ao atualizar aluno (" . $e->getFile() . ":" . $e->getLine() . "): " . $e->getMessage());
-            throw new \Exception("Erro PDO ao atualizar aluno (" . $e->getFile() . ":" . $e->getLine() . "): " . $e->getMessage());
-        } catch (\Exception $e) {
-            error_log("Erro geral ao atualizar aluno (" . $e->getFile() . ":" . $e->getLine() . "): " . $e->getMessage());
-            throw new \Exception("Erro geral ao atualizar aluno (" . $e->getFile() . ":" . $e->getLine() . "): " . $e->getMessage());
-        }
-    }
-
     public static function obterAlunoPorId($id)
     {
-        try {
-            $db = Database::getConnection();
-            $sql = "SELECT * FROM aluno WHERE idaluno = :id";
-            $stmt = $db->prepare($sql);
-            $stmt->execute([':id' => $id]);
-            return $stmt->fetch(PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-            error_log("Erro ao obter aluno: " . $e->getMessage());
-            return null;
-        }
+        $db = Database::getConnection();
+
+        $sql = "SELECT * FROM aluno WHERE idaluno = :id";
+
+        $stmt =  $db->prepare($sql);
+
+        $stmt->execute([
+            ':id' => $id
+        ]);
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 }

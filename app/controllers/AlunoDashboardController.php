@@ -14,7 +14,7 @@ class AlunoDashboardController
 {
     public function render()
     {
-        AuthController::iniciarSessao(); 
+        AuthController::iniciarSessao();
         $alunosEncontrados = Aluno::listarAlunosRecentes();
 
         if (!is_array($alunosEncontrados)) {
@@ -32,8 +32,8 @@ class AlunoDashboardController
     public function matricularAluno()
     {
         // Verificar se é uma requisição AJAX
-        $isAjax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) && 
-                 strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
+        $isAjax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) &&
+            strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
 
         $nome = filter_input(INPUT_POST, 'nome_aluno', FILTER_SANITIZE_SPECIAL_CHARS);
         $email = filter_input(INPUT_POST, 'email_aluno', FILTER_SANITIZE_EMAIL);
@@ -141,29 +141,7 @@ class AlunoDashboardController
         }
         header("Location: ?page = Aluno");
     }
-    public function atualizarAluno()
-    {
-        header('Content-Type: application/json');
 
-        $dados = $_POST;
-
-        if (empty($dados)) {
-            http_response_code(400);
-            echo json_encode(["erro" => "Dados POST vazios"]);
-            exit;
-        }
-
-        try {
-            Aluno::atualizarAluno($dados);
-            http_response_code(200);
-            echo json_encode(["status" => "ok"]);
-        } catch (\Exception $e) {
-            error_log("Erro ao atualizar aluno (" . $e->getFile() . ":" . $e->getLine() . "): " . $e->getMessage());
-            http_response_code(500);
-            echo json_encode(["erro" => "Erro interno: " . $e->getMessage()]);
-        }
-        exit;
-    }
 
     public function obterAluno()
     {
@@ -184,6 +162,23 @@ class AlunoDashboardController
         } else {
             http_response_code(404);
             echo json_encode(["erro" => "Aluno com ID $id não encontrado", "id_buscado" => $id]);
+        }
+        exit;
+    }
+
+    public function obterAlunoPorId()
+    {
+        if (ob_get_length()) ob_clean();
+        $id = $_GET['id'] ?? null;
+
+        header("Content-Type: application/json; charset=UTF-8");
+
+        if ($id) {
+            $usuario = Aluno::obterAlunoPorId($id);
+
+            echo json_encode($usuario);
+        } else {
+            echo json_encode(["erro" => "Id não definido"]);
         }
         exit;
     }
