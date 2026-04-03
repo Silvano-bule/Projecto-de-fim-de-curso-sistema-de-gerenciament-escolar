@@ -7,7 +7,8 @@ use App\controllers\AdminDashboardController;
 use App\controllers\ProfessorDashboardController;
 use App\controllers\AlunoDashboardController;
 use App\controllers\TurmaAlunoController;
-
+use App\controllers\CursoController;
+use App\Models\Curso;
 
 define('AVAILABLE_ROUTES', [
     'home' => homeController::class,
@@ -15,6 +16,7 @@ define('AVAILABLE_ROUTES', [
     'entrar' => entrarController::class,
     'admin_dashboard' => AdminDashboardController::class,
     'professor_dashboard' => ProfessorDashboardController::class,
+    'curso_dashboard' => CursoController::class,
     'aluno_dashboard' => AlunoDashboardController::class,
     'classe' => App\controllers\ClasseController::class,
     'Auth' => App\controllers\AuthController::class,

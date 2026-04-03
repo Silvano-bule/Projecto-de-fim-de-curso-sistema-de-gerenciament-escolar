@@ -1,12 +1,15 @@
-<?php 
+<?php
 
 namespace App\Controllers;
+
 require_once __DIR__ . '/../../vendor/autoload.php';
 
 use App\Models\Curso;
 
-class CursoController {
-    public static function guardarCurso() {
+class CursoController
+{
+    public static function guardarCurso()
+    {
         $nome_curso = filter_input(INPUT_POST, 'nome_curso', FILTER_SANITIZE_SPECIAL_CHARS);
         $area_tecnica_curso = filter_input(INPUT_POST, 'area_tecnica_curso', FILTER_SANITIZE_SPECIAL_CHARS);
         $estado = filter_input(INPUT_POST, 'status_curso', FILTER_SANITIZE_SPECIAL_CHARS);
@@ -17,15 +20,24 @@ class CursoController {
         exit;
     }
 
-    public static function listarCursos() {
+    public static function listarCursos()
+    {
         $cursos = Curso::listarCursos();
 
-        if(!is_array($cursos)){
+        if (!is_array($cursos)) {
             $cursos = [];
         }
         $viewPath = __DIR__ . '/../views/adminDashboardView.php';
 
         require $viewPath;
+    }
+    public static function obterCursoId()
+    {
+        header("Content-Type application/json");
+        if ($_GET['idCurso']) {
+            $id = $_GET['idCurso'] ?? null;
+            Curso::obterCursoId($id);
+        }
     }
 }
 

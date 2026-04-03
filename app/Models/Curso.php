@@ -27,7 +27,7 @@ class Curso
 
         $stmt = $db->prepare($sql);
 
-        
+
         $stmt->execute(
             [
                 ':nome' => $nome_curso,
@@ -37,11 +37,27 @@ class Curso
         );
     }
 
-    public static function listarCursos(){
+    public static function listarCursos()
+    {
         $db = Database::getConnection();
         $sql = "SELECT * FROM curso";
-        $stmt = $db-> prepare($sql);
+        $stmt = $db->prepare($sql);
         $stmt->execute();
-        return $stmt-> fetchAll(PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public static function obterCursoId($idCurso)
+    {
+        $db = Database::getConnection();
+
+        $sql  = "SELECT * FROM curso WHERE idcurso = :idCurso";
+
+        $stmt = $db->prepare($sql);
+
+        $stmt->execute([
+            'idCurso' => $idCurso,
+        ]);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }

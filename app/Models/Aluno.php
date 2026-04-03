@@ -95,6 +95,7 @@ class Aluno
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
     public static function removerAluno($id)
     {
         $db = Database::getConnection();
@@ -124,5 +125,32 @@ class Aluno
         ]);
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+    public static function actualizarAluno($dados)
+    {
+        $db = Database::getConnection();
+
+        $sql = "UPDATE  aluno  SET nome = :nome_aluno, email = :email_aluno, telefone = :telefone_aluno, nascimento = :nascimento_aluno, sexo = :sexo_aluno, nacionalidade = :nacionalidade_aluno, nome_pai = :pai_aluno,nome_mae = :mae_aluno, numero_bi = :numero_BI_aluno, provincia = :provincia_aluno, altura = :altura_aluno, id_turma=:turma_aluno, id_curso =  :curso_aluno, id_classe = :classe_aluno, sala = :sala_aluno WHERE idaluno = :idaluno";
+
+        $stmt = $db->prepare($sql);
+
+        return $stmt->execute([
+            ':idaluno' => $dados['idaluno'],
+            ':nome_aluno' => $dados['nome_aluno'],
+            ':email_aluno' => $dados['email_aluno'],
+            ':telefone_aluno' => $dados['telefone_aluno'],
+            ':nascimento_aluno' => $dados['nascimento_aluno'],
+            ':sexo_aluno' => $dados['sexo_aluno'],
+            ':nacionalidade_aluno' => $dados['nacionalidade_aluno'],
+            ':pai_aluno' => $dados['pai_aluno'],
+            ':mae_aluno' => $dados['mae_aluno'],
+            ':numero_BI_aluno' => $dados['numero_BI_aluno'],
+            ':provincia_aluno' => $dados['provincia_aluno'],
+            ':altura_aluno' => $dados['altura_aluno'],
+            ':turma_aluno' => $dados['turma_aluno'],
+            ':curso_aluno' => $dados['curso'],
+            ':classe_aluno' => $dados['classe_aluno'],
+            ':sala_aluno' => $dados['sala'],
+        ]);
     }
 }

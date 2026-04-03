@@ -62,16 +62,37 @@ class Teacher
         }
     }
 
-    public static function editarProfessor($id)
+    public static function obterProfessorPorId($id)
     {
-        try {
-            $db = Database::getConnection();
-            $sql = "SELECT * FROM professor WHERE idprofessor = :id";
-            $stmt = $db->prepare($sql);
-            $stmt->execute([':id' => $id]);
-            return $stmt->fetch(PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-            echo "Erro ao buscar professor: " . $e->getMessage();
-        }
+        $db =  Database::getConnection();
+
+        $sql = "SELECT *  FROM professor  WHERE idprofessor = :id";
+
+        $stmt  = $db->prepare($sql);
+
+        $stmt->execute([
+            ':id' => $id
+        ]);
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+    public static function actualizarProfessor($dados)
+    {
+      $db = Database::getConnection();
+
+      $sql = "UPDATE professor SET nome = :nome, nascimento = :nascimento, sexo = :sexo, telefone = :telefone, email = :email, provincia = :provincia, nacionalidade = :nacionalidade WHERE idprofessor = :id";
+
+      $stmt = $db ->prepare($sql);
+
+      return $stmt ->execute([
+        ':nome' => $dados['nome_professor'],
+        ':email' => $dados['email_professor'],
+        ':nascimento' => $dados['nascimento_professor'],
+        ':sexo' => $dados['sexo_professor'],
+        ':telefone' => $dados['telefone_professor'],
+        ':provincia' => $dados['provincia_professor'],
+        ':nacionalidade' => $dados['nacionalidade_professor'],
+        ':id' => $dados['idProfessor']
+      ]);
     }
 }

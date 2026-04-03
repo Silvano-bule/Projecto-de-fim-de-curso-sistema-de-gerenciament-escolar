@@ -47,6 +47,24 @@
                             </svg>
                             <span class="mx-2 text-sm font-medium">Professores</span>
                         </a>
+                        <a class="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700 cursor-pointer"
+                            data-alvo="Turmas">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="w-5 h-5">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M3.75 12h16.5m-16.5 3.75h16.5M3.75 19.5h16.5M5.625 4.5h12.75a1.875 1.875 0 010 3.75H5.625a1.875 1.875 0 010-3.75z" />
+                            </svg>
+                            <span class="mx-2 text-sm font-medium">Turmas</span>
+                        </a>
+                        <a class="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700 cursor-pointer"
+                            data-alvo="Cursos">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="w-5 h-5">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M3.75 12h16.5m-16.5 3.75h16.5M3.75 19.5h16.5M5.625 4.5h12.75a1.875 1.875 0 010 3.75H5.625a1.875 1.875 0 010-3.75z" />
+                            </svg>
+                            <span class="mx-2 text-sm font-medium">Cursos</span>
+                        </a>
                     </nav>
 
                     <div class="mt-6">
@@ -342,7 +360,7 @@
                 </section>
 
                 <!-- Area de Aluno -->
-                <section id="Aluno" class="p-4 ml-64">
+                <section id="Aluno" class="p-4 ml-64 hidden">
                     <div class="grid grid-row-2 gap-8">
                         <section class="container px-4 mx-auto">
                             <div class="flex flex-col gap-4 mt-6">
@@ -425,7 +443,7 @@
                                         <h1 class="text-2xl font-bold text-white">Professores</h1>
                                         <p>Gerencie todos os professores cadastrados</p>
                                     </div>
-                                    <button class="flex flow-row items-center bg-blue-500 text-white rounded-md px-3 cursor-pointer" id="professor" onclick="my_modal_2.showModal()">
+                                    <button class="flex flow-row items-center bg-blue-500 text-white rounded-md px-3 cursor-pointer" id="professor" onclick="modal_professor.showModal()">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                                         </svg>
@@ -468,7 +486,151 @@
                                                                             </a>
                                                                         </li>
                                                                         <li>
-                                                                            <a onclick="editarProfessor(<?= $professor['idprofessor'] ?>)">
+                                                                            <a onclick="obterProfessor(<?= $professor['idprofessor'] ?>)">
+                                                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+                                                                                    <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                                                                                </svg>
+                                                                                Editar
+                                                                            </a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    <?php endforeach; ?>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </section>
+
+                <!-- Area de turmas-->
+                <section id="Turmas" class="p-4 ml-64 hidden">
+                    <div class="grid grid-row-2 gap-8">
+                        <section class="container px-4 mx-auto">
+                            <div class="flex flex-col gap-4 mt-6">
+                                <div class="flex flex-row justify-between items-center mt-8">
+                                    <div>
+                                        <h1 class="text-2xl font-bold text-white">Turmas</h1>
+                                        <p>Gerencie todos os Turmas cadastradas</p>
+                                    </div>
+                                    <button class="flex flow-row items-center bg-blue-500 text-white rounded-md px-3 cursor-pointer" id="professor" onclick="modal_turma.showModal()">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                        </svg>
+                                        <div tabindex="0" role="button" class="m-2">Nova turmas</div>
+                                    </button>
+                                </div>
+                                <input id="inputPesquisa" type="text" class="mt-8 px-4 py-2 text-gray-700 bg-white border rounded-md dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 min-w-full" placeholder="Buscar Alunos">
+                                <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                                    <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8 mt-4">
+                                        <div class="overflow-visible border border-gray-200 dark:border-gray-700 md:rounded-lg">
+                                            <table id="tabelaAlunos" class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                                                <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
+                                                    <?php foreach ($dados['turmasEncontradas'] as $turma): ?>
+                                                        <tr class="flex flex-row justify-between items-center px-4">
+                                                            <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                                                <div class="inline-flex items-center gap-x-3">
+                                                                    <div class="flex items-center gap-x-2">
+                                                                        <img class="object-cover w-10 h-10 rounded-full" src="https://images.unsplash.com/photo-1499470932971-a90681ce8530?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" alt="">
+                                                                        <div>
+                                                                            <h2 class="font-medium text-gray-800 dark:text-white "><?= $turma['nome'] ?></h2>
+                                                                            <p class="text-sm font-normal text-gray-600 dark:text-gray-400"><?= $turma['periodo'] ?> <span class="text-sm font-normal text-gray-600 dark:text-gray-400 ml-10"><?= $turma['sala'] ?> </span></p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="dropdown dropdown-hover">
+                                                                    <div tabindex="0" role="button" class="btn m-1 "> <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                                                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z" />
+                                                                        </svg></div>
+                                                                    <ul class="dropdown-content menu bg-base-100 rounded-box w-52 p-2 shadow-sm  absolute right-0">
+                                                                        <li>
+                                                                            <a onclick="removerTurma(<?= $turma['idturma'] ?>)">
+                                                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4 text-red-500">
+                                                                                    <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                                                                </svg>
+                                                                                Excluir
+                                                                            </a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a onclick="obterTurma(<?= $turma['idturma'] ?>)">
+                                                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+                                                                                    <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                                                                                </svg>
+                                                                                Editar
+                                                                            </a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    <?php endforeach; ?>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </section>
+
+                <!-- Area de Cursos -->
+                <section id="Cursos" class="p-4 ml-64">
+                    <div class="grid grid-row-2 gap-8">
+                        <section class="container px-4 mx-auto">
+                            <div class="flex flex-col gap-4 mt-6">
+                                <div class="flex flex-row justify-between items-center mt-8">
+                                    <div>
+                                        <h1 class="text-2xl font-bold text-white">Cursos</h1>
+                                        <p>Gerencie todos os Cursos cadastradas</p>
+                                    </div>
+                                    <button class="flex flow-row items-center bg-blue-500 text-white rounded-md px-3 cursor-pointer" id="professor" onclick="modal_curso.showModal()">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                        </svg>
+                                        <div tabindex="0" role="button" class="m-2">Novos Cursos</div>
+                                    </button>
+                                </div>
+                                <input id="inputPesquisa" type="text" class="mt-8 px-4 py-2 text-gray-700 bg-white border rounded-md dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 min-w-full" placeholder="Buscar Alunos">
+                                <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                                    <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8 mt-4">
+                                        <div class="overflow-visible border border-gray-200 dark:border-gray-700 md:rounded-lg">
+                                            <table id="tabelaAlunos" class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                                                <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
+                                                    <?php foreach ($dados['cursosEncontrados'] as $curso): ?>
+                                                        <tr class="flex flex-row justify-between items-center px-4">
+                                                            <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                                                <div class="inline-flex items-center gap-x-3">
+                                                                    <div class="flex items-center gap-x-2">
+                                                                        <img class="object-cover w-10 h-10 rounded-full" src="https://images.unsplash.com/photo-1499470932971-a90681ce8530?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" alt="">
+                                                                        <div>
+                                                                            <h2 class="font-medium text-gray-800 dark:text-white "><?= $curso['nome'] ?></h2>
+                                                                            <p class="text-sm font-normal text-gray-600 dark:text-gray-400"><span class="text-sm font-normal text-gray-600 dark:text-gray-400 ml-10"><?= $curso['area'] ?> </span></p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="dropdown dropdown-hover">
+                                                                    <div tabindex="0" role="button" class="btn m-1 "> <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                                                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z" />
+                                                                        </svg></div>
+                                                                    <ul class="dropdown-content menu bg-base-100 rounded-box w-52 p-2 shadow-sm  absolute right-0">
+                                                                        <li>
+                                                                            <a onclick="removerCurso(<?= $curso['idcurso'] ?>)">
+                                                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4 text-red-500">
+                                                                                    <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                                                                </svg>
+                                                                                Excluir
+                                                                            </a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a onclick="obterCurso(<?= $curso['idcurso'] ?>)">
                                                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
                                                                                     <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
                                                                                 </svg>
@@ -489,7 +651,6 @@
                     </div>
                 </section>
             </div>
-
             <!--Modal Aluno -->
             <dialog id="my_modal_1" class="modal">
                 <div class="modal-box w-screen max-w-5xl">
@@ -498,7 +659,7 @@
                     </div>
                     <form action="index.php?page=aluno_dashboard&action=matricularAluno" method="POST" id="formulario">
                         <div class="grid grid-cols-3 gap-6 mt-4 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
-                            <input type="hidden" name="idaluno" id="idaluno">
+                            <input type="hidden" name="idaluno" id="id" class="ID">
                             <div>
                                 <label class="text-gray-700 dark:text-gray-200" for="username">Nome<span class="text-red-500 text-xs"> (Obrigatório)</span> </label>
                                 <input name="nome_aluno" id="username" type="text" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" required>
@@ -649,7 +810,7 @@
                         <button type="submit" class=" m-4  btn btn-success text-white shadow-md hover:shadow-lg transition-all cursor-poiter">
                             Salvar
                         </button>
-                        <button id="btnClose" type="button" class="cursor-pointer btn btn-error  text-white hover:text-red-600 hover:bg-red-300">Fechar</button>
+                        <button id="btnClose" type="button" class="btn-fechar cursor-pointer btn btn-error  text-white hover:text-red-600 hover:bg-red-300">Fechar</button>
                     </form>
                 </div>
 
@@ -661,22 +822,23 @@
                         <h3 class="text-lg font-bold">Criar Turma</h3>
                     </div>
                     <form action="index.php?page=turma&action=pegarInfoTurma" method="POST" id="formulario">
+                        <input type="hidden" name="idTurma" id="idTurma">
                         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-2">
                             <div>
                                 <label class="text-gray-700 dark:text-gray-200" for="nome_turma">Nome da Turma</label>
-                                <input placeholder="Ex: A,B" name="nome_turma" type="text" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" required>
+                                <input placeholder="Ex: A,B" id="nome_turma" name="nome_turma" type="text" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" required>
                             </div>
                             <div>
                                 <label class="text-gray-700 dark:text-gray-200" for="periodo_turma">Periodo<span class="text-red-500 text-xs"> (Obrigatório)</span> </label>
-                                <input placeholder="Manhã, Tarde" name="periodo_turma" type="text" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" required>
+                                <input placeholder="Manhã, Tarde" id="periodo_turma" name="periodo_turma" type="text" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" required>
                             </div>
                             <div>
                                 <label class="text-gray-700 dark:text-gray-200" for="sala_turma">Sala</label>
-                                <input placeholder="Ex: Sala 9" name="sala_turma" type="text" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" required>
+                                <input placeholder="Ex: Sala 9" id="sala_turma" name="sala_turma" type="text" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" required>
                             </div>
                             <div>
                                 <label class="text-gray-700 dark:text-gray-200" for="capacidade_turma">Capacidade</label>
-                                <input name="capacidade_turma" type="number" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" minlength="1" maxlength="60" required>
+                                <input placeholder="Ex: 30" id="capacidade_turma" name="capacidade_turma" type="number" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" minlength="1" maxlength="60" required>
                                 <?php if (isset($error['capacidade'])): ?>
                                     <p class="text-red-500 text-xs mt-1"><?= $error['capacidade'] ?></p>
                                 <?php endif; ?>
@@ -719,12 +881,15 @@
                     </form>
                 </div>
             </dialog>
+
             <dialog id="modal_professor" class="modal">
                 <div class="modal-box w-screen max-w-5xl">
                     <div class="flex flow-row justify-between items-center">
                         <h3 class="text-lg font-bold">Inserir Professor</h3>
                     </div>
-                    <form action="index.php?page=professor_dashboard&action=salvarDados" method="POST">
+
+                    <form action="index.php?page=professor_dashboard&action=salvarDados" method="POST" id="formulario">
+                        <input type="hidden" name="idProfessor" id="idProfessor" class="ID">
                         <div class="grid grid-cols-3 gap-6 mt-4 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
                             <div>
                                 <label class="text-gray-700 dark:text-gray-200" for="username">Nome<span class="text-red-500 text-xs"> (Obrigatório)</span> </label>
@@ -780,7 +945,7 @@
                         <button type="submit" class=" m-4  btn btn-success text-white shadow-md hover:shadow-lg transition-all cursor-poiter">
                             Salvar
                         </button>
-                        <button id="btnClose" type="button" class="cursor-pointer btn btn-error  text-white hover:text-red-600 hover:bg-red-300">Fechar</button>
+                        <button id="btnClose" type="button" class="btn-fechar cursor-pointer btn btn-error  text-white hover:text-red-600 hover:bg-red-300">Fechar</button>
                     </form>
                 </div>
             </dialog>

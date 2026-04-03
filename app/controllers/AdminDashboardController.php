@@ -28,6 +28,7 @@ namespace App\controllers;
 
 // Importar outras classes que vamos usar
 use App\controllers\AuthController;
+use App\controllers\AlunoDashboardController;
 use App\Models\Usuarios;
 use App\Models\Aluno;
 use App\Models\Professor;
@@ -69,7 +70,7 @@ class AdminDashboardController
      *     ↓
      * HTML é mostrado no navegador
      */
-    
+
     public function render()
     {
         // 1. INICIAR SESSÃO
@@ -79,19 +80,20 @@ class AdminDashboardController
         // 2. BUSCAR DADOS RECENTES
         // Pega os últimos 3 alunos adicionados ao sistema
         $alunosRecentes = Aluno::listarAlunosRecentes();
-        
+
         // Se por algum motivo não retornar array, cria vazio
         if (!is_array($alunosRecentes)) {
             $alunosRecentes = [];
         }
 
+       /* 
         // 3. BUSCAR TURMAS
         // Pega todas as turmas do sistema
         $turmasEncontradas = Turma::listarTurma();
         if (!is_array($turmasEncontradas)) {
             $turmasEncontradas = [];
         }
-
+*/
         // 4. VALIDAR SE ESTÁ LOGADO
         // Se não estiver logado, redireciona para login
         if (AuthController::isLogged() === false) {
@@ -115,20 +117,20 @@ class AdminDashboardController
         $dados = [
             // Dados do usuário logado (vem da sessão)
             'nome' => $_SESSION['user_name'],
-            
+
             // ESTATÍSTICAS (números que aparecem no topo)
             'totalUsers' => Usuarios::contarUsuarios(),         // Quantos usuários
             'totalAlunos' => Aluno::contarAlunos(),             // Quantos alunos
             'totalProfessores' => Teacher::contarProfessores(), // Quantos professores
             'totalTurmas' => Turma::contarTurmas(),             // Quantas turmas
             'totalCursos' => Curso::contarCursos(),             // Quantos cursos
-            
+
             // DADOS PARA PREENCHER FORMULÁRIOS (dropdown)
             'turmasEncontradas' => Turma::listarTurma(),        // Lista de turmas
             'cursosEncontrados' => Curso::listarCursos(),       // Lista de cursos
             'totalClasses' => Classe::totalClasses(),           // Total de classes
             'classesEncontradas' => Classe::classes(),          // Lista de classes
-            
+
             // DADOS PARA MOSTRAR EM TABELAS
             'alunosRecentes' => $alunosRecentes,                // Últimos 3 alunos
             'matriculaGerada' => Matricula::listarAlunosComMatriculas(),  // Alunos com matrícula
@@ -140,10 +142,18 @@ class AdminDashboardController
         // Isto transforma o array em variáveis normais
         // Após isto, pode usar $nome, $totalAlunos, etc. na view
         extract($dados);
-        
+
         // 8. CARREGAR A VIEW (HTML)
         // Isto mostra a página no navegador
         require_once __DIR__ . '/../views/adminDashboardView.php';
     }
-}
 
+    public function teste(){
+        $dados = $_POST;
+
+        echo "<pre>";
+        print_r($dados);
+        echo "<pre>";
+        exit;
+    }
+}
