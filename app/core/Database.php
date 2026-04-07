@@ -14,7 +14,7 @@ class Database
         if (self::$instance === null) {
             try {
                 self::$instance = new PDO(
-                    'mysql:host=localhost;dbname=sge;charset=utf8',
+                    'mysql:host=localhost;dbname=sgp;charset=utf8',
                     'root',
                     ''
                 );

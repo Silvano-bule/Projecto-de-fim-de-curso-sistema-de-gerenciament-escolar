@@ -185,6 +185,7 @@ function preencherFormularioTurma(turma) {
     document.getElementById('capacidade_turma').value = turma.capacidade;
 }
 function obterCurso(idCurso) {
+    document.getElementById("idCurso").value = idCurso;
     fetch("index.php?page=curso_dashboard&action=obterCursoId&id=" + idCurso)
         .then(response => response.json())
         .then(curso => {

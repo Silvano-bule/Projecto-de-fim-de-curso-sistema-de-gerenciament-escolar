@@ -27,7 +27,6 @@ class Curso
 
         $stmt = $db->prepare($sql);
 
-
         $stmt->execute(
             [
                 ':nome' => $nome_curso,

@@ -33,9 +33,9 @@ class CursoController
     }
     public static function obterCursoId()
     {
-        header("Content-Type application/json");
-        if ($_GET['idCurso']) {
-            $id = $_GET['idCurso'] ?? null;
+        header("Content-Type: application/json");
+        if ($_GET['id']) {
+            $id = $_GET['id'] ?? null;
             Curso::obterCursoId($id);
         }
     }

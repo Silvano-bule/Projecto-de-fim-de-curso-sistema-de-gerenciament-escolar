@@ -20,12 +20,12 @@ class Aluno
         $resultado  = $stmt->fetch(PDO::FETCH_ASSOC);
         return $resultado['total'];
     }
-    public static function salvarAluno($nome, $email, $telefone, $nascimento, $sexo, $nacionalidade, $nome_pai, $nome_mae, $numero_BI, $provincia, $altura, $turma, $curso, $classe, $sala)
+    public static function salvarAluno($nome, $email, $telefone, $nascimento, $sexo, $nacionalidade, $nome_pai, $nome_mae, $numero_BI, $provincia, $altura)
     {
         try {
             $db = Database::getConnection();
 
-            $sql = "INSERT INTO aluno (nome, email, telefone, nascimento, sexo, nacionalidade, nome_pai, nome_mae, numero_BI, provincia, altura, id_turma, id_curso, id_classe, sala) VALUES (:nome, :email, :telefone, :nascimento, :sexo, :nacionalidade, :nome_pai, :nome_mae, :numero_BI, :provincia, :altura, :turma, :curso, :classe, :sala)";
+            $sql = "INSERT INTO aluno (nome, email, telefone, nascimento, sexo, nacionalidade, nome_pai, nome_mae, numero_BI, provincia, altura) VALUES (:nome, :email, :telefone, :nascimento, :sexo, :nacionalidade, :nome_pai, :nome_mae, :numero_BI, :provincia, :altura)";
             $stmt = $db->prepare($sql);
 
             $result = $stmt->execute([
@@ -39,11 +39,7 @@ class Aluno
                 ':nome_mae' => $nome_mae,
                 ':numero_BI' => $numero_BI,
                 ':provincia' => $provincia,
-                ':altura' => $altura,
-                ':turma' => $turma,
-                ':curso' => $curso,
-                ':classe' => $classe,
-                ':sala' => $sala
+                ':altura' => $altura
             ]);
 
             if ($result) {
@@ -82,15 +78,7 @@ class Aluno
     {
         $db = Database::getConnection();
 
-        $sql = "SELECT 
-        aluno.*,
-        matricula.numero_matricula
-        FROM aluno
-        LEFT JOIN matricula 
-        ON aluno.idaluno = matricula.alunomatricula
-        ORDER BY aluno.idaluno DESC
-        LIMIT 3";
-
+        $sql = "SELECT aluno.nome, matricula.numero from aluno join matricula on aluno.id = matricula.id_aluno";
         $stmt  = $db->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);

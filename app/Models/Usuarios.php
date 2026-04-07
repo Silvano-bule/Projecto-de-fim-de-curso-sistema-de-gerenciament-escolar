@@ -11,7 +11,7 @@ class Usuarios
     {
         $db = Database::getConnection();
 
-        $query = "INSERT INTO usuarios (nome, email, senha, tipo) VALUES (:nome,:email,:senha, :tipo)";
+        $query = "INSERT INTO usuario (nome, email, senha, tipo) VALUES (:nome,:email,:senha, :tipo)";
         $stmt = $db->prepare($query);
 
         $senhaHash = password_hash($senha, PASSWORD_BCRYPT);
@@ -31,7 +31,7 @@ class Usuarios
     {
         $db = Database::getConnection();
 
-        $query = "SELECT * FROM usuarios WHERE email = :email";
+        $query = "SELECT * FROM usuario WHERE email = :email";
         $stmt = $db->prepare($query);
         $stmt->bindParam(':email', $email);
         $stmt->execute();
@@ -42,7 +42,7 @@ class Usuarios
     {
         $db = Database::getConnection();
 
-        $msm = "SELECT COUNT(*) as total from usuarios";
+        $msm = "SELECT COUNT(*) as total from usuario";
 
         $stmt =  $db->prepare($msm);
         $stmt->execute();
@@ -54,7 +54,7 @@ class Usuarios
     public static function listarUsuarios()
     {
         $db = Database::getConnection();
-        $insert = "SELECT * from usuarios";
+        $insert = "SELECT * from usuario";
         $stmt = $db->prepare($insert);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);

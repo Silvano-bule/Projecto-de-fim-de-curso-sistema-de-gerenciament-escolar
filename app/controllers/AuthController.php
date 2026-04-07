@@ -14,7 +14,7 @@ class AuthController
     {
         self::iniciarSessao();
 
-        $_SESSION['user_id'] = $usuario['idusuario'];
+        $_SESSION['user_id'] = $usuario['id'];
         $_SESSION['user_name'] = $usuario['nome'];
         $_SESSION['user_tipo'] = $usuario['tipo'];
 
