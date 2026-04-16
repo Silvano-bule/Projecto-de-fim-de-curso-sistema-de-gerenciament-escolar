@@ -42,9 +42,9 @@ class Usuarios
     {
         $db = Database::getConnection();
 
-        $msm = "SELECT COUNT(*) as total from usuario";
+        $sql = "SELECT COUNT(*) as total from usuario";
 
-        $stmt =  $db->prepare($msm);
+        $stmt =  $db->prepare($sql);
         $stmt->execute();
 
         $resultado = $stmt->fetch(PDO::FETCH_ASSOC);

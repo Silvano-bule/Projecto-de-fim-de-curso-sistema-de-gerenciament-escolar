@@ -28,7 +28,7 @@ namespace App\controllers;
 
 // Importar outras classes que vamos usar
 use App\controllers\AuthController;
-use App\controllers\AlunoDashboardController;
+use App\controllers\ProfessorDashboardController;
 use App\Models\Usuarios;
 use App\Models\Aluno;
 use App\Models\Professor;
@@ -37,6 +37,7 @@ use App\Models\Curso;
 use App\Models\Teacher;
 use App\Models\Classe;
 use App\Models\Matricula;
+use App\Models\salaModels;
 
 class AdminDashboardController
 {
@@ -71,7 +72,9 @@ class AdminDashboardController
      * HTML é mostrado no navegador
      */
 
-    public function render()
+
+
+    /*  public function render()
     {
         // 1. INICIAR SESSÃO
         // Sem isto, $_SESSION não funciona
@@ -86,7 +89,7 @@ class AdminDashboardController
             $alunosRecentes = [];
         }
 
-       /* 
+        /* 
         // 3. BUSCAR TURMAS
         // Pega todas as turmas do sistema
         $turmasEncontradas = Turma::listarTurma();
@@ -94,27 +97,27 @@ class AdminDashboardController
             $turmasEncontradas = [];
         }
 */
-        // 4. VALIDAR SE ESTÁ LOGADO
-        // Se não estiver logado, redireciona para login
-        if (AuthController::isLogged() === false) {
+    // 4. VALIDAR SE ESTÁ LOGADO
+    // Se não estiver logado, redireciona para login
+    /*  if (AuthController::isLogged() === false) {
             header("Location: public/index.php?page=entrar");
             exit;  // Para a execução aqui
-        }
+        } */
 
-        // 5. VALIDAR SE É ADMIN
-        // Verifica se:
-        //   - $_SESSION['user_tipo'] existe
-        //   - É igual a 'admin'
-        // Se for professor ou aluno, redireciona
-        if (!isset($_SESSION['user_tipo']) || $_SESSION['user_tipo'] !== 'admin') {
+    // 5. VALIDAR SE É ADMIN
+    // Verifica se:
+    //   - $_SESSION['user_tipo'] existe
+    //   - É igual a 'admin'
+    // Se for professor ou aluno, redireciona
+    /*  if (!isset($_SESSION['user_tipo']) || $_SESSION['user_tipo'] !== 'admin') {
             header("Location: public/index.php?page=entrar");
             exit;  // Para a execução
-        }
+        } */
 
-        // 6. CRIAR ARRAY COM TODOS OS DADOS
-        // Este array será passado para a tela HTML
-        // A tela pode acessar: $dados['nome'], $dados['totalAlunos'], etc.
-        $dados = [
+    // 6. CRIAR ARRAY COM TODOS OS DADOS
+    // Este array será passado para a tela HTML
+    // A tela pode acessar: $dados['nome'], $dados['totalAlunos'], etc.
+    /*  $dados = [
             // Dados do usuário logado (vem da sessão)
             'nome' => $_SESSION['user_name'],
 
@@ -130,30 +133,125 @@ class AdminDashboardController
             'cursosEncontrados' => Curso::listarCursos(),       // Lista de cursos
             'totalClasses' => Classe::totalClasses(),           // Total de classes
             'classesEncontradas' => Classe::classes(),          // Lista de classes
+            'salasEncontradas' => salaModels::listarSalas(),          // Lista de salas
 
             // DADOS PARA MOSTRAR EM TABELAS
             'alunosRecentes' => $alunosRecentes,                // Últimos 3 alunos
             'matriculaGerada' => Matricula::listarAlunosComMatriculas(),  // Alunos com matrícula
             'alunos' => Aluno::listarAlunos(),                  // Todos os alunos
             'professores' => Teacher::listarProfessores(),      // Todos os professores
-        ];
+        ];*/
 
-        // 7. EXTRAIR VARIÁVEIS
-        // Isto transforma o array em variáveis normais
-        // Após isto, pode usar $nome, $totalAlunos, etc. na view
-        extract($dados);
+    /*    echo "<pre>";
+        print_r($dados);
+        echo "</pre>";
+        exit; */
 
-        // 8. CARREGAR A VIEW (HTML)
-        // Isto mostra a página no navegador
-        require_once __DIR__ . '/../views/adminDashboardView.php';
-    }
 
-    public function teste(){
+    // 8. CARREGAR A VIEW (HTML)
+    // Isto mostra a página no navegador
+    //require dirname(__DIR__) . '/views/adminDashboardView.php';
+    /* } */
+
+    /*  public function teste()
+    {
         $dados = $_POST;
 
         echo "<pre>";
         print_r($dados);
         echo "<pre>";
         exit;
+    } */
+
+
+    public function render()
+    {
+
+       /*  $this->mostrarPagina(); */
+        $this->iniciarSessão();
+        $this->dadosUsuario();
     }
+  /*   private function mostrarPagina()
+    {
+        $date = ProfessorDashboardController::validarDados($nome, $email, $telefone, $nascimento, $sexo, $nacionalidade, $provincia);
+
+
+        $dados = $_POST;
+
+        echo "<pre>";
+        print_r($date);
+        echo "</pre>";
+        require dirname(__DIR__) . '/views/adminDashboardView.php';
+        exit();
+    } */
+    private function iniciarSessão()
+    {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        $this->verificarLogin();
+    }
+    private function verificarLogin()
+    {
+        if (AuthController::isLogged() === false) {
+            header("Location: index.php?page=entrar");
+            exit;
+        }
+
+        $this->verificarUsuario();
+    }
+    private function verificarUsuario()
+    {
+        if (!isset($_SESSION['user_tipo']) || $_SESSION['user_tipo'] !== 'admin') {
+            header("Location: index.php?page=entrar");
+            exit;
+        }
+    }
+
+    private function dadosUsuario()
+    {
+        $dados = [
+            'nome' => $_SESSION['user_name'],
+            'totalUsers' => Usuarios::contarUsuarios(),
+            'totalAlunos' => Aluno::contarAlunos(),
+            'totalProfessores' => Teacher::contarProfessores(),
+            'totalTurmas' => Turma::contarTurmas(),
+            'totalCursos' => Curso::contarCursos(),
+            'totalClasses' => Classe::contarClasses(),
+
+
+            'salasEncontradas' => salaModels::listarSalas(),
+            'alunosRecentes' => Aluno::listarAlunosRecentes(),
+            'matriculaGerada' => Matricula::listarAlunosComMatriculas(),
+            'alunos' => Aluno::listarAlunos(),
+            'professores' => Teacher::listarProfessores(),
+            'turmasEncontradas' => Turma::listarTurma(),
+            'cursosEncontrados' => Curso::listarCursos(),
+            'classesEncontradas' => Classe::listarClasses(),
+        ];
+
+        extract($dados);
+        require __DIR__ . '/../views/adminDashboardView.php';
+    }
+
+    public function teste()
+    {
+
+        $dados = $_POST;
+
+        echo "<pre>";
+        print_r($dados);
+        echo "</pre>";
+        exit;
+    }
+
+    /* ======= PASSOA PARA GERENCIAR O ADMIN=======
+            
+            1- INICIAR SESSÃO
+            2-VERIFICAR SE ESTÁ LOGADO
+            3-VERIFICAR SE É ADMIN
+            4-CRIAR ARRAY COM TODOS OS DADOS
+            5-PASSAR PARA A VIEW (HTML)        
+            6- CRIAR UMA  FUNÇÃO PARA TESTAR OS DADOS (opcional, para ver se está pegando do banco)    
+            */
 }

@@ -8,7 +8,7 @@ use PDOException;
 
 class Classe
 {
-    public static function guardar($nome)
+    public static function guardarDados($nome)
     {
         $db = Database::getConnection();
 
@@ -22,7 +22,16 @@ class Classe
 
         return  $db->lastInsertId();
     }
+    public static function classesExistente()
+    {
+        $db = Database::getConnection();
+        $msm = "SELECT nome from classe";
+        $stmt = $db->prepare($msm);
+        $stmt->execute();
 
+        $resultado  = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $resultado;
+    }
     public static function ligarCurso($idclasse, $idcurso)
     {
         $db = Database::getConnection();
@@ -37,7 +46,7 @@ class Classe
             ]
         );
     }
-    public static function totalClasses()
+    public static function contarClasses()
     {
         $db = Database::getConnection();
         $msm = "SELECT COUNT(*) as total from classe";

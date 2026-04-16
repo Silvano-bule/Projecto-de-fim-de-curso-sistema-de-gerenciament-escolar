@@ -16,14 +16,14 @@ define('AVAILABLE_ROUTES', [
     'entrar' => entrarController::class,
     'admin_dashboard' => AdminDashboardController::class,
     'professor_dashboard' => ProfessorDashboardController::class,
-    'curso_dashboard' => CursoController::class,
+    'Curso' => CursoController::class,
     'aluno_dashboard' => AlunoDashboardController::class,
     'classe' => App\controllers\ClasseController::class,
     'Auth' => App\controllers\AuthController::class,
     'matricular_aluno' => AlunoDashboardController::class,
     'turma' => TurmaAlunoController::class,
     'removerAluno' => AlunoDashboardController::class,
-    'Sala' => SalaController::class
+    'Sala' =>  SalaController::class
 ]);
 
 define('DEFAULT_ROUTE', homeController::class);

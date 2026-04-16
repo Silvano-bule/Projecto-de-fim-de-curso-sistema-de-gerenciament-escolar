@@ -7,9 +7,8 @@ require __DIR__ . '/../vendor/autoload.php';
 
 
 use App\core\Router;
-use App\core\Session;
 use App\controllers\AuthController;
-use App\controllers\TurmaAlunoController;
+
 
 AuthController::iniciarSessao();
 

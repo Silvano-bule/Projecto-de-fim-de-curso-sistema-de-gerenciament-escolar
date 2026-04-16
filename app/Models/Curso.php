@@ -19,23 +19,38 @@ class Curso
         return $resultado['total'];
     }
 
-    public static function guardarCurso($nome_curso, $area_tecnica_curso, $estado)
+    public static function guardarCurso($nome_curso, $descricao_curso)
     {
         $db = Database::getConnection();
 
-        $sql = "INSERT INTO curso (nome, area, estado) VALUES (:nome, :area, :estado)";
+        $sql = "INSERT INTO curso (nome, descricao) VALUES (:nome, :descricao)";
 
         $stmt = $db->prepare($sql);
 
         $stmt->execute(
             [
                 ':nome' => $nome_curso,
-                ':area' => $area_tecnica_curso,
-                ':estado' => $estado
+                ':descricao' => $descricao_curso
             ]
         );
     }
 
+
+    public static function verificarCursoExistente($nome_curso)
+    {
+        $db = Database::getConnection();
+
+        $sql = "SELECT COUNT(*) as total FROM curso WHERE nome = :nome_curso";
+
+        $stmt = $db->prepare($sql);
+
+        $stmt->execute([
+            ':nome_curso' => $nome_curso,
+        ]);
+
+        $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $resultado['total'] > 0;
+    }
     public static function listarCursos()
     {
         $db = Database::getConnection();

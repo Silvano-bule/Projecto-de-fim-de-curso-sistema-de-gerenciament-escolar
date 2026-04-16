@@ -19,4 +19,27 @@ class salaModels
             ':capacidade' => $capacidade
         ]);
     }
+    public static function verificarSalaExitente($nome)
+    {
+        $db = Database::getConnection();
+
+        $sql = "SELECT COUNT(*) FROM sala WHERE nome = :nome";
+
+        $stmt = $db->prepare($sql);
+
+        $stmt->execute([':nome' => $nome]);
+
+        return $stmt->fetchColumn() > 0;
+    }
+
+    public static function listarSalas()
+    {
+        $db = Database::getConnection();
+
+        $sql = "SELECT * FROM sala";
+
+        $stmt = $db->query($sql);
+
+        return $stmt->fetchAll();
+    }
 }

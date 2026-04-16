@@ -1,9 +1,10 @@
 <?php
-
 namespace App\controllers;
 
 use App\Models\salaModels;
-
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 class SalaController
 {
     public function render()
@@ -42,11 +43,18 @@ class SalaController
         }
 
         if (!preg_match('/^[a-zA-Z0-9 ]+$/', $nome)) {
-            $error['nome'] = "O nome da sala deve conter apenas letras e números, sem espaços ou caracteres especiais.";
+            $error['nome'] = "O nome da sala deve conter apenas letras, números e espaços.";
         }
 
         if (empty($nome)) {
             $error['nome'] = "O nome da sala é obrigatório.";
+        }
+
+        if ($nome) {
+            $salaExistente = salaModels::verificarSalaExitente($nome);
+            if($salaExistente) {
+                $error['nome'] = "Já existe uma sala com esse nome.";
+            }
         }
 
         if (!empty($error)) {
@@ -73,8 +81,8 @@ class SalaController
 
         $nome = $_SESSION['nome_sala'] ?? '';
         $capacidade = $_SESSION['capacidade'] ?? '';
-        
-        require dirname(__DIR__) . '/components/modals/sala.php';
+
+        header("Location: index.php?page=admin_dashboard");
         exit();
     }
 

@@ -1775,6 +1775,9 @@
   .uppercase {
     text-transform: uppercase;
   }
+  .italic {
+    font-style: italic;
+  }
   .placeholder-gray-500 {
     &::placeholder {
       color: var(--color-gray-500);

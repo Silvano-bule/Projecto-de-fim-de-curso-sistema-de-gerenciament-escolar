@@ -9,6 +9,7 @@ use App\Models\Aluno;
 use App\controllers\TurmaAlunoController;
 use App\controllers\matriculaController;
 use App\Models\Matricula;
+use Error;
 
 class AlunoDashboardController
 {
@@ -206,10 +207,11 @@ class AlunoDashboardController
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $this->receberDadosAluno();
+            exit();
         }
-        $this->exibirViews();
 
-        require_once __DIR__ . '/../views/alunoDashboardView.php';
+        header("Location: index.php?page=admin_dashboard");
+        exit();
     }
 
     private function criarSessão()
@@ -240,53 +242,103 @@ class AlunoDashboardController
 
     private function validarDadosAluno($nome, $email, $telefone, $nascimento, $sexo, $nacionalidade, $nome_pai, $nome_mae, $numero_BI, $provincia, $altura)
     {
+
+        $error_aluno = [];
+        $nome = trim($nome);
+        $email = trim($email);
+        $telefone = trim($telefone);
+        $nascimento = trim($nascimento);
+        $nacionalidade = trim($nacionalidade);
+        $nome_pai = trim($nome_pai);
+        $nome_mae = trim($nome_mae);
+        $numero_BI = trim($numero_BI);
+        $provincia = trim($provincia);
+        $altura = trim($altura);
+
+
+        /* VALIDAR O NOME DO ALUNO */
+        if (!filter_var($nome, FILTER_SANITIZE_FULL_SPECIAL_CHARS)) {
+            $error_aluno['nome'] = "O nome do aluno contém carateres inválidos";
+        }
+
+        /* VALIDAR O NOME DO EMAIL */
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $error_aluno['email'] = "O email do aluno contém carateres inválidos";
+        }
+        /* VALIDAR O NOME DO TELEFONE */
+        if (!filter_var($telefone, FILTER_SANITIZE_NUMBER_INT)) {
+            $error_aluno['telefone'] = "O numero do aluno contém carateres inválidos";
+        }
+
         if (strlen($telefone) !== 9) {
-            die("Telefone deve conter exatamente 9 dígitos");
+            $error_aluno['telefone'] = "O telefone deve ter exatamente 9 dígitos";
         }
 
+        /*  VALIDAR O NACIONALIDADE */
+        if (!filter_var($nacionalidade, FILTER_SANITIZE_FULL_SPECIAL_CHARS)) {
+            $error_aluno['nacionalidade'] = "A nacionalidade do aluno contém carateres inválidos";
+        }
+        /*  VALIDAR O NOME DA MAE */
+        if (!filter_var($nome_mae, FILTER_SANITIZE_FULL_SPECIAL_CHARS)) {
+            $error_aluno['nome_mae'] = "O nome da mae do aluno contém carateres inválidos";
+        }
+        /*  VALIDAR O NOME DO PAI */
+        if (!filter_var($nome_pai, FILTER_SANITIZE_FULL_SPECIAL_CHARS)) {
+            $error_aluno['nome_pai'] = "O nome do pai do aluno contém carateres inválidos";
+        }
+
+        /* VALIDAR O NUMERO DO BI */
         if (!preg_match('/^\d{9}LA\d{3}$/', $numero_BI)) {
-            die("Formato de numero de BI inválido");
+            $error_aluno['numero_BI'] = "Formato de numero de BI inválido";
         }
 
-        if (empty($nome)  || empty($email) || empty($telefone) || empty($nascimento) || empty($nacionalidade) || $sexo === "" || empty($nome_mae) || empty($nome_pai) || empty($numero_BI) || empty($provincia) || empty($altura)) {
-            die("Preencha os campos, por favor");
+        $dados = [$nome, $email, $telefone, $nascimento, $nacionalidade, $sexo, $nome_mae, $nome_pai, $numero_BI, $provincia, $altura];
+
+        foreach ($dados as $data) {
+            if ((empty($data))) {
+                $error_aluno[$data] = "Preencha os campos, por favor";
+            }
         }
 
+
+        if (!empty($error_aluno)) {
+            $this->redirecionarComErro($error_aluno, $nome, $email, $telefone, $nascimento, $sexo, $nacionalidade, $nome_pai, $nome_mae, $numero_BI, $provincia, $altura);
+            return;
+        }
+
+        // Se não houver erros, salvar o aluno
         $this->salvarAluno($nome, $email, $telefone, $nascimento, $sexo, $nacionalidade, $nome_pai, $nome_mae, $numero_BI, $provincia, $altura);
     }
 
     private function salvarAluno($nome, $email, $telefone, $nascimento, $sexo, $nacionalidade, $nome_pai, $nome_mae, $numero_BI, $provincia, $altura)
     {
-        try {
-            $idAluno = Aluno::salvarAluno($nome, $email, $telefone, $nascimento, $sexo, $nacionalidade, $nome_pai, $nome_mae, $numero_BI, $provincia, $altura);
 
-            if (!$idAluno) {
-                throw new \Exception("Falha ao salvar aluno no banco de dados");
-            }
+        Aluno::salvarAluno($nome, $email, $telefone, $nascimento, $sexo, $nacionalidade, $nome_pai, $nome_mae, $numero_BI, $provincia, $altura);
 
-            // Redireciona de volta para a dashboard de administrador
-            header("Location: index.php?page=admin_dashboard");
-            exit();
-        } catch (\PDOException $e) {
-            die("Erro ao matricular aluno: " . $e->getMessage());
-        } catch (\Exception $e) {
-            die("Erro ao matricular aluno: " . $e->getMessage());
-        }
-    }
-
-    private function exibirViews()
-    {
         header("Location: index.php?page=admin_dashboard");
         exit();
     }
 
-    /* 
-        =========== PASSOS PARA REGISTRAR UM USUÁRIO =============
-        1. CRIAR SESSÃO
-        2. RECEBER DADOS DO FORMULÁRIO
-        3. VALIDAR DADOS
-        4. SALVAR NO BANCO DE DADOS
-        5. REDIRECIONAR PARA A DASHBOARD DE ADMINISTRADOR
+    private function redirecionarComErro($erro_aluno, $nome, $email, $telefone, $nascimento, $sexo, $nacionalidade, $nome_pai, $nome_mae, $numero_BI, $provincia, $altura)
+    {
+
+        $_SESSION['erro_aluno'] = $erro_aluno;
+        $_SESSION['nome'] = $nome;
+        $_SESSION['email'] = $email;
+        $_SESSION['telefone'] = $telefone;
+        $_SESSION['nascimento'] = $nascimento;
+        $_SESSION['sexo'] = $sexo;
+        $_SESSION['nacionalidade'] = $nacionalidade;
+        $_SESSION['nome_pai'] = $nome_pai;
+        $_SESSION['nome_mae'] = $nome_mae;
+        $_SESSION['numero_BI'] = $numero_BI;
+        $_SESSION['provincia'] = $provincia;
+        $_SESSION['altura'] = $altura;
+
+        header("Location: index.php?page=admin_dashboard");
+        exit();
+    }
+
     /* 
         =========== PASSOS PARA REGISTRAR UM ALUNO =============
         1. CRIAR SESSÃO

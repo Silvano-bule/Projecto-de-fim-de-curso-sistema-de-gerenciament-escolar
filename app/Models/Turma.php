@@ -18,19 +18,18 @@ class Turma
         return $resultado['total'];
     }
 
-    public static function guardarTurma($nome_turma, $periodo_turma, $sala_turma, $capacidade_turma)
+    public static function guardarTurma($nome_turma, $periodo_turma, $sala)
     {
         $db = Database::getConnection();
 
-        $sql = "INSERT INTO turma(nome, periodo, sala, capacidade) VALUES(:nome, :periodo, :sala, :capacidade)";
+        $sql = "INSERT INTO turma(nome, periodo, id_sala) VALUES(:nome, :periodo, :sala)";
 
         $stmt = $db->prepare($sql);
 
         $stmt->execute([
             ':nome' => $nome_turma,
             ':periodo' => $periodo_turma,
-            ':sala' => $sala_turma,
-            ':capacidade' => $capacidade_turma
+            ':sala' => $sala
         ]);
     }
 

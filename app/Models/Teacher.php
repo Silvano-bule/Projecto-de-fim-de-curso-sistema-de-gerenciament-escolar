@@ -19,26 +19,23 @@ class Teacher
         $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
         return $resultado['total'];
     }
-    public static  function guardarDados($nome, $email, $telefone, $nascimento, $sexo, $nacionalidade, $provincia)
+    public static function guardarDados($nome, $email, $telefone, $nascimento, $sexo, $nacionalidade, $provincia)
     {
-        try {
-            $db = Database::getConnection();
-            $sql = "INSERT INTO professor (nome, nascimento , sexo,  telefone, email, provincia, nacionalidade) VALUES (:nome, :nascimento, :sexo, :telefone, :email, :provincia, :nacionalidade)";
+        $db = Database::getConnection();
+        $sql = "INSERT INTO professor (nome, nascimento, sexo, telefone, email, provincia, nacionalidade) VALUES (:nome, :nascimento, :sexo, :telefone, :email, :provincia, :nacionalidade)";
 
-            $stmt = $db->prepare($sql);
+        $stmt = $db->prepare($sql);
+        $stmt->execute([
+            ':nome' => $nome,
+            ':nascimento' => $nascimento,
+            ':sexo' => $sexo,
+            ':telefone' => $telefone,
+            ':email' => $email,
+            ':provincia' => $provincia,
+            ':nacionalidade' =>  $nacionalidade,
+        ]);
 
-            $stmt->execute([
-                ':nome' => $nome,
-                ':email' => $email,
-                ':telefone'  => $telefone,
-                ':nascimento' => $nascimento,
-                ':sexo' => $sexo,
-                ':nacionalidade' =>  $nacionalidade,
-                ':provincia' => $provincia
-            ]);
-        } catch (PDOException $e) {
-            echo "ERRO AO SALVAR NO BANCO: " . $e->getMessage();
-        }
+        return $stmt->rowCount() > 0;
     }
     public static function listarProfessores()
     {
@@ -78,21 +75,21 @@ class Teacher
     }
     public static function actualizarProfessor($dados)
     {
-      $db = Database::getConnection();
+        $db = Database::getConnection();
 
-      $sql = "UPDATE professor SET nome = :nome, nascimento = :nascimento, sexo = :sexo, telefone = :telefone, email = :email, provincia = :provincia, nacionalidade = :nacionalidade WHERE idprofessor = :id";
+        $sql = "UPDATE professor SET nome = :nome, nascimento = :nascimento, sexo = :sexo, telefone = :telefone, email = :email, provincia = :provincia, nacionalidade = :nacionalidade WHERE idprofessor = :id";
 
-      $stmt = $db ->prepare($sql);
+        $stmt = $db->prepare($sql);
 
-      return $stmt ->execute([
-        ':nome' => $dados['nome_professor'],
-        ':email' => $dados['email_professor'],
-        ':nascimento' => $dados['nascimento_professor'],
-        ':sexo' => $dados['sexo_professor'],
-        ':telefone' => $dados['telefone_professor'],
-        ':provincia' => $dados['provincia_professor'],
-        ':nacionalidade' => $dados['nacionalidade_professor'],
-        ':id' => $dados['idProfessor']
-      ]);
+        return $stmt->execute([
+            ':nome' => $dados['nome_professor'],
+            ':email' => $dados['email_professor'],
+            ':nascimento' => $dados['nascimento_professor'],
+            ':sexo' => $dados['sexo_professor'],
+            ':telefone' => $dados['telefone_professor'],
+            ':provincia' => $dados['provincia_professor'],
+            ':nacionalidade' => $dados['nacionalidade_professor'],
+            ':id' => $dados['idProfessor']
+        ]);
     }
 }
