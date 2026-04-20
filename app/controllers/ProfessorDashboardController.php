@@ -78,7 +78,28 @@ class ProfessorDashboardController
         if (!empty($error_professor)) {
             $this->redirecionarComErro($error_professor, $nome, $email, $telefone, $nascimento, $sexo, $nacionalidade, $provincia);
         }
-        $this->salvarDados($nome, $email, $telefone, $nascimento, $sexo, $nacionalidade, $provincia);
+
+        if (!empty($_POST['idProfessor'])) {
+
+            $dadosAtualizados = [
+                'idProfessor'           => $_POST['idProfessor'], // Certifique-se que o id vem do POST
+                'nome_professor'        => $nome,
+                'email_professor'       => $email,
+                'telefone_professor'    => $telefone,
+                'nascimento_professor'  => $nascimento,
+                'sexo_professor'        => $sexo,
+                'nacionalidade_professor' => $nacionalidade,
+                'provincia_professor' => $provincia
+            ];
+
+            // Tente atualizar
+            Teacher::actualizarProfessor($dadosAtualizados);
+
+            header("Location: index.php?page=admin_dashboard");
+            exit();
+        } else {
+            $this->salvarDados($nome, $email, $telefone, $nascimento, $sexo, $nacionalidade, $provincia);
+        }
     }
 
     private function redirecionarComErro($error_professor, $nome, $email, $telefone, $nascimento, $sexo, $nacionalidade, $provincia)
@@ -111,21 +132,20 @@ class ProfessorDashboardController
             $this->redirecionarComErro(['db' => $e->getMessage()], $nome, $email, $telefone, $nascimento, $sexo, $nacionalidade, $provincia);
         }
     }
-
-    /* public function removerProfessor()
+    public function removerProfessor()
     {
         if (isset($_GET['id'])) {
             $id = $_GET['id'];
             Teacher::removerProfessor($id);
         }
     }
+
     public function obterProfessorId()
     {
         if (ob_get_length()) ob_clean();
         header("Content-Type: application/json; charset=UTF-8");
 
         $id = $_GET['id'] ?? null;
-
 
         if ($id) {
             $professor = Teacher::obterProfessorPorId($id);
@@ -135,5 +155,5 @@ class ProfessorDashboardController
             echo json_encode(["erro" => "Id não definido"]);
         }
         exit;
-    } */
+    }
 }

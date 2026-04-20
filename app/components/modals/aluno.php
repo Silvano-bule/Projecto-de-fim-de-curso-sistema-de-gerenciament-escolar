@@ -26,7 +26,7 @@ unset($_SESSION['erro_aluno'], $_SESSION['nome'], $_SESSION['email'], $_SESSION[
             </div>
             <form action="index.php?page=aluno_dashboard&action=render" method="POST" id="formulario">
                 <div class="grid grid-cols-3 gap-6 mt-4 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
-                    <input type="hidden" name="idaluno" id="id" class="ID">
+                    <input type="hidden" name="idAluno" id="id_aluno" class="ID" value="<?= $aluno['id'] ?? '' ?>">
                     <div>
                         <label class="text-gray-700 dark:text-gray-200" for="username">Nome<span class="text-red-500 text-xs"> (Obrigatório)</span> </label>
                         <input name="nome_aluno" id="username" type="text" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" required>
@@ -70,7 +70,7 @@ unset($_SESSION['erro_aluno'], $_SESSION['nome'], $_SESSION['email'], $_SESSION[
                     </div>
                     <div>
                         <label class="text-gray-700 dark:text-gray-200" for="Numero do BI">Número do BI</label>
-                        <input autocomplete="on" type="text" name="numero_BI_aluno" id="numero_BI" placeholder="000000000LA000" pattern="[0-9]{9}LA[0-9]{3}" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-30  dark:border-gray-600 focus:border-blue-400 focus:ring-blue-30０ focus:ring-opacity-4０ dark:focus:border-blue-3００ focus:outline-none focus:ring" required maxlength="14">
+                        <input autocomplete="on" type="text" name="numero_BI_aluno" id="numero_BI" placeholder="000000000LA000" pattern="[0-9]{9}LA[0-9]{3}" class="block w-full px-4 py-2 mt-2 text-gray-100 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-30  dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" required maxlength="14">
                     </div>
                     <div>
                         <label class="text-gray-700 dark:text-gray-200" for="Provincia">Provincia</label>
@@ -148,7 +148,7 @@ unset($_SESSION['erro_aluno'], $_SESSION['nome'], $_SESSION['email'], $_SESSION[
                     </div>
                     <div>
                         <label class="text-gray-700 dark:text-gray-200" for="Curso">Curso</label>
-                        <select name="curso" id="Curso" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring">
+                        <select name="curso_aluno" id="Curso" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring">
                             <option value="">Selecionar Curso</option>
                             <?php if (empty($cursosEncontrados)): ?>
                                 <option value="" disabled>Nenhum curso cadastrado</option>
@@ -163,7 +163,7 @@ unset($_SESSION['erro_aluno'], $_SESSION['nome'], $_SESSION['email'], $_SESSION[
                     </div>
                     <div>
                         <label class="text-gray-700 dark:text-gray-200" for="sala">Sala</label>
-                        <select name="sala" id="sala" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring">
+                        <select name="sala_aluno" id="Sala" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring">
                             <option value="">Selecionar Sala</option>
                             <?php if (empty($salasEncontradas)): ?>
                                 <option value="" disabled>Nenhuma sala cadastrada</option>

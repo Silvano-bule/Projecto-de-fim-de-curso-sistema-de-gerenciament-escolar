@@ -93,7 +93,7 @@ class ClasseController
             $error_classe['nome_classe'] = "O nome da classe contém caracteres inválidos.";
         }
 
-        if($nome){
+        if ($nome) {
             $classeExistente = Classe::classesExistente();
             foreach ($classeExistente as $classe) {
                 if (strtolower($classe['nome']) === strtolower($nome)) {
@@ -107,7 +107,21 @@ class ClasseController
             return;
         }
 
-        $this->salvarDados($nome);
+
+         if (!empty($_POST['idClasse'])) {
+            $dadosAtualizados = [
+                'id_classe'           => $_POST['idClasse'], // Certifique-se que o id vem do POST
+                'nome_classe'        => $nome
+            ];
+
+            // Tente atualizar
+            Classe::actualizarClasse($dadosAtualizados);
+
+            header("Location: index.php?page=admin_dashboard");
+            exit();
+        } else {
+             $this->salvarDados($nome);
+        }
     }
 
     private function redirecinarComErros($error_classe, $nome)
@@ -127,7 +141,38 @@ class ClasseController
     }
 
 
+    public function removerClasse()
+    {
+        header("Content-Type: application/json");
+        if (isset($_GET['id'])) {
+            $id = $_GET['id'];
 
+            $total = Curso::cursoTemAluno($id);
+
+            if ($total > 0) {
+                echo json_encode(["status" => "erro", "message" => "Não é possível remover a turma, pois há alunos associados a ela."]);
+                return;
+            }
+
+            Classe::removerClasse($id);
+            echo json_encode(["status" => "sucesso", "message" => "Turma removida com sucesso."]);
+        }
+    }
+
+    public function obterClassePorId()
+    {
+        header("Content-Type: application/json; charset=UTF-8");
+
+        $id = $_GET['id'] ?? null;
+
+        if ($id) {
+            $curso = Classe::obterClassePorId($id);
+
+            echo json_encode($curso);
+        } else {
+            echo json_encode(["erro" => "Id não definido"]);
+        }
+    }
 
     /* 
     ===== PASSOS PARA GERENCIAR A CLASSE DO ALUNO ====

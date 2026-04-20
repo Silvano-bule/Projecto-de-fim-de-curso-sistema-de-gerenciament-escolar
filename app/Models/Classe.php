@@ -74,4 +74,66 @@ class Classe
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public static function cursoTemAluno($id)
+    {
+        $db = Database::getConnection();
+
+        $sql = "SELECT COUNT(*) FROM matricula WHERE id_classe = :id";
+
+        $stmt = $db->prepare($sql);
+
+        $stmt->execute([
+            ':id' => $id
+        ]);
+
+        $resultado = $stmt->fetch();
+
+        return $resultado['total'];
+    }
+
+    public static function removerClasse($id)
+    {
+
+        $db = Database::getConnection();
+
+        $sql = "DELETE  FROM classe WHERE id = :id";
+
+        $stmt = $db->prepare($sql);
+
+        return $stmt->execute([':id' => $id]);
+    }
+    public static function obterClassePorId($id)
+    {
+        $db = Database::getConnection();
+
+        $sql = "SELECT * FROM classe WHERE id = :id";
+
+        $stmt = $db->prepare($sql);
+
+        $stmt->execute([':id' => $id]);
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+      public static function actualizarClasse($dados)
+    {
+
+        /* echo "<pre>";
+        print_r($dados);
+        echo "</pre>";
+        die(); */
+        $db = Database::getConnection();
+
+        $sql = "UPDATE classe 
+        SET nome = :nome
+        WHERE id = :id";
+
+        $stmt = $db->prepare($sql);
+
+        return $stmt->execute([
+            ':nome' => $dados['nome_classe'],
+            ':id' => $dados['id_classe']
+        ]);
+    }
 }

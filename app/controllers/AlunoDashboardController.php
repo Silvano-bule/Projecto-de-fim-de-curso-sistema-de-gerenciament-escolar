@@ -159,33 +159,7 @@ class AlunoDashboardController
 
         require $viewPath;
     }
-    public function removerAluno()
-    {
-        if (isset($_GET['id'])) {
-            $id = $_GET['id'];
-            Aluno::removerAluno($id);
-        }
-        header("Location: ?page = Aluno");
-    }
-
-
-    public function obterAlunoPorId()
-    {
-        if (ob_get_length()) ob_clean();
-
-        $id = $_GET['id'] ?? null;
-
-        header("Content-Type: application/json; charset=UTF-8");
-
-        if ($id) {
-            $usuario = Aluno::obterAlunoPorId($id);
-
-            echo json_encode($usuario);
-        } else {
-            echo json_encode(["erro" => "Id não definido"]);
-        }
-        exit;
-    }
+  
 
     public static function actualizarAluno()
     {
@@ -197,7 +171,8 @@ class AlunoDashboardController
             echo json_encode(["sucesso" => $sucesso]);
         } else {
             echo json_encode(["erro" => "Dados Incompletos"]);
-        }  }*/
+        }  
+    }*/
 
 
 
@@ -206,6 +181,7 @@ class AlunoDashboardController
         $this->criarSessão();
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
             $this->receberDadosAluno();
             exit();
         }
@@ -236,85 +212,83 @@ class AlunoDashboardController
         $altura_raw = filter_input(INPUT_POST, 'altura_aluno', FILTER_DEFAULT);
         $altura = str_replace(',', '.', $altura_raw);
 
+        $classe_aluno = filter_input(INPUT_POST, 'classe_aluno', FILTER_SANITIZE_SPECIAL_CHARS);
+        $turma_aluno = filter_input(INPUT_POST, 'turma_aluno', FILTER_SANITIZE_SPECIAL_CHARS);
+        $curso_aluno = filter_input(INPUT_POST, 'curso_aluno', FILTER_SANITIZE_SPECIAL_CHARS);
+        $sala_aluno = filter_input(INPUT_POST, 'sala_aluno', FILTER_SANITIZE_NUMBER_INT);
+
         // Validar os dados
-        $this->validarDadosAluno($nome, $email, $telefone, $nascimento, $sexo, $nacionalidade, $nome_pai, $nome_mae, $numero_BI, $provincia, $altura);
+        $this->validarDadosAluno($nome, $email, $telefone, $nascimento, $sexo, $nacionalidade, $nome_pai, $nome_mae, $numero_BI, $provincia, $altura, $classe_aluno, $turma_aluno, $curso_aluno, $sala_aluno);
     }
 
-    private function validarDadosAluno($nome, $email, $telefone, $nascimento, $sexo, $nacionalidade, $nome_pai, $nome_mae, $numero_BI, $provincia, $altura)
+    private function validarDadosAluno($nome, $email, $telefone, $nascimento, $sexo, $nacionalidade, $nome_pai, $nome_mae, $numero_BI, $provincia, $altura, $classe_aluno, $turma_aluno, $curso_aluno, $sala_aluno)
     {
-
         $error_aluno = [];
-        $nome = trim($nome);
-        $email = trim($email);
-        $telefone = trim($telefone);
-        $nascimento = trim($nascimento);
-        $nacionalidade = trim($nacionalidade);
-        $nome_pai = trim($nome_pai);
-        $nome_mae = trim($nome_mae);
-        $numero_BI = trim($numero_BI);
-        $provincia = trim($provincia);
-        $altura = trim($altura);
 
-
-        /* VALIDAR O NOME DO ALUNO */
-        if (!filter_var($nome, FILTER_SANITIZE_FULL_SPECIAL_CHARS)) {
-            $error_aluno['nome'] = "O nome do aluno contém carateres inválidos";
+        // 1. Validar campos obrigatórios primeiro
+        if (empty($nome) || empty($email) || empty($numero_BI)) {
+            $error_aluno['campos'] = "Preencha todos os campos obrigatórios";
         }
 
-        /* VALIDAR O NOME DO EMAIL */
+        // 2. Validação Real (FILTER_VALIDATE e não SANITIZE)
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $error_aluno['email'] = "O email do aluno contém carateres inválidos";
-        }
-        /* VALIDAR O NOME DO TELEFONE */
-        if (!filter_var($telefone, FILTER_SANITIZE_NUMBER_INT)) {
-            $error_aluno['telefone'] = "O numero do aluno contém carateres inválidos";
+            $error_aluno['email'] = "O email informado é inválido";
         }
 
         if (strlen($telefone) !== 9) {
             $error_aluno['telefone'] = "O telefone deve ter exatamente 9 dígitos";
         }
 
-        /*  VALIDAR O NACIONALIDADE */
-        if (!filter_var($nacionalidade, FILTER_SANITIZE_FULL_SPECIAL_CHARS)) {
-            $error_aluno['nacionalidade'] = "A nacionalidade do aluno contém carateres inválidos";
-        }
-        /*  VALIDAR O NOME DA MAE */
-        if (!filter_var($nome_mae, FILTER_SANITIZE_FULL_SPECIAL_CHARS)) {
-            $error_aluno['nome_mae'] = "O nome da mae do aluno contém carateres inválidos";
-        }
-        /*  VALIDAR O NOME DO PAI */
-        if (!filter_var($nome_pai, FILTER_SANITIZE_FULL_SPECIAL_CHARS)) {
-            $error_aluno['nome_pai'] = "O nome do pai do aluno contém carateres inválidos";
-        }
-
-        /* VALIDAR O NUMERO DO BI */
         if (!preg_match('/^\d{9}LA\d{3}$/', $numero_BI)) {
-            $error_aluno['numero_BI'] = "Formato de numero de BI inválido";
+            $error_aluno['numero_BI'] = "Formato de numero de BI inválido (Ex: 000000000LA000)";
         }
 
-        $dados = [$nome, $email, $telefone, $nascimento, $nacionalidade, $sexo, $nome_mae, $nome_pai, $numero_BI, $provincia, $altura];
-
-        foreach ($dados as $data) {
-            if ((empty($data))) {
-                $error_aluno[$data] = "Preencha os campos, por favor";
-            }
-        }
-
-
+        // Se houver erros, para aqui
         if (!empty($error_aluno)) {
             $this->redirecionarComErro($error_aluno, $nome, $email, $telefone, $nascimento, $sexo, $nacionalidade, $nome_pai, $nome_mae, $numero_BI, $provincia, $altura);
             return;
         }
 
-        // Se não houver erros, salvar o aluno
-        $this->salvarAluno($nome, $email, $telefone, $nascimento, $sexo, $nacionalidade, $nome_pai, $nome_mae, $numero_BI, $provincia, $altura);
+        // 3. SEÇÃO DE ATUALIZAÇÃO (Onde estava falhando)
+        if (!empty($_POST['idAluno'])) {
+
+            $dadosAtualizados = [
+                'idaluno'           => $_POST['idAluno'], // Certifique-se que o id vem do POST
+                'nome_aluno'        => $nome,
+                'email_aluno'       => $email,
+                'telefone_aluno'    => $telefone,
+                'nascimento_aluno'  => $nascimento,
+                'sexo_aluno'        => $sexo,
+                'nacionalidade_aluno' => $nacionalidade,
+                'pai_aluno'         => $nome_pai,
+                'mae_aluno'         => $nome_mae,
+                'numero_BI_aluno'   => $numero_BI,
+                'provincia_aluno'   => $provincia,
+                'altura_aluno'      => $altura,
+                'turma_aluno'       => $turma_aluno, // Use as variáveis recebidas no parâmetro
+                'curso_aluno'       => $curso_aluno,
+                'classe_aluno'      => $classe_aluno,
+                'sala_aluno'        => $sala_aluno
+            ];
+
+            // Tente atualizar
+            Aluno::actualizarAluno($dadosAtualizados);
+
+            header("Location: index.php?page=admin_dashboard");
+            exit();
+        } else {
+            $this->salvarAluno($nome, $email, $telefone, $nascimento, $sexo, $nacionalidade, $nome_pai, $nome_mae, $numero_BI, $provincia, $altura, $classe_aluno, $turma_aluno, $sala_aluno, $curso_aluno);
+        }
     }
 
-    private function salvarAluno($nome, $email, $telefone, $nascimento, $sexo, $nacionalidade, $nome_pai, $nome_mae, $numero_BI, $provincia, $altura)
+
+    private function salvarAluno($nome, $email, $telefone, $nascimento, $sexo, $nacionalidade, $nome_pai, $nome_mae, $numero_BI, $provincia, $altura, $Idclasse, $Idturma, $Idsala, $Idcurso)
     {
+        /*  print_r($dados); */
 
-        Aluno::salvarAluno($nome, $email, $telefone, $nascimento, $sexo, $nacionalidade, $nome_pai, $nome_mae, $numero_BI, $provincia, $altura);
+        $IdAluno = Aluno::salvarAluno($nome, $email, $telefone, $nascimento, $sexo, $nacionalidade, $nome_pai, $nome_mae, $numero_BI, $provincia, $altura);
 
+        Aluno::matricula($IdAluno, $Idclasse, $Idturma, $Idsala, $Idcurso);
         header("Location: index.php?page=admin_dashboard");
         exit();
     }
@@ -338,9 +312,40 @@ class AlunoDashboardController
         header("Location: index.php?page=admin_dashboard");
         exit();
     }
+    public function removerAluno()
+    {
+        if (isset($_GET['id'])) {
+            $id = $_GET['id'];
 
+            var_dump($id);
+            Aluno::removerAluno($id);
+        } else {
+            echo "ID não fornecido";
+        }
+        header("Location: index.php?page=aluno_dashboard");
+        exit();
+    }
+
+    public function obterAlunoPorId()
+    {
+        if (ob_get_length()) ob_clean();
+
+        $id = $_GET['id'] ?? null;
+
+        header("Content-Type: application/json; charset=UTF-8");
+
+        if ($id) {
+            $usuario = Aluno::obterAlunoPorId($id);
+
+            echo json_encode($usuario);
+        } else {
+            echo json_encode(["erro" => "Id não definido"]);
+        }
+        exit;
+    }
     /* 
-        =========== PASSOS PARA REGISTRAR UM ALUNO =============
+        =========== PASSOS PARA REGISTRAR UM ALUNO ==
+        ===========
         1. CRIAR SESSÃO
         2. RECEBER DADOS DO FORMULÁRIO
         3. VALIDAR DADOS

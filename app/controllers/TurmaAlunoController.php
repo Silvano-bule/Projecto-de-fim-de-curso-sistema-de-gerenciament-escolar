@@ -33,40 +33,8 @@ class TurmaAlunoController
     {
         return Turma::listarTurma();
     }
-    public function removerTurma()
-    {
-
-        header("Content-Type: application/json");
-        if (isset($_GET['id'])) {
-
-            $id = $_GET['id'];
-
-            $total = Turma::turmaTemAluno($id);
-
-            if ($total > 0) {
-                echo json_encode(["status" => "erro", "message" => "Não é possível remover a turma, pois há alunos associados a ela."]);
-                return;
-            }
-
-            Turma::removerTurma($id);
-            echo json_encode(["status" => "sucesso", "message" => "Turma removida com sucesso."]);
-        }
-    }
-
-    public function obterTurmaPorId()
-    {
-        header("Content-Type: application/json; charset=UTF-8");
-
-        $id = $_GET['id'] ?? null;
-
-        if ($id) {
-            $turma = Turma::obterTurmaPorId($id);
-
-            echo json_encode($turma);
-        } else {
-            echo json_encode(["erro" => "Id não definido"]);
-        }
-    } */
+   
+*/
 
     public function render()
     {
@@ -140,7 +108,23 @@ class TurmaAlunoController
             $this->redirecionarComErro($erro, $nome, $periodo, $sala);
             return;
         }
-        $this->guardarTurma($nome, $periodo, $sala);
+        
+        if (!empty($_POST['idTurma'])) {
+            $dadosAtualizados = [
+                'id_turma'           => $_POST['idTurma'], // Certifique-se que o id vem do POST
+                'nome_turma'        => $nome,
+                'sala_turma'        => $sala,
+                'periodo_turma'       => $periodo,
+            ];
+
+            // Tente atualizar
+            Turma::actualizarTurma($dadosAtualizados);
+
+            header("Location: index.php?page=admin_dashboard");
+            exit();
+        } else {
+            $this->guardarTurma($nome, $periodo, $sala);
+        }
     }
 
     public function guardarTurma($nome, $periodo, $sala)
@@ -164,6 +148,40 @@ class TurmaAlunoController
 
         header("Location: index.php?page=admin_dashboard");
         exit();
+    }
+    public function removerTurma()
+    {
+
+        header("Content-Type: application/json");
+        if (isset($_GET['id'])) {
+
+            $id = $_GET['id'];
+
+            $total = Turma::turmaTemAluno($id);
+
+            if ($total > 0) {
+                echo json_encode(["status" => "erro", "message" => "Não é possível remover a turma, pois há alunos associados a ela."]);
+                return;
+            }
+
+            Turma::removerTurma($id);
+            echo json_encode(["status" => "sucesso", "message" => "Turma removida com sucesso."]);
+        }
+    }
+
+    public function obterTurmaPorId()
+    {
+        header("Content-Type: application/json; charset=UTF-8");
+
+        $id = $_GET['id'] ?? null;
+
+        if ($id) {
+            $turma = Turma::obterTurmaPorId($id);
+
+            echo json_encode($turma);
+        } else {
+            echo json_encode(["erro" => "Id não definido"]);
+        }
     }
     /* 
         

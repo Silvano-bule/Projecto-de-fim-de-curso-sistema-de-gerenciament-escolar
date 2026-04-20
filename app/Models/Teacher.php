@@ -51,7 +51,7 @@ class Teacher
     {
         try {
             $db = Database::getConnection();
-            $sql = "DELETE FROM professor WHERE idprofessor = :id";
+            $sql = "DELETE FROM professor WHERE id = :id";
             $stmt = $db->prepare($sql);
             $stmt->execute([':id' => $id]);
         } catch (PDOException $e) {
@@ -63,7 +63,7 @@ class Teacher
     {
         $db =  Database::getConnection();
 
-        $sql = "SELECT *  FROM professor  WHERE idprofessor = :id";
+        $sql = "SELECT *  FROM professor  WHERE id = :id";
 
         $stmt  = $db->prepare($sql);
 
@@ -77,7 +77,15 @@ class Teacher
     {
         $db = Database::getConnection();
 
-        $sql = "UPDATE professor SET nome = :nome, nascimento = :nascimento, sexo = :sexo, telefone = :telefone, email = :email, provincia = :provincia, nacionalidade = :nacionalidade WHERE idprofessor = :id";
+        $sql = "UPDATE professor
+        SET nome = :nome, 
+        nascimento = :nascimento, 
+        sexo = :sexo, 
+        telefone = :telefone, 
+        email = :email, 
+        provincia = :provincia, 
+        nacionalidade = :nacionalidade 
+        WHERE id = :id";
 
         $stmt = $db->prepare($sql);
 

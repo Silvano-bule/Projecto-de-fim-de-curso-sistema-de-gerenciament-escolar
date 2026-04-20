@@ -32,14 +32,7 @@ class CursoController
 
         require $viewPath;
     }
-    public static function obterCursoId()
-    {
-        header("Content-Type: application/json");
-        if ($_GET['id']) {
-            $id = $_GET['id'] ?? null;
-            Curso::obterCursoId($id);
-        }
-    } */
+     */
 
     public function render()
     {
@@ -107,7 +100,21 @@ class CursoController
             return;
         }
 
-        $this->salvarCurso($nome_curso, $descricao_curso);
+        if (!empty($_POST['idCurso'])) {
+            $dadosAtualizados = [
+                'id_curso'           => $_POST['idCurso'], // Certifique-se que o id vem do POST
+                'nome_curso'        => $nome,
+                'descricao_curso'        => $descricao_curso
+            ];
+
+            // Tente atualizar
+            Curso::actualizarTurma($dadosAtualizados);
+
+            header("Location: index.php?page=admin_dashboard");
+            exit();
+        } else {
+            $this->salvarCurso($nome_curso, $descricao_curso);
+        }
     }
 
     public function salvarCurso($nome_curso, $descricao_curso)
@@ -126,7 +133,38 @@ class CursoController
         header("Location: index.php?page=admin_dashboard");
         exit;
     }
+    public function removerCurso()
+    {
+        header("Content-Type: application/json");
+        if (isset($_GET['id'])) {
+            $id = $_GET['id'];
 
+            $total = Curso::cursoTemAluno($id);
+
+            if ($total > 0) {
+                echo json_encode(["status" => "erro", "message" => "Não é possível remover a turma, pois há alunos associados a ela."]);
+                return;
+            }
+
+            Curso::removerCurso($id);
+            echo json_encode(["status" => "sucesso", "message" => "Turma removida com sucesso."]);
+        }
+    }
+
+    public function obterCursoPorId()
+    {
+        header("Content-Type: application/json; charset=UTF-8");
+
+        $id = $_GET['id'] ?? null;
+
+        if ($id) {
+            $curso = Curso::obterCursoPorId($id);
+
+            echo json_encode($curso);
+        } else {
+            echo json_encode(["erro" => "Id não definido"]);
+        }
+    }
     /* 
             ===== PASSOS PARA GERENCIAR O CURSO DO ALUNO ======
                 1- INICIAR SESSÃO

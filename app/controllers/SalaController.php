@@ -1,7 +1,9 @@
 <?php
+
 namespace App\controllers;
 
 use App\Models\salaModels;
+
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -52,7 +54,7 @@ class SalaController
 
         if ($nome) {
             $salaExistente = salaModels::verificarSalaExitente($nome);
-            if($salaExistente) {
+            if ($salaExistente) {
                 $error['nome'] = "Já existe uma sala com esse nome.";
             }
         }
@@ -62,7 +64,22 @@ class SalaController
             return;
         }
 
-        $this->salvarDados($nome, $capacidade_limpada);
+        if (!empty($_POST['idSala'])) {
+            $dadosAtualizados = [
+                'id_sala'           => $_POST['idSala'], // Certifique-se que o id vem do POST
+                'nome_sala'        => $nome,
+                'capacidade_sala'        => $capacidade,
+            ];
+
+            // Tente atualizar
+            salaModels::actualizarSala($dadosAtualizados);
+
+            header("Location: index.php?page=admin_dashboard");
+            exit();
+        } else {
+             $this->salvarDados($nome, $capacidade_limpada);
+        }
+       
     }
 
     private function salvarDados($nome, $capacidade)
@@ -85,7 +102,40 @@ class SalaController
         header("Location: index.php?page=admin_dashboard");
         exit();
     }
+    public function removerSala()
+    {
 
+        header("Content-Type: application/json");
+        if (isset($_GET['id'])) {
+
+            $id = $_GET['id'];
+
+            $total = salaModels::salaTemTurma($id);
+
+            if ($total > 0) {
+                echo json_encode(["status" => "erro", "message" => "Não é possível remover a turma, pois há alunos associados a ela."]);
+                return;
+            }
+
+            salaModels::removerSala($id);
+            echo json_encode(["status" => "sucesso", "message" => "Turma removida com sucesso."]);
+        }
+    }
+
+    public function obterSalaPorId()
+    {
+        header("Content-Type: application/json; charset=UTF-8");
+
+        $id = $_GET['id'] ?? null;
+
+        if ($id) {
+            $sala = salaModels::obterSalaPorId($id);
+
+            echo json_encode($sala);
+        } else {
+            echo json_encode(["erro" => "Id não definido"]);
+        }
+    }
 
     /* 
         ===== PASSOS PARA GRENCIAAR A SALA DO ALUNO ======

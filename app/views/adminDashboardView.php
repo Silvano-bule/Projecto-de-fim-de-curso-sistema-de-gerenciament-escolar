@@ -42,6 +42,12 @@
                 <!-- Area de Cursos -->
                 <?php require dirname(__DIR__) . '/components/sections/curso.php'; ?>
 
+                <!-- Area das classes -->
+                <?php require dirname(__DIR__) . '/components/sections/classe.php'; ?>
+
+                <!-- Area das das salas -->
+                <?php require dirname(__DIR__) . '/components/sections/sala.php'; ?>
+
             </div>
             <!--Modal Aluno -->
             <?php require dirname(__DIR__) . '/components/modals/aluno.php'; ?>

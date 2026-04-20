@@ -47,11 +47,11 @@ class Turma
     {
         $db = Database::getConnection();
 
-        $sql = "SELECT COUNT(*) as total FROM aluno  WHERE id_turma = :idTurma";
+        $sql = "SELECT count(*) as total FROM matricula WHERE id_turma = :id";
 
         $stmt = $db->prepare($sql);
 
-        $stmt->execute([':idTurma' => $idTurma]);
+        $stmt->execute([':id' => $idTurma]);
 
         $resultado = $stmt->fetch();
 
@@ -62,7 +62,7 @@ class Turma
     {
         $db = Database::getConnection();
 
-        $sql = "DELETE FROM turma WHERE idturma = :id";
+        $sql = "DELETE FROM turma WHERE id = :id";
 
         $stmt = $db->prepare($sql);
 
@@ -72,7 +72,7 @@ class Turma
     {
         $db = Database::getConnection();
 
-        $sql = "SELECT * FROM turma WHERE idturma = :id";
+        $sql = "SELECT * FROM turma WHERE id = :id";
 
         $stmt = $db->prepare($sql);
 
@@ -83,9 +83,18 @@ class Turma
 
     public static function actualizarTurma($dados)
     {
+
+        /* echo "<pre>";
+        print_r($dados);
+        echo "</pre>";
+        die(); */
         $db = Database::getConnection();
 
-        $sql = "UPDATE turma SET nome = :nome, periodo = :periodo, sala = :sala, capacidade = :capacidade WHERE idturma = :id";
+        $sql = "UPDATE turma 
+        SET nome = :nome, 
+        periodo = :periodo, 
+        id_sala = :sala
+        WHERE id = :id";
 
         $stmt = $db->prepare($sql);
 
@@ -93,8 +102,7 @@ class Turma
             ':nome' => $dados['nome_turma'],
             ':periodo' => $dados['periodo_turma'],
             ':sala' => $dados['sala_turma'],
-            ':capacidade' => $dados['capacidade_turma'],
-            ':id' => $dados['idTurma']
+            ':id' => $dados['id_turma']
         ]);
     }
 }

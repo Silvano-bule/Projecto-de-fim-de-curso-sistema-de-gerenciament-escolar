@@ -49,12 +49,12 @@
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-                                    <?php if (!empty($dados['alunosRecentes'])): ?>
-                                        <?php foreach ($dados['alunosRecentes'] as $aluno): ?>
+                                    <?php if (!empty($alunosRecentes)): ?>
+                                        <?php foreach ($alunosRecentes as $aluno): ?>
                                             <tr>
                                                 <td class="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
                                                     <div class="inline-flex items-center gap-x-3">
-                                                        <span><?= htmlspecialchars($aluno['numero_matricula'] ?? 'N/A') ?></span>
+                                                        <span><?= htmlspecialchars($aluno['numero'] ?? 'N/A') ?></span>
                                                     </div>
                                                 </td>
                                                 <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
@@ -64,14 +64,14 @@
                                                     <?= htmlspecialchars($aluno['nascimento'] ?? 'N/A') ?>
                                                 </td>
                                                 <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                    <?= htmlspecialchars($aluno['id_classe'] ?? 'N/A') ?>
+                                                    <?= htmlspecialchars($aluno['nome_classe'] ?? 'N/A') ?>
                                                 </td>
                                                 <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                                                     <!-- Aqui você pode buscar o nome da turma se quiser, mas por simplicidade, mostra o ID -->
-                                                    <?= htmlspecialchars($aluno['id_turma'] ?? 'N/A') ?>
+                                                    <?= htmlspecialchars($aluno['nome_turma'] ?? 'N/A') ?>
                                                 </td>
                                                 <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                    <?= htmlspecialchars($aluno['sala'] ?? 'N/A') ?>
+                                                    <?= htmlspecialchars($aluno['nome_sala'] ?? 'N/A') ?>
                                                 </td>
                                             </tr>
                                         <?php endforeach; ?>

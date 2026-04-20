@@ -59,12 +59,35 @@ class Curso
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-
-    public static function obterCursoId($idCurso)
+    public static function cursoTemAluno($idCurso)
     {
         $db = Database::getConnection();
 
-        $sql  = "SELECT * FROM curso WHERE idcurso = :idCurso";
+        $sql = "SELECT count(*) as total FROM matricula WHERE id_curso = :id";
+
+        $stmt = $db->prepare($sql);
+
+        $stmt->execute([':id' => $idCurso]);
+
+        $resultado = $stmt->fetch();
+
+        return $resultado['total'];
+    }
+    public static  function removerCurso($id)
+    {
+        $db = Database::getConnection();
+
+        $sql = "DELETE FROM curso WHERE id = :id";
+
+        $stmt = $db->prepare($sql);
+
+        return $stmt->execute([':id' => $id]);
+    }
+    public static function obterCursoPorId($idCurso)
+    {
+        $db = Database::getConnection();
+
+        $sql  = "SELECT * FROM curso WHERE id = :idCurso";
 
         $stmt = $db->prepare($sql);
 
@@ -72,6 +95,28 @@ class Curso
             'idCurso' => $idCurso,
         ]);
 
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+    public static function actualizarTurma($dados)
+    {
+
+        /* echo "<pre>";
+        print_r($dados);
+        echo "</pre>";
+        die(); */
+        $db = Database::getConnection();
+
+        $sql = "UPDATE curso
+        SET nome = :nome, 
+        descricao = :descricao
+        WHERE id = :id";
+
+        $stmt = $db->prepare($sql);
+
+        return $stmt->execute([
+            ':nome' => $dados['nome_curso'],
+            ':descricao' => $dados['descricao_curso'],
+            ':id' => $dados['id_curso']
+        ]);
     }
 }
