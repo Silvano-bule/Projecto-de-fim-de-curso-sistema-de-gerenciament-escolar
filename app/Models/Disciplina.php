@@ -5,7 +5,7 @@ namespace App\Models;
 use App\core\Database;
 use PDO;
 
-class Turma
+class Disciplina
 {
     public static function contarTurmas()
     {
@@ -18,26 +18,25 @@ class Turma
         return $resultado['total'];
     }
 
-    public static function guardarTurma($nome_turma, $periodo_turma, $sala, $classe)
+    public static function guardarDisciplina($nome_turma, $curso, $prof)
     {
         $db = Database::getConnection();
 
-        $sql = "INSERT INTO turma(nome, periodo,classe, id_sala) VALUES(:nome, :periodo,:classe, :sala)";
+        $sql = "INSERT INTO disciplina(nome, id_curso, id_professor) VALUES(:nome, :curso, :prof)";
 
         $stmt = $db->prepare($sql);
 
         $stmt->execute([
             ':nome' => $nome_turma,
-            ':periodo' => $periodo_turma,
-            ':sala' => $sala,
-            ':classe' => $classe
+            ':curso' => $curso,
+            ':prof' => $prof
         ]);
     }
 
-    public static function listarTurma()
+    public static function listarDisciplinas()
     {
         $db = Database::getConnection();
-        $sql = "SELECT * FROM turma";
+        $sql = "SELECT * FROM disciplina";
         $sql = $db->prepare($sql);
 
         $sql->execute();
@@ -59,21 +58,21 @@ class Turma
         return $resultado['total'];
     }
 
-    public static  function removerTurma($id)
+    public static  function removerDisciplina($id)
     {
         $db = Database::getConnection();
 
-        $sql = "DELETE FROM turma WHERE id = :id";
+        $sql = "DELETE FROM disciplina WHERE id = :id";
 
         $stmt = $db->prepare($sql);
 
         return $stmt->execute([':id' => $id]);
     }
-    public static function obterTurmaPorId($id)
+    public static function obterDisciplinaPorId($id)
     {
         $db = Database::getConnection();
 
-        $sql = "SELECT * FROM turma WHERE id = :id";
+        $sql = "SELECT * FROM disciplina WHERE id = :id";
 
         $stmt = $db->prepare($sql);
 
@@ -82,7 +81,7 @@ class Turma
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public static function actualizarTurma($dados)
+    public static function actualizarDisciplina($dados)
     {
 
         /* echo "<pre>";
@@ -91,39 +90,17 @@ class Turma
         die(); */
         $db = Database::getConnection();
 
-        $sql = "UPDATE turma 
+        $sql = "UPDATE disciplina 
         SET nome = :nome, 
-        periodo = :periodo, 
-        id_sala = :sala
-        classe = :classe,
+        curso = :curso
         WHERE id = :id";
 
         $stmt = $db->prepare($sql);
 
         return $stmt->execute([
             ':nome' => $dados['nome_turma'],
-            ':periodo' => $dados['periodo_turma'],
-            ':sala' => $dados['sala_turma'],
-            ':classe' => $dados['classe'],
-            ':id' => $dados['id_turma']
+            ':curso' => $dados['curso'],
+            ':id' => $dados['id_disciplina']
         ]);
-    }
-
-    public static function obterRegistro()
-    {
-        $db = Database::getConnection();
-        
-        $sql = "SELECT matricula.numero as numero_matricula,
-        aluno.nome as nome_aluno, 
-        turma.nome as nome_turma, 
-        curso.nome as nome_curso
-        FROM turma 
-        JOIN matricula ON matricula.id_turma = turma.id 
-        JOIN aluno ON aluno.id = matricula.id_aluno
-        JOIN curso ON matricula.id_curso = curso.id";
-
-        $stmt = $db->prepare($sql);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }

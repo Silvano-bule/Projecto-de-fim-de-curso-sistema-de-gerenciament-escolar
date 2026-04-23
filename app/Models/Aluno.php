@@ -46,19 +46,19 @@ class Aluno
             $idAluno = $db->lastInsertId();
             $db->commit();
             return $idAluno;
-        } catch (\PDOException $e) {
+        } catch (PDOException $e) {
             throw new \Exception("Erro ao salvar no banco (" . $e->getFile() . ":" . $e->getLine() . "): " . $e->getMessage());
         } catch (\Exception $e) {
             throw new \Exception("Erro geral ao salvar aluno (" . $e->getFile() . ":" . $e->getLine() . "): " . $e->getMessage());
         }
     }
-    public static function matricula($IdAluno, $Idclasse, $Idturma, $Idsala, $Idcurso)
+    public static function matricula($IdAluno, $Idturma, $Idsala, $Idcurso)
     {
         $db = Database::getConnection();
 
         // A query tem 6 marcadores
-        $sql = "INSERT INTO matricula (numero, Id_aluno, Id_classe, Id_turma, Id_sala, Id_curso) 
-            VALUES (:numero, :IdAluno, :Idclasse, :Idturma, :Idsala, :Idcurso)";
+        $sql = "INSERT INTO matricula (numero, Id_aluno, Id_turma, Id_sala, Id_curso) 
+            VALUES (:numero, :IdAluno, :Idturma, :Idsala, :Idcurso)";
 
         $stmt = $db->prepare($sql);
         $numeroMatricula = uniqid("MAT");
@@ -66,7 +66,6 @@ class Aluno
         $stmt->execute([
             ':numero'   => $numeroMatricula,
             ':IdAluno'  => $IdAluno,   // Corrigido: era IdAaluno
-            ':Idclasse' => $Idclasse,
             ':Idturma'  => $Idturma,
             ':Idsala'   => $Idsala,    // Adicionado: estava a faltar
             ':Idcurso'  => $Idcurso
@@ -99,16 +98,13 @@ class Aluno
         $db = Database::getConnection();
 
         $sql = "SELECT aluno.nome, aluno.nascimento,
-        matricula.numero, 
-        matricula.id_classe, 
+        matricula.numero,
         matricula.id_turma,
         turma.id_sala,
-        classe.nome as nome_classe,
         turma.nome as nome_turma,
         sala.nome as nome_sala
         from aluno 
         join matricula on aluno.id = matricula.id_aluno
-        join classe on classe.id = matricula.id_classe
         join turma on turma.id = matricula.id_turma
         join sala on sala.id = turma.id_sala";
 
@@ -150,7 +146,6 @@ class Aluno
                 aluno.numero_BI,
                 aluno.provincia,
                 aluno.altura,
-                matricula.id_classe,
                 matricula.id_turma,
                 matricula.id_curso
                 FROM aluno 
@@ -210,16 +205,14 @@ class Aluno
             // 2. Atualizar Tabela Matricula
             $sqlMatricula = "UPDATE matricula SET 
                          id_turma = :turma_aluno, 
-                         id_curso = :curso_aluno, 
-                         id_classe = :classe_aluno
+                         id_curso = :curso_aluno,
                          WHERE id_aluno = :idaluno";
 
             $stmtM = $db->prepare($sqlMatricula);
             $stmtM->execute([
                 ':idaluno'      => $dados['idaluno'],
                 ':turma_aluno'  => $dados['turma_aluno'],
-                ':curso_aluno'  => $dados['curso_aluno'],
-                ':classe_aluno' => $dados['classe_aluno']
+                ':curso_aluno'  => $dados['curso_aluno']
             ]);
         } catch (PDOException $e) {
             // Se houver erro no nome de alguma coluna, ele vai mostrar aqui

@@ -17,8 +17,8 @@
 
             <div class="content w-full">
                 <!-- Main content - Conteúdo do dashboard -->
-                 
-                <section id="Dashboard" class="container w-auto mx-auto px-4 ml-64 sectio-content">
+
+                <section id="Dashboard" class="container w-auto mx-auto px-4 ml-64 sectio-content hidden">
                     <!-- Header Dasboard -->
                     <?php require dirname(__DIR__) . '/components/dashboard/header.php' ?>
 
@@ -42,11 +42,15 @@
                 <!-- Area de Cursos -->
                 <?php require dirname(__DIR__) . '/components/sections/curso.php'; ?>
 
-                <!-- Area das classes -->
-                <?php require dirname(__DIR__) . '/components/sections/classe.php'; ?>
 
-                <!-- Area das das salas -->
+                <!-- Area das salas -->
                 <?php require dirname(__DIR__) . '/components/sections/sala.php'; ?>
+
+                <!-- Area das  Disciplina -->
+                <?php require dirname(__DIR__) . '/components/sections/disciplina.php'; ?>
+
+                <!-- Area dos relatorios -->
+                <?php require dirname(__DIR__) . '/components/sections/relatorios.php'; ?>
 
             </div>
             <!--Modal Aluno -->
@@ -61,14 +65,17 @@
             <!-- Modal Professor -->
             <?php require dirname(__DIR__) . '/components/modals/professor.php'; ?>
 
-            <!-- Modal Classe -->
-            <?php require dirname(__DIR__) . '/components/modals/classe.php'; ?>
+            
 
             <!-- Modal Sala -->
             <?php require dirname(__DIR__) . '/components/modals/sala.php'; ?>
 
-            <script src="assets/js/main.js"></script>
+            <!-- Modal Disciplina -->
+            <?php require dirname(__DIR__) . '/components/modals/disciplina.php'; ?>
+
+
         </section>
+        <script src="assets/js/main.js"></script>
     </body>
 
     </html>

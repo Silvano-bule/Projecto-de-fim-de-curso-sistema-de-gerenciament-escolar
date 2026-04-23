@@ -29,6 +29,7 @@ unset($_SESSION['error_classes'], $_SESSION['nome_classe']);
                         Salvar
                     </button>
                     <button id="btnClose" type="button" class="cursor-pointer btn btn-error  text-white hover:text-red-600 hover:bg-red-300">Fechar</button>
+                </div>
             </form>
         </div>
     </dialog>

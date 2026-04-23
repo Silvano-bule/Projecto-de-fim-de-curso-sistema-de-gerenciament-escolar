@@ -9,6 +9,7 @@ use App\controllers\AlunoDashboardController;
 use App\controllers\TurmaAlunoController;
 use App\controllers\CursoController;
 use App\controllers\SalaController;
+use App\controllers\DisciplinaController;
 
 define('AVAILABLE_ROUTES', [
     'home' => homeController::class,
@@ -18,12 +19,12 @@ define('AVAILABLE_ROUTES', [
     'professor_dashboard' => ProfessorDashboardController::class,
     'Curso' => CursoController::class,
     'aluno_dashboard' => AlunoDashboardController::class,
-    'classe' => App\controllers\ClasseController::class,
     'Auth' => App\controllers\AuthController::class,
     'matricular_aluno' => AlunoDashboardController::class,
     'turma' => TurmaAlunoController::class,
     'removerAluno' => AlunoDashboardController::class,
-    'Sala' =>  SalaController::class
+    'Sala' =>  SalaController::class,
+    'disciplina' =>  DisciplinaController::class
 ]);
 
 define('DEFAULT_ROUTE', homeController::class);

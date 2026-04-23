@@ -28,14 +28,13 @@ namespace App\controllers;
 
 // Importar outras classes que vamos usar
 use App\controllers\AuthController;
-use App\controllers\ProfessorDashboardController;
 use App\Models\Usuarios;
 use App\Models\Aluno;
-use App\Models\Professor;
 use App\Models\Turma;
 use App\Models\Curso;
 use App\Models\Teacher;
 use App\Models\Classe;
+use App\Models\Disciplina;
 use App\Models\Matricula;
 use App\Models\salaModels;
 
@@ -217,7 +216,7 @@ class AdminDashboardController
             'totalProfessores' => Teacher::contarProfessores(),
             'totalTurmas' => Turma::contarTurmas(),
             'totalCursos' => Curso::contarCursos(),
-            'totalClasses' => Classe::contarClasses(),
+            
 
 
             'salasEncontradas' => salaModels::listarSalas(),
@@ -226,18 +225,22 @@ class AdminDashboardController
             'alunos' => Aluno::listarAlunos(),
             'professores' => Teacher::listarProfessores(),
             'turmasEncontradas' => Turma::listarTurma(),
+            'disciplinasEncontradas' => Disciplina::listarDisciplinas(),
             'cursosEncontrados' => Curso::listarCursos(),
-            'classesEncontradas' => Classe::listarClasses(),
+            'registros' => Turma::obterRegistro(),
+            'registroProfesor' => Teacher::registroProfesor()
         ];
+
+       /*  echo "<pre>";
+        print_r($dados['obterRegistro']);
+        echo "</pre>"; */
 
         extract($dados);
         require __DIR__ . '/../views/adminDashboardView.php';
     }
 
-    public function teste()
+    public function teste($dados)
     {
-
-        $dados = $_POST;
 
         echo "<pre>";
         print_r($dados);

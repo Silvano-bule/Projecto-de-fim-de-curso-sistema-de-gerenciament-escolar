@@ -16,12 +16,11 @@
                         <div tabindex="0" role="button" class="m-2">Adicionar novo</div>
                     </div>
                     <ul tabindex="-1" class="dropdown-content menu bg-blue-600 rounded-box z-1 w-52 p-2 shadow-sm mt-1 text-white">
-                        <li><a id="aluno" onclick="my_modal_1.showModal()">Aluno</a></li>
-                        <li><a id="professor" onclick="modal_professor.showModal()">Professor</a></li>
-                        <li><a id="turma" onclick="modal_turma.showModal()">Turma</a></li>
-                        <li><a id="curso" onclick="modal_curso.showModal()">Curso</a></li>
-                        <li><a id="classe" onclick="modal_classe.showModal()">Classe</a></li>
-                        <li><a id="sala" onclick="modal_sala.showModal()">Sala</a></li>
+                        <li><a id="aluno" onclick="document.getElementById('my_modal_1').showModal()">Aluno</a></li>
+                        <li><a id="professor" onclick="document.getElementById('modal_professor').showModal()">Professor</a></li>
+                        <li><a id="turma" onclick="document.getElementById('modal_turma').showModal()">Turma</a></li>
+                        <li><a id="curso" onclick="document.getElementById('modal_curso').showModal()">Curso</a></li>
+                        <li><a id="sala" onclick="document.getElementById('modal_sala').showModal()">Sala</a></li>
                     </ul>
                 </div>
                 <div class="relative mx-3">

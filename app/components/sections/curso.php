@@ -1,6 +1,3 @@
-<html>
-
-<body>
     <section id="Cursos" class="p-4 ml-64 hidden">
         <div class="grid grid-row-2 gap-8">
             <section class="container px-4 mx-auto">
@@ -10,7 +7,7 @@
                             <h1 class="text-2xl font-bold text-white">Cursos</h1>
                             <p>Gerencie todos os Cursos cadastradas</p>
                         </div>
-                        <button class="flex flow-row items-center bg-blue-500 text-white rounded-md px-3 cursor-pointer" id="professor" onclick="modal_curso.showModal()">
+                        <button class="flex flow-row items-center bg-blue-500 text-white rounded-md px-3 cursor-pointer" id="professor" onclick="document.getElementById('modal_curso').showModal()">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                             </svg>
@@ -72,6 +69,3 @@
         </div>
     </section>
     <script src="assets/js/curso.js"></script>
-</body>
-
-</html>

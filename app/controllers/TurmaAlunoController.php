@@ -57,23 +57,31 @@ class TurmaAlunoController
         $nome_turma = filter_input(INPUT_POST, 'nome_turma', FILTER_SANITIZE_SPECIAL_CHARS);
         $periodo_turma = filter_input(INPUT_POST, 'periodo_turma', FILTER_SANITIZE_SPECIAL_CHARS);
         $sala_turma = filter_input(INPUT_POST, 'sala_turma', FILTER_SANITIZE_SPECIAL_CHARS);
+        $classe = filter_input(INPUT_POST, 'classe', FILTER_SANITIZE_SPECIAL_CHARS);
 
-        $this->validarDados($nome_turma, $periodo_turma, $sala_turma);
+        $this->validarDados($nome_turma, $periodo_turma, $sala_turma, $classe);
     }
 
-    private function validarDados($nome, $periodo, $sala)
+    private function validarDados($nome, $periodo, $sala, $classe)
     {
         $erro = [];
 
         $nome = trim($nome);
         $periodo = trim($periodo);
+        $classe = trim($classe);
         $sala = trim($_POST['sala_turma'] ?? '');
 
 
         if (empty($nome)) {
             $erro['nome'] = "O nome da turma é obrigatório.";
         }
+        if (empty($classe)) {
+            $erro['nome'] = "A classe é obrigatório.";
+        }
 
+        if (!preg_match('/^[0-3]+$/', $classe)) {
+            $erro['nome'] = "A classe deve conter apenas numeros como 0, 1, 2, 3.";
+        }
         if (!preg_match('/^[a-zA-Z]+$/', $nome)) {
             $erro['nome'] = "O nome da turma deve conter apenas letras.";
         }
@@ -105,16 +113,17 @@ class TurmaAlunoController
         }
 
         if (!empty($erro)) {
-            $this->redirecionarComErro($erro, $nome, $periodo, $sala);
+            $this->redirecionarComErro($erro, $nome, $periodo, $sala, $classe);
             return;
         }
-        
+
         if (!empty($_POST['idTurma'])) {
             $dadosAtualizados = [
                 'id_turma'           => $_POST['idTurma'], // Certifique-se que o id vem do POST
                 'nome_turma'        => $nome,
                 'sala_turma'        => $sala,
                 'periodo_turma'       => $periodo,
+                'classe'       => $classe,
             ];
 
             // Tente atualizar
@@ -123,28 +132,30 @@ class TurmaAlunoController
             header("Location: index.php?page=admin_dashboard");
             exit();
         } else {
-            $this->guardarTurma($nome, $periodo, $sala);
+            $this->guardarTurma($nome, $periodo, $sala, $classe);
         }
     }
 
-    public function guardarTurma($nome, $periodo, $sala)
+    public function guardarTurma($nome, $periodo, $sala, $classe)
     {
-        Turma::guardarTurma($nome,  $periodo, $sala);
+        Turma::guardarTurma($nome,  $periodo, $sala, $classe);
 
         header("Location: index.php?page=admin_dashboard");
         exit;
     }
 
-    private function redirecionarComErro($erro, $nome, $periodo, $sala)
+    private function redirecionarComErro($erro, $nome, $periodo, $sala, $classe)
     {
         $_SESSION['erro'] = $erro;
         $_SESSION['nome_turma'] = $nome;
         $_SESSION['periodo_turma'] = $periodo;
         $_SESSION['sala_turma'] = $sala;
+        $_SESSION['classe'] = $classe;
 
         $nome = $_SESSION['nome_turma'] ?? '';
         $periodo = $_SESSION['periodo_turma'] ?? '';
         $sala = $_SESSION['sala_turma'] ?? '';
+        $classe = $_SESSION['classe'] ?? '';
 
         header("Location: index.php?page=admin_dashboard");
         exit();
@@ -182,6 +193,21 @@ class TurmaAlunoController
         } else {
             echo json_encode(["erro" => "Id não definido"]);
         }
+    }
+
+    public function buscarRegistro()
+    {
+        header('Content-Type: application/json');
+        $id = $_GET['id'] ?? null;
+
+        if (empty($id)) {
+            echo json_encode(["status" => "erro", "mensagem" => "Id não encotrado"]);
+        }
+
+        $dados = Turma::obterRegistro($id);
+        echo json_encode($dados);
+
+        /* require dirname(__DIR__) . '/components/sections/relatorios.php'; */
     }
     /* 
         

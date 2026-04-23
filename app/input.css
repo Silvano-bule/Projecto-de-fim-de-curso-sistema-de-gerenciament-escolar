@@ -21,4 +21,7 @@
     .sub-title{
         @apply  font-medium text-black text-xl max-w-full text-center;    
     }
+    .btn-filter{
+        @apply btn bg-blue-500
+    }
 }

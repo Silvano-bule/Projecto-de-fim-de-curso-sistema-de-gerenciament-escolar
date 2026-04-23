@@ -119,4 +119,23 @@ class Curso
             ':id' => $dados['id_curso']
         ]);
     }
+
+    public static function registroCurso()
+    {
+        $db = Database::getConnection();
+
+        $sql = "SELECT  disciplina.nome as nome_disciplina, 
+        curso.nome AS nome_curso, 
+        turma.nome AS nome_turma, 
+        professor.nome AS nome_professor 
+        FROM curso 
+        LEFT JOIN matricula ON matricula.id_curso = curso.id
+        LEFT JOIN disciplina ON disciplina.id_curso = curso.id
+        LEFT JOIN turma ON turma.id = matricula.id_turma
+        LEFT JOIN professor ON professor.id = disciplina.id_professor";
+
+        $stmt = $db->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

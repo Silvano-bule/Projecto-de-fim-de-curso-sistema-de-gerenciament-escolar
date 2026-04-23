@@ -1,31 +1,34 @@
 // Definir o ano lectivo dinamicamente no rodapé
 const yearText = document.querySelector('#year');
 
-function getFullYear() {
-    const currentYear = new Date().getFullYear();
-    return `Ano lectivo ${currentYear - 1}/${currentYear}`;
+if (yearText) {
+    function getFullYear() {
+        const currentYear = new Date().getFullYear();
+        return `Ano lectivo ${currentYear - 1}/${currentYear}`;
+    }
+    yearText.textContent = getFullYear();
 }
 
-yearText.textContent = getFullYear();
-
-// Guardar dados do utilizador
+// Guardar dados do utilizador - com verificação de existência
 const username = document.getElementById('username');
 const address = document.getElementById('emailAddress');
 const password = document.getElementById('password');
 const saveBtn = document.getElementById('saveBtn');
 const btnClose = document.querySelectorAll('#btnClose');
 
-btnClose.forEach(button => {
-    button.addEventListener('click', function () {
-        // Encontrar o modal pai do botão clicado e fechar apenas esse
-        const modalParent = button.closest('.modal');
+if (btnClose.length > 0) {
+    btnClose.forEach(button => {
+        button.addEventListener('click', function () {
+            // Encontrar o modal pai do botão clicado e fechar apenas esse
+            const modalParent = button.closest('.modal');
 
-        // Verificar se o botão foi clicado
-        if (modalParent) {
-            modalParent.close();
-        }
+            // Verificar se o botão foi clicado
+            if (modalParent) {
+                modalParent.close();
+            }
+        });
     });
-});
+}
 
 const butoes = document.querySelectorAll('nav a');
 const conteudos = document.querySelectorAll('.content >  section');
@@ -43,7 +46,7 @@ function trocarConteudo(alvo) {
     conteudos.forEach(conteudo => {
         conteudo.classList.add('hidden');
     })
-
+    
     document.getElementById(alvo).classList.remove('hidden');
 }
 

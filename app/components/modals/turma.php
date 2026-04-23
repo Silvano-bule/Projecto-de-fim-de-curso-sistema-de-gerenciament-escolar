@@ -2,8 +2,9 @@
 $erro = $_SESSION['erro'] ?? [];
 $nome_turma = $_SESSION['nome_turma'] ?? '';
 $periodo_turma = $_SESSION['periodo_turma'] ?? '';
+$classe = $_SESSION['classe'] ?? '';
 
-unset($_SESSION['erro'], $_SESSION['nome_turma'], $_SESSION['periodo_turma']);
+unset($_SESSION['erro'], $_SESSION['nome_turma'], $_SESSION['periodo_turma'],$_SESSION['classe']);
 ?>
 
 <html>
@@ -29,6 +30,13 @@ unset($_SESSION['erro'], $_SESSION['nome_turma'], $_SESSION['periodo_turma']);
                         <input placeholder="Manhã, Tarde" id="periodo_turma" name="periodo_turma" type="text" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" value="<?= htmlspecialchars($periodo_turma) ?>" required>
                         <?php if (isset($erro['periodo'])): ?>
                             <p class="text-red-500 text-xs"><?php echo $erro['periodo']; ?></p>
+                        <?php endif; ?>
+                    </div>
+                    <div>
+                        <label class="text-gray-700 dark:text-gray-200" for="classe">Classe<span class="text-red-500 text-xs"> (Obrigatório)</span> </label>
+                        <input placeholder="10ª, 11ª, 12ª..." id="classe_turma" name="classe" type="text" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" value="<?= htmlspecialchars($classe) ?>" required>
+                        <?php if (isset($erro['classe'])): ?>
+                            <p class="text-red-500 text-xs"><?php echo $erro['classe']; ?></p>
                         <?php endif; ?>
                     </div>
                     <div>

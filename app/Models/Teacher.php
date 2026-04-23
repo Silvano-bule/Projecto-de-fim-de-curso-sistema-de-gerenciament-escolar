@@ -100,4 +100,23 @@ class Teacher
             ':id' => $dados['idProfessor']
         ]);
     }
+
+    public static function registroProfesor()
+    {
+        $db = Database::getConnection();
+
+        $sql = "SELECT  disciplina.nome as nome_disciplina, 
+        curso.nome AS nome_curso, 
+        turma.nome AS nome_turma, 
+        professor.nome AS nome_professor 
+        FROM curso 
+        JOIN matricula ON matricula.id_curso = curso.id
+        JOIN disciplina ON disciplina.id_curso = curso.id
+        JOIN turma ON turma.id = matricula.id_turma
+        JOIN professor ON professor.id = disciplina.id_professor";
+
+        $stmt = $db->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

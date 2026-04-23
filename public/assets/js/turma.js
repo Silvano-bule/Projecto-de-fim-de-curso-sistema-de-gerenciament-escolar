@@ -22,4 +22,5 @@ function preencherFormularioTurma(turma) {
     document.getElementById('nome_turma').value = turma.nome;
     document.getElementById('periodo_turma').value = turma.periodo;
     document.getElementById('Sala_turma').value = turma.id_sala;
+    document.getElementById('classe_turma').value = turma.classe;
 }
