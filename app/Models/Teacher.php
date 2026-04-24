@@ -119,4 +119,32 @@ class Teacher
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    public static function verificarUsuario($nome)
+    {
+        $db = Database::getConnection();
+
+        $sql = "SELECT * FROM professor WHERE nome = :nome";
+
+        $stmt = $db->prepare($sql);
+
+        $stmt->execute([
+            ':nome' => $nome,
+        ]);
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+    public static function verificarEmail($email)
+    {
+        $db = Database::getConnection();
+
+        $sql = "SELECT * FROM professor WHERE email = :email";
+
+        $stmt = $db->prepare($sql);
+
+        $stmt->execute([
+            ':email' => $email,
+        ]);
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 }

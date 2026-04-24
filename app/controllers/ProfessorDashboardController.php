@@ -3,28 +3,30 @@
 namespace App\controllers;
 
 use App\Models\Teacher;
+use App\Models\Usuarios;
+use App\Models\Turma;
+use App\Models\Curso;
+use App\Models\salaModels;
+use App\Models\Matricula;
+use App\Models\Disciplina;
+use App\Models\Aluno;
+use App\controllers\AuthController;
 
 class ProfessorDashboardController
 {
     public function render()
     {
-        $this->iniciarSessao();
+        AuthController::iniciarSessao();
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $this->receberDados();
             return;
         }
 
-        header("Location: index.php?page=admin_dashboard");
+        include dirname(__DIR__) . '/views/professorDashboardView.php';
         exit();
     }
 
-    private function iniciarSessao()
-    {
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-    }
     private function receberDados()
     {
         $nome = filter_input(INPUT_POST, 'nome_professor', FILTER_SANITIZE_SPECIAL_CHARS);
@@ -138,6 +140,8 @@ class ProfessorDashboardController
             $id = $_GET['id'];
             Teacher::removerProfessor($id);
         }
+        header("Location: index.php?page=admin_dashboard");
+        exit();
     }
 
     public function obterProfessorId()
@@ -155,5 +159,32 @@ class ProfessorDashboardController
             echo json_encode(["erro" => "Id não definido"]);
         }
         exit;
+    }
+    private function dadosUsuario()
+    {
+        $dados = [
+            'nome' => $_SESSION['user_name'],
+            'totalUsers' => Usuarios::contarUsuarios(),
+            'totalAlunos' => Aluno::contarAlunos(),
+            'totalProfessores' => Teacher::contarProfessores(),
+            'totalTurmas' => Turma::contarTurmas(),
+            'totalCursos' => Curso::contarCursos(),
+
+
+
+            'salasEncontradas' => salaModels::listarSalas(),
+            'alunosRecentes' => Aluno::listarAlunosRecentes(),
+            'matriculaGerada' => Matricula::listarAlunosComMatriculas(),
+            'alunos' => Aluno::listarAlunos(),
+            'professores' => Teacher::listarProfessores(),
+            'turmasEncontradas' => Turma::listarTurma(),
+            'disciplinasEncontradas' => Disciplina::listarDisciplinas(),
+            'cursosEncontrados' => Curso::listarCursos(),
+            'registros' => Turma::obterRegistro(),
+            'registroProfesor' => Teacher::registroProfesor()
+        ];
+
+        extract($dados);
+        require __DIR__ . '/../views/professorDashboardView.php';
     }
 }

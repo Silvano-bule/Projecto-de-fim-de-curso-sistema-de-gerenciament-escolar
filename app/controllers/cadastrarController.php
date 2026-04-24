@@ -5,6 +5,7 @@ namespace App\controllers;
 use App\Models\Usuarios;
 use App\controllers\AuthController;
 use App\Models\Aluno;
+use App\Models\Teacher;
 
 class cadastrarController
 {
@@ -104,6 +105,7 @@ class cadastrarController
 
     private function processarcadastro()
     {
+        $error = [];
         $nome = filter_input(INPUT_POST, 'nome', FILTER_SANITIZE_SPECIAL_CHARS);
         $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
         $senha = filter_input(INPUT_POST, 'senha', FILTER_SANITIZE_SPECIAL_CHARS);
@@ -113,7 +115,9 @@ class cadastrarController
 
         if (!empty($error)) {
             $this->redireccionarComErro($error, $nome, $email, $senha, $tipo);
+            return;
         }
+
 
         $this->salvarUsuario($nome, $email, $senha, $tipo);
 
@@ -129,9 +133,20 @@ class cadastrarController
         if ($tipo === '') $error['tipo'] = "Tipo de usuario é obrigatório.";
 
         $usuario = Usuarios::buscarPorEmail($email);
-
         if ($usuario) {
-            $error['email'] = 'Este email já está cadastrado';
+            $error['email'] = 'Este email já está vinculado a uma conta';
+        }
+
+        $professor = $this->verificarUsuario($nome);
+        if (!$professor) {
+            $error['nome'] = 'Professor não existente no sistema';
+            return $error;
+        }
+        $email_professor = $this->verificarEmail($email);
+
+        if (!$email_professor) {
+            $error['email'] = 'Email não vinculado a nehum professor autorizado';
+            return $error;
         }
         return $error;
     }
@@ -163,6 +178,20 @@ class cadastrarController
         unset($_SESSION['error'], $_SESSION['email'], $_SESSION['senha'], $_SESSION['tipo']);
         require_once __DIR__ . '/../views/cadastrarViews.php';
         exit;  // Para a execução aqui
+    }
+    private function verificarUsuario($nome)
+    {
+        $professor = Teacher::verificarUsuario($nome);
+        return $professor;
+        /* var_dump($nome);
+        exit; */
+    }
+    private function verificarEmail($email)
+    {
+        $email = Teacher::verificarEmail($email);
+        return $email;
+        /* var_dump($nome);
+        exit; */
     }
     /* 
         ======= PASSO PARA REFACTORAÇÃO DO MEU CÓDIGO: =======

@@ -13,65 +13,65 @@
         <!-- Main content dashboard -->
         <section class="flex flex-row">
             <!-- Menu lateral -->
-            <?php require dirname(__DIR__) . '/components/dashboard/menu.php' ?>
+            <?php require dirname(__DIR__) . '/components/adminConponents/dashboard/menu.php' ?>
 
             <div class="content w-full">
                 <!-- Main content - Conteúdo do dashboard -->
 
                 <section id="Dashboard" class="container w-auto mx-auto px-4 ml-64 sectio-content hidden">
                     <!-- Header Dasboard -->
-                    <?php require dirname(__DIR__) . '/components/dashboard/header.php' ?>
+                    <?php require dirname(__DIR__) . '/components/adminConponents/dashboard/header.php' ?>
 
                     <!--  Dados Estatísticos -->
-                    <?php require dirname(__DIR__) . '/components/dashboard/estatisticas.php' ?>
+                    <?php require dirname(__DIR__) . '/components/adminConponents/dashboard/estatisticas.php' ?>
 
                     <!-- Tabela de dados -->
-                    <?php require dirname(__DIR__) . '/components/dashboard/tabela.php' ?>
+                    <?php require dirname(__DIR__) . '/components/adminConponents/dashboard/tabela.php' ?>
 
                 </section>
 
                 <!-- Area de Aluno -->
-                <?php require dirname(__DIR__) . '/components/sections/aluno.php' ?>
+                <?php require dirname(__DIR__) . '/components/adminConponents/sections/aluno.php' ?>
 
                 <!-- Area de Professor -->
-                <?php require dirname(__DIR__) . '/components/sections/professor.php' ?>
+                <?php require dirname(__DIR__) . '/components/adminConponents/sections/professor.php' ?>
 
                 <!-- Area de turmas-->
-                <?php require dirname(__DIR__) . '/components/sections/turma.php'; ?>
+                <?php require dirname(__DIR__) . '/components/adminConponents/sections/turma.php'; ?>
 
                 <!-- Area de Cursos -->
-                <?php require dirname(__DIR__) . '/components/sections/curso.php'; ?>
+                <?php require dirname(__DIR__) . '/components/adminConponents/sections/curso.php'; ?>
 
 
                 <!-- Area das salas -->
-                <?php require dirname(__DIR__) . '/components/sections/sala.php'; ?>
+                <?php require dirname(__DIR__) . '/components/adminConponents/sections/sala.php'; ?>
 
                 <!-- Area das  Disciplina -->
-                <?php require dirname(__DIR__) . '/components/sections/disciplina.php'; ?>
+                <?php require dirname(__DIR__) . '/components/adminConponents/sections/disciplina.php'; ?>
 
                 <!-- Area dos relatorios -->
-                <?php require dirname(__DIR__) . '/components/sections/relatorios.php'; ?>
+                
 
             </div>
             <!--Modal Aluno -->
-            <?php require dirname(__DIR__) . '/components/modals/aluno.php'; ?>
+            <?php require dirname(__DIR__) . '/components/adminConponents/modals/aluno.php'; ?>
 
             <!-- Modal Turma -->
-            <?php require dirname(__DIR__) . '/components/modals/turma.php'; ?>
+            <?php require dirname(__DIR__) . '/components/adminConponents/modals/turma.php'; ?>
 
             <!-- Modal Curso -->
-            <?php require dirname(__DIR__) . '/components/modals/curso.php'; ?>
+            <?php require dirname(__DIR__) . '/components/adminConponents/modals/curso.php'; ?>
 
             <!-- Modal Professor -->
-            <?php require dirname(__DIR__) . '/components/modals/professor.php'; ?>
+            <?php require dirname(__DIR__) . '/components/adminConponents/modals/professor.php'; ?>
 
             
 
             <!-- Modal Sala -->
-            <?php require dirname(__DIR__) . '/components/modals/sala.php'; ?>
+            <?php require dirname(__DIR__) . '/components/adminConponents/modals/sala.php'; ?>
 
             <!-- Modal Disciplina -->
-            <?php require dirname(__DIR__) . '/components/modals/disciplina.php'; ?>
+            <?php require dirname(__DIR__) . '/components/adminConponents/modals/disciplina.php'; ?>
 
 
         </section>

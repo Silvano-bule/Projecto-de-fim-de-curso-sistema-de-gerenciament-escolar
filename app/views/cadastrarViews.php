@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -22,28 +24,28 @@
 
             <form action="index.php?page=cadastrar" method="post" autocomplete="off">
                 <div class="w-full mt-4">
-                    <input autocomplete="given-name" class="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-lg dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300" type="text" placeholder="Digite o seu nome" aria-label="text" name="nome" value="<?= htmlspecialchars($nome ?? '') ?>" />
+                    <input autocomplete="given-name" class="block w-full px-4 py-2 mt-2 text-gray-100 placeholder-gray-500 bg-white border rounded-lg dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300" type="text" placeholder="Digite o seu nome" aria-label="text" name="nome" value="<?= htmlspecialchars($nome ?? '') ?>" />
                     <?php if (isset($error['nome'])): ?>
                         <p class="text-red-500 text-sm"><?= htmlspecialchars($error['nome']) ?></p>
                     <?php endif; ?>
 
                 </div>
                 <div class="w-full mt-4">
-                    <input autocomplete="email" class="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-lg dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300" type="email" placeholder="Email Address" aria-label="Email Address" name="email" value="<?= htmlspecialchars($email ?? '') ?>" />
+                    <input autocomplete="email" class="block w-full px-4 py-2 mt-2 text-gray-100 placeholder-gray-500 bg-white border rounded-lg dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300" type="email" placeholder="Email Address" aria-label="Email Address" name="email" value="<?= htmlspecialchars($email ?? '') ?>" />
                     <?php if (isset($error['email'])): ?>
                         <p class="text-red-500 text-sm"><?= htmlspecialchars($error['email']) ?></p>
                     <?php endif; ?>
                 </div>
 
                 <div class="w-full mt-4">
-                    <input autocomplete="new-password" class="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-lg dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300" type="password" placeholder="Password" aria-label="Password" name="senha" minlength="6" />
+                    <input autocomplete="new-password" class="block w-full px-4 py-2 mt-2 text-gray-100 placeholder-gray-500 bg-white border rounded-lg dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300" type="password" placeholder="Password" aria-label="Password" name="senha" minlength="6" />
                     <?php if (isset($error['senha'])): ?>
                         <p class="text-red-500 text-sm"><?= htmlspecialchars($error['senha']) ?></p>
                     <?php endif; ?>
                 </div>
                 <div class="w-full mt-4">
                     <label for="tipo">Tipo de usuario</label>
-                    <select name="tipo" id="tipo" class="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-lg dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300">
+                    <select name="tipo" id="tipo" class="block w-full px-4 py-2 mt-2 text-gray-100 placeholder-gray-500 bg-white border rounded-lg dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300">
                         <option value="" disabled selected>Selecione o tipo de usuario</option>
                         <option value="admin">admin</option>
                         <option value="professor">Professor</option>

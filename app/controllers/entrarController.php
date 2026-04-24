@@ -35,13 +35,17 @@ class entrarController
                     $userLoged = AuthController::login($usuario);
                     unset($_SESSION['error'], $_SESSION['old']);
 
-                    if ($userLoged && strtolower(trim($usuario['tipo'])) ===  'admin') {
+                    // Normalizar o tipo para comparação
+                    $tipoUsuario = strtolower(trim($usuario['tipo'] ?? ''));
+
+                    if ($userLoged && $tipoUsuario === 'admin') {
                         header("Location: index.php?page=admin_dashboard");
                         exit;
-                    } else if ($userLoged && strtolower(trim($usuario['tipo'])) ===  'professor') {
+                    } else if ($userLoged && $tipoUsuario === 'professor') {
                         header("Location: index.php?page=professor_dashboard");
                         exit;
                     } else {
+                        // Se for aluno ou qualquer outro tipo, vai para aluno_dashboard
                         header("Location: index.php?page=aluno_dashboard");
                         exit;
                     }
