@@ -10,6 +10,7 @@ use App\controllers\TurmaAlunoController;
 use App\controllers\CursoController;
 use App\controllers\SalaController;
 use App\controllers\DisciplinaController;
+use App\controllers\notaController;
 
 define('AVAILABLE_ROUTES', [
     'home' => homeController::class,
@@ -24,7 +25,8 @@ define('AVAILABLE_ROUTES', [
     'turma' => TurmaAlunoController::class,
     'removerAluno' => AlunoDashboardController::class,
     'Sala' =>  SalaController::class,
-    'disciplina' =>  DisciplinaController::class
+    'disciplina' =>  DisciplinaController::class,
+    'nota' =>  notaController::class
 ]);
 
 define('DEFAULT_ROUTE', homeController::class);

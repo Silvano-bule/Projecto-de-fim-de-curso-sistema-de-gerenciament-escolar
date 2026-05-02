@@ -18,13 +18,34 @@ class ProfessorDashboardController
     {
         AuthController::iniciarSessao();
 
+        if (!AuthController::isLogged()) {
+            header("Location: index.php?page=login");
+            exit;
+        }
+
+        if ($_SESSION['user_tipo'] !== 'professor') {
+            header("Location: index.php?page=login");
+        }
+
+
+        $email_professor =  trim($_SESSION['user_email'] ?? null);
+
+
+        $emailEncontrado = Teacher::buscarEmailDoProfessor($email_professor);
+        $alunosDoProf = Teacher::listarAlunosDoProfessor($email_professor);
+        $registroGeralProfessor = [];
+
+        if ($emailEncontrado) {
+            $registroGeralProfessor = Teacher::buscarTurmasDoProfessor($emailEncontrado);
+            $listarDisciplinasDoProfessor = Teacher::listarDisciplinasDoProfessor($email_professor);
+        }
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $this->receberDados();
             return;
         }
 
-        include dirname(__DIR__) . '/views/professorDashboardView.php';
-        exit();
+        $this->dadosUsuario($registroGeralProfessor, $alunosDoProf, $listarDisciplinasDoProfessor);
     }
 
     private function receberDados()
@@ -160,10 +181,11 @@ class ProfessorDashboardController
         }
         exit;
     }
-    private function dadosUsuario()
+    private function dadosUsuario($registroGeralProfessor, $alunosDoProf, $listarDisciplinasDoProfessor)
     {
         $dados = [
             'nome' => $_SESSION['user_name'],
+            'tipo' => $_SESSION['user_tipo'],
             'totalUsers' => Usuarios::contarUsuarios(),
             'totalAlunos' => Aluno::contarAlunos(),
             'totalProfessores' => Teacher::contarProfessores(),
@@ -181,8 +203,12 @@ class ProfessorDashboardController
             'disciplinasEncontradas' => Disciplina::listarDisciplinas(),
             'cursosEncontrados' => Curso::listarCursos(),
             'registros' => Turma::obterRegistro(),
-            'registroProfesor' => Teacher::registroProfesor()
+            'registroProfesor' => Teacher::registroProfesor(),
+            'registroGeralProfessor' => $registroGeralProfessor,
+            'alunosDoProf' => $alunosDoProf,
+            'listarDisciplinasDoProfessor' => $listarDisciplinasDoProfessor
         ];
+
 
         extract($dados);
         require __DIR__ . '/../views/professorDashboardView.php';

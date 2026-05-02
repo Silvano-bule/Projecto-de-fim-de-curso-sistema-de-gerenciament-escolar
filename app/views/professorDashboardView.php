@@ -48,6 +48,9 @@
 
                 <!-- Area das  Disciplina -->
                 <?php require dirname(__DIR__) . '/components/professorComponents/sections/disciplina.php'; ?>
+
+                <!-- Modal para adicionar notas -->
+                 <?php require dirname(__DIR__) . '/components/professorComponents/modals/nota.php'?>
             </div>
         </section>
         <script src="assets/js/main.js"></script>

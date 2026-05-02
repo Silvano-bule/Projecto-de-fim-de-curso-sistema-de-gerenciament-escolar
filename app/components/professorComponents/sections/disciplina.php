@@ -1,4 +1,4 @@
-    <section id="Disciplina" class="p-4 ml-64">
+    <section id="Disciplina" class="p-4 ml-64 hidden">
         <div class="grid grid-row-2 gap-8">
             <section class="container px-4 mx-auto">
                 <div class="flex flex-col gap-4 mt-6">

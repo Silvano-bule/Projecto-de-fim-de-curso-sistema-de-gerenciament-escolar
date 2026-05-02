@@ -112,7 +112,7 @@ class Turma
     public static function obterRegistro()
     {
         $db = Database::getConnection();
-        
+
         $sql = "SELECT matricula.numero as numero_matricula,
         aluno.nome as nome_aluno, 
         turma.nome as nome_turma, 
@@ -124,6 +124,26 @@ class Turma
 
         $stmt = $db->prepare($sql);
         $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    public static function pegarAluno($id)
+    {
+        $db = Database::getConnection();
+
+        $sql = "SELECT aluno.nome AS nome_aluno, 
+        matricula.numero as numero_matricula, 
+        turma.nome as nome_turma 
+        FROM matricula 
+        JOIN turma ON matricula.id_turma = turma.id
+        join aluno ON aluno.id = matricula.id_aluno
+        WHERE turma.id = :id";
+
+        $stmt = $db->prepare($sql);
+
+        $stmt->execute([
+            ':id' =>$id,
+        ]);
+
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }

@@ -26,20 +26,20 @@ function obterAluno(idAluno) {
         })
 }
 function preencherFormulario(aluno) {
-    document.getElementById('id_aluno').value = aluno.id;
-    document.getElementById('username').value = aluno.nome;
-    document.getElementById('email').value = aluno.email;
-    document.getElementById('telefone').value = aluno.telefone;
-    document.getElementById('nasc').value = aluno.nascimento;
-    document.getElementById('sexo').value = aluno.sexo;
-    document.getElementById('nacio').value = aluno.nacionalidade;
-    document.getElementById('nome_pai').value = aluno.nome_pai;
-    document.getElementById('nome_mae').value = aluno.nome_mae;
-    document.getElementById('numero_BI').value = aluno.numero_BI;
-    document.getElementById('provincia').value = aluno.provincia;
-    document.getElementById('altura').value = aluno.altura;
-    document.getElementById('Classe').value = aluno.id_classe;
-    document.getElementById('Turma').value = aluno.id_turma;
-    document.getElementById('Curso').value = aluno.id_curso;
-    document.getElementById('Sala').value = aluno.id_sala;
+    document.getElementById('id_aluno').value = aluno.id || '';
+    document.getElementById('username').value = aluno.nome || '';
+    document.getElementById('email').value = aluno.email || '';
+    document.getElementById('telefone').value = aluno.telefone || '';
+    document.getElementById('nasc').value = aluno.nascimento || '';
+    document.getElementById('sexo').value = aluno.sexo || '';
+    document.getElementById('nacio').value = aluno.nacionalidade || '';
+    document.getElementById('nome_pai').value = aluno.nome_pai || '';
+    document.getElementById('nome_mae').value = aluno.nome_mae || '';
+    document.getElementById('numero_BI').value = aluno.numero_BI || '';
+    document.getElementById('provincia').value = aluno.provincia || '';
+    document.getElementById('altura').value = aluno.altura || '';
+    document.getElementById('aluno_classe').value = aluno.classe_aluno || '';
+    document.getElementById('Turma').value = aluno.id_turma || '';
+    document.getElementById('Curso').value = aluno.id_curso || '';
+    document.getElementById('Sala').value = aluno.sala_aluno || '';
 }

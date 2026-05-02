@@ -147,10 +147,12 @@ class Aluno
                 aluno.provincia,
                 aluno.altura,
                 matricula.id_turma,
-                matricula.id_curso
+                matricula.id_curso,
+                turma.id_sala as sala_aluno,
+                turma.classe as classe_aluno
                 FROM aluno 
-                LEFT JOIN matricula 
-                ON aluno.id = matricula.id_aluno
+                LEFT JOIN matricula ON aluno.id = matricula.id_aluno
+                LEFT JOIN turma ON turma.id = matricula.id_turma
                 WHERE aluno.id = :id";
 
         $stmt =  $db->prepare($sql);
@@ -205,7 +207,7 @@ class Aluno
             // 2. Atualizar Tabela Matricula
             $sqlMatricula = "UPDATE matricula SET 
                          id_turma = :turma_aluno, 
-                         id_curso = :curso_aluno,
+                         id_curso = :curso_aluno
                          WHERE id_aluno = :idaluno";
 
             $stmtM = $db->prepare($sqlMatricula);

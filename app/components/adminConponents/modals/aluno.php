@@ -102,21 +102,21 @@ unset($_SESSION['erro_aluno'], $_SESSION['nome'], $_SESSION['email'], $_SESSION[
                     </div>
                     <div>
                         <label class="text-gray-700 dark:text-gray-200" for="Classe">Classe</label>
-                        <select name="classe_aluno" id="Classe" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" required>
+                        <select id="aluno_classe" name="classe_aluno" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" required>
                             <option value="">Selecionar classe</option>
-                            <?php if (empty($classesEncontradas)): ?>
+                            <?php if (empty($turmasEncontradas)): ?>
                                 <option value="" disabled>Nenhuma classe cadastrada</option>
                             <?php else: ?>
-                                <?php foreach ($classesEncontradas as $classe): ?>
-                                    <option value="<?php echo htmlspecialchars($classe['id']); ?>">
-                                        <?php echo htmlspecialchars($classe['nome']); ?>
+                                <?php foreach ($turmasEncontradas as $turma): ?>
+                                    <option value="<?php echo htmlspecialchars($turma['id']); ?>">
+                                        <?php echo htmlspecialchars($turma['classe']); ?>
                                     </option>
                                 <?php endforeach; ?>
                             <?php endif; ?>
                         </select>
                     </div>
                     <div>
-                        <label class="text-gray-700 dark:text-gray-200" for="Classe">Turma</label>
+                        <label class="text-gray-700 dark:text-gray-200" for="Turma">Turma</label>
                         <!-- Primeiro, verifique se a variável existe -->
                         <select autocomplete="on" id="Turma" name="turma_aluno" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" required>
 
@@ -134,15 +134,11 @@ unset($_SESSION['erro_aluno'], $_SESSION['nome'], $_SESSION['email'], $_SESSION[
                                     $nomeTurma = isset($turma['nome']) ? $turma['nome'] : '';
 
                                     // Só mostra se tiver nome
-                                    if (!empty($nomeTurma)):
-                                    ?>
+                                    if (!empty($nomeTurma)):?>
                                         <option value="<?php echo htmlspecialchars($idTurma); ?>">
                                             <?php echo htmlspecialchars($nomeTurma); ?>
                                         </option>
-                                <?php
-                                    endif;
-                                endforeach;
-                                ?>
+                                <?php endif; endforeach; ?>
                             <?php endif; ?>
                         </select>
                     </div>
@@ -163,7 +159,7 @@ unset($_SESSION['erro_aluno'], $_SESSION['nome'], $_SESSION['email'], $_SESSION[
                     </div>
                     <div>
                         <label class="text-gray-700 dark:text-gray-200" for="sala">Sala</label>
-                        <select name="sala_aluno" id="Sala" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring">
+                        <select  id="Sala" name="sala_aluno" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring">
                             <option value="">Selecionar Sala</option>
                             <?php if (empty($salasEncontradas)): ?>
                                 <option value="" disabled>Nenhuma sala cadastrada</option>

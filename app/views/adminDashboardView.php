@@ -65,8 +65,6 @@
             <!-- Modal Professor -->
             <?php require dirname(__DIR__) . '/components/adminConponents/modals/professor.php'; ?>
 
-            
-
             <!-- Modal Sala -->
             <?php require dirname(__DIR__) . '/components/adminConponents/modals/sala.php'; ?>
 

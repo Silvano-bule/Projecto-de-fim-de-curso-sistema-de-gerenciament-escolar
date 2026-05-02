@@ -209,6 +209,19 @@ class TurmaAlunoController
 
         /* require dirname(__DIR__) . '/components/sections/relatorios.php'; */
     }
+    public function pegarAluno()
+    {
+
+        header('Content-Type: application/json');
+
+        if ($_GET['id']) {
+            $id = $_GET['id'];
+
+            $turma = Turma::pegarAluno($id);
+
+            echo json_encode($turma);
+        }
+    }
     /* 
         
         ===== PASSOS PARA GERENCIAR TURMA DO ALUNO=====

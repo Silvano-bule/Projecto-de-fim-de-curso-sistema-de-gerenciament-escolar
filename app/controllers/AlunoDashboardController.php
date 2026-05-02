@@ -277,18 +277,18 @@ class AlunoDashboardController
             header("Location: index.php?page=admin_dashboard");
             exit();
         } else {
-            $this->salvarAluno($nome, $email, $telefone, $nascimento, $sexo, $nacionalidade, $nome_pai, $nome_mae, $numero_BI, $provincia, $altura, $classe_aluno, $turma_aluno, $sala_aluno, $curso_aluno);
+            $this->salvarAluno($nome, $email, $telefone, $nascimento, $sexo, $nacionalidade, $nome_pai, $nome_mae, $numero_BI, $provincia, $altura, $classe_aluno, $turma_aluno, $sala_aluno);
         }
     }
 
 
-    private function salvarAluno($nome, $email, $telefone, $nascimento, $sexo, $nacionalidade, $nome_pai, $nome_mae, $numero_BI, $provincia, $altura, $Idclasse, $Idturma, $Idsala, $Idcurso)
+    private function salvarAluno($nome, $email, $telefone, $nascimento, $sexo, $nacionalidade, $nome_pai, $nome_mae, $numero_BI, $provincia, $altura, $Idclasse, $Idturma, $Idsala)
     {
         /*  print_r($dados); */
 
         $IdAluno = Aluno::salvarAluno($nome, $email, $telefone, $nascimento, $sexo, $nacionalidade, $nome_pai, $nome_mae, $numero_BI, $provincia, $altura);
 
-        Aluno::matricula($IdAluno, $Idclasse, $Idturma, $Idsala, $Idcurso);
+        Aluno::matricula($IdAluno, $Idclasse, $Idturma, $Idsala);
         header("Location: index.php?page=admin_dashboard");
         exit();
     }

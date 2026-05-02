@@ -166,29 +166,10 @@ class AdminDashboardController
     public function render()
     {
 
-       /*  $this->mostrarPagina(); */
-        $this->iniciarSessão();
-        $this->dadosUsuario();
-    }
-  /*   private function mostrarPagina()
-    {
-        $date = ProfessorDashboardController::validarDados($nome, $email, $telefone, $nascimento, $sexo, $nacionalidade, $provincia);
-
-
-        $dados = $_POST;
-
-        echo "<pre>";
-        print_r($date);
-        echo "</pre>";
-        require dirname(__DIR__) . '/views/adminDashboardView.php';
-        exit();
-    } */
-    private function iniciarSessão()
-    {
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
+        /*  $this->mostrarPagina(); */
+        AuthController::iniciarSessao();
         $this->verificarLogin();
+        $this->dadosUsuario();
     }
     private function verificarLogin()
     {
@@ -211,12 +192,13 @@ class AdminDashboardController
     {
         $dados = [
             'nome' => $_SESSION['user_name'],
+            'tipo' => $_SESSION['user_tipo'],
             'totalUsers' => Usuarios::contarUsuarios(),
             'totalAlunos' => Aluno::contarAlunos(),
             'totalProfessores' => Teacher::contarProfessores(),
             'totalTurmas' => Turma::contarTurmas(),
             'totalCursos' => Curso::contarCursos(),
-            
+
 
 
             'salasEncontradas' => salaModels::listarSalas(),
@@ -231,7 +213,7 @@ class AdminDashboardController
             'registroProfesor' => Teacher::registroProfesor()
         ];
 
-       /*  echo "<pre>";
+        /*  echo "<pre>";
         print_r($dados['obterRegistro']);
         echo "</pre>"; */
 
